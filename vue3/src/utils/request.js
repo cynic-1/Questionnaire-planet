@@ -1,8 +1,8 @@
-import axios from 'axios'
-import store from '../store'
+// import axios from 'axios'
+// import store from '../store'
 
 // create an axios instance
-const service = axios.create({
+const service = this.axios.create({
     baseURL: process.env.VUE_APP_BASE_API,
     timeout: 5000 // request timeout
 })

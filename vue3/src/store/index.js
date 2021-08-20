@@ -1,4 +1,4 @@
-import Vuex from 'vuex'
+import { createStore } from "vuex";
 import {getTimeInterval} from '../utils/index'
 import {fetchSiteInfo0,fetchSocial} from '@/api'
 // import {fetchTravelerInfo} from "../api";
@@ -83,7 +83,7 @@ const getters = {
     runTimeInterval: state => state.runTimeInterval,
     notice: state => state.websiteInfo?state.websiteInfo.notice:''
 }
-export default new Vuex.Store({
+export default createStore({
     state,
     mutations,
     actions,

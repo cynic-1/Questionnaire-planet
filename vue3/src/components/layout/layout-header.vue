@@ -10,7 +10,7 @@
     <div class="menus-btn" @click.stop="mobileShow=!mobileShow">
       Menus
     </div>
-    <div v-if="$store.state.isLogging" class="site-menus" :class="{'mobileShow':mobileShow}" @click.stop="mobileShow=!mobileShow">
+    <div v-if="this.$store.state.isLogging" class="site-menus" :class="{'mobileShow':mobileShow}" @click.stop="mobileShow=!mobileShow">
       <div class="menu-item header-search"><header-search/></div>
       <div class="menu-item">
         <router-link v-if="this.$store.state.hasLogin" to="/log">笔记坊</router-link>
@@ -33,17 +33,17 @@
             {{item.title}}</router-link></div>
         </div>
       </div>
-      <div class="menu-item" v-if="!$store.state.hasLogin">
+      <div class="menu-item" v-if="!this.$store.state.hasLogin">
         <router-link to="/login">登录/注册</router-link>
       </div>
       <div class="menu-item hasChild" v-else>
-        <img class="menu-img" :src="$store.state.websiteInfo.avatar" >
+        <img class="menu-img" :src="this.$store.state.websiteInfo.avatar" >
         <div class="childMenu" v-if="category.length">
           <div class="sub-menu" v-for="item in profile" :key="item.title">
-            <router-link :to="$route.fullPath" v-if="item.href === '/'" active-class="active"
+            <router-link :to="this.$route.fullPath" v-if="item.href === '/'" active-class="active"
                          @click.native="quit(item.title)">
               {{item.title}}</router-link>
-            <router-link :to="`${item.href + $store.state.websiteInfo.username}`" v-else @click.native="quit(item.title)">
+            <router-link :to="`${item.href + this.$store.state.websiteInfo.username}`" v-else @click.native="quit(item.title)">
               {{item.title}}</router-link>
           </div>
         </div>
