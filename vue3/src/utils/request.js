@@ -1,6 +1,3 @@
-// import axios from 'axios'
-// import store from '../store'
-
 // create an axios instance
 const service = this.axios.create({
     baseURL: process.env.VUE_APP_BASE_API,

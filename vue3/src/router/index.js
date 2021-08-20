@@ -1,6 +1,6 @@
 // import App from '../App'
 import VueRouter from 'vue-router'
-import store from './store'
+import store from '../store'
 
 import 'element-ui/lib/theme-chalk/index.css'
 

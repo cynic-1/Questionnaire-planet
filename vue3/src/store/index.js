@@ -1,6 +1,7 @@
 import { createStore } from "vuex";
 import {getTimeInterval} from '../utils/index'
-import {fetchSiteInfo0,fetchSocial} from '@/api'
+import * as url from "url";
+// import {fetchSiteInfo0,fetchSocial} from '@/api'
 // import {fetchTravelerInfo} from "../api";
 
 // 略:后台获取系统运行时间
@@ -53,8 +54,12 @@ const actions = {
     },
     getSiteInfo0: ({commit,state}) =>{
         return new Promise(resolve => {
-            fetchSiteInfo0().then(res => {
-                let data = res.data || {}
+            this.$axios({
+                method: 'get',
+                url: '/site0'
+                }
+            ).then(res => {
+                let data = res.data.data || {}
                 commit('SET_SITE_INFO',data);
                 resolve(data);
             }).catch(err => {
@@ -67,7 +72,11 @@ const actions = {
             if (state.socials){
                 resolve(state.socials)
             } else {
-                fetchSocial().then(res =>{
+                this.$axios({
+                        method: 'get',
+                        url: '/social'
+                    }
+                ).then(res =>{
                     let data = res.data || []
                     commit('SET_SOCIALS',data);
                     resolve(data);
