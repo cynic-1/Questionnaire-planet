@@ -65,7 +65,7 @@ export default{
   created:function(){
     this.loggingState()
   },
-  destroyed:function() {
+  unmounted:function() {
     this.loggingState()
   },
   methods: {

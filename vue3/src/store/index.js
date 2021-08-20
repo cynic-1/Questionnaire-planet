@@ -1,8 +1,5 @@
 import { createStore } from "vuex";
 import {getTimeInterval} from '../utils/index'
-import * as url from "url";
-// import {fetchSiteInfo0,fetchSocial} from '@/api'
-// import {fetchTravelerInfo} from "../api";
 
 // 略:后台获取系统运行时间
 const runAt = '1589878800000';
@@ -52,6 +49,7 @@ const actions = {
     initComputeTime: ({commit}) => {
         commit('GET_RUNTIME_INTERVAL');
     },
+    // eslint-disable-next-line no-unused-vars
     getSiteInfo0: ({commit,state}) =>{
         return new Promise(resolve => {
             this.$axios({
