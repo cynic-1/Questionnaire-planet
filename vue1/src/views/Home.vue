@@ -11,20 +11,23 @@
 <!--                <quote v-else>{{notice}}</quote>-->
             </div>
 
-            <!--问卷列表-->
-            <main class="site-main" :class="{'search':hideSlogan}">
-<!--                <section-title v-if="!hideSlogan">内容</section-title>-->
-                <template v-for="item in postList1">
-                  <el-card>
-                    <post :post="item" :key="item.id"></post>
-                  </el-card>
-                </template>
-            </main>
 
-            <!--加载更多-->
-            <div class="more" v-show="hasNextPage">
-                <div class="more-btn" @click="loadMore">More</div>
-            </div>
+          <questionnairelist></questionnairelist>
+
+<!--            &lt;!&ndash;问卷列表&ndash;&gt;-->
+<!--            <main class="site-main" :class="{'search':hideSlogan}">-->
+<!--&lt;!&ndash;                <section-title v-if="!hideSlogan">内容</section-title>&ndash;&gt;-->
+<!--                <template v-for="item in postList1">-->
+<!--                  <el-card>-->
+<!--                    <post :post="item" :key="item.id"></post>-->
+<!--                  </el-card>-->
+<!--                </template>-->
+<!--            </main>-->
+
+<!--            &lt;!&ndash;加载更多&ndash;&gt;-->
+<!--            <div class="more" v-show="hasNextPage">-->
+<!--                <div class="more-btn" @click="loadMore">More</div>-->
+<!--            </div>-->
         </div>
     </div>
 </template>
@@ -37,6 +40,7 @@
     import SmallIco from '@/components/small-ico'
     import Quote from '@/components/quote'
     import {fetchFocus, fetchList} from '../api'
+    import questionnairelist from "@/components/questionnaire/questionnairelist";
 
     export default {
         name: 'Home',
@@ -54,7 +58,8 @@
             sectionTitle,
             Post,
             SmallIco,
-            Quote
+            Quote,
+            questionnairelist,
         },
       computed: {
             searchWords() {
