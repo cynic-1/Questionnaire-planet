@@ -32,12 +32,6 @@ const routes = [
         }
     },
     {
-      path: '/notLogin',
-      name: 'notLogin',
-      component: () => import('../views/NotLogin.vue'),
-      meta: {title: '请先点击右上角登录'}
-    },
-    {
         path: '/login',
         name: 'login',
         component: () => import('../views/loginRegister.vue'),
@@ -48,42 +42,6 @@ const routes = [
     //     name: 'personalCenter',
     //     component: () => import('../views/PersonalCenter1.vue'),
     //     meta: { title: '个人中心', params: 'username'}
-    // },
-    // {
-    //     path: '/writeBlog',
-    //     name: 'writeBlog',
-    //     component: () => import('../views/Write1.vue'),
-    //     meta: { title: '创作笔记'}
-    // },
-    // {
-    //     path: '/newBook',
-    //     name: 'newBook',
-    //     component: () => import('../views/newBook.vue'),
-    //     meta: { title: '发布新书'}
-    // },
-    // {
-    //     path:'/books/:id',
-    //     name: 'books',
-    //     component: () => import('./../views/Book'),
-    //     meta: { title: '书籍详情页' }
-    // },
-    // {
-    //     path:'/book-ground',
-    //     name:'book-ground',
-    //     component: () => import ("../views/BookGround"),
-    //     meta:{title: "藏书阁"}
-    // },
-    // {
-    //     path:'/log',
-    //     name:'log',
-    //     component: () => import ('./../views/Log'),
-    //     meta: {title: "读书笔记"}
-    // },
-    // {
-    //     path: '/discussion',
-    //     name: 'userContent',
-    //     component: () => import ('./../views/UserContent'),
-    //     meta: {title: "争鸣殿——在这里讨论吧！"}
     // },
     // {
     //     path: '/search/:type/:words',

@@ -220,6 +220,7 @@
       width: 1144px;
       height: 600px;
 		/*margin-top: 10%;*/
+    /*  alignment: center;*/
 	}
     .demo-table-expand {
         font-size: 0;
