@@ -217,8 +217,8 @@
 
 <style>
     .box-card-questionnaire {
-	    /*width: 60%;*/
-      /*  height: 40%;*/
+      width: 1144px;
+      height: 600px;
 		/*margin-top: 10%;*/
 	}
     .demo-table-expand {

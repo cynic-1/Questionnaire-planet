@@ -1,14 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0e372b6f-a806-4342-a93a-e202f699ceb5" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue1/src/assets/css/style.less" beforeDir="false" afterPath="$PROJECT_DIR$/vue1/src/assets/css/style.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue1/src/components/questionnaire/personalhome.vue" beforeDir="false" afterPath="$PROJECT_DIR$/vue1/src/components/questionnaire/leftBlockAtHome.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue1/src/components/questionnaire/questionnairelist.vue" beforeDir="false" afterPath="$PROJECT_DIR$/vue1/src/components/questionnaire/questionnairelist.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue1/src/router/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/vue1/src/router/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue1/src/views/Home.vue" beforeDir="false" afterPath="$PROJECT_DIR$/vue1/src/views/Home.vue" afterDir="false" />
-    </list>
+    <list default="true" id="0e372b6f-a806-4342-a93a-e202f699ceb5" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -45,7 +38,7 @@
       <option name="presentableId" value="Default" />
       <updated>1629595806427</updated>
       <workItem from="1629595807940" duration="19789000" />
-      <workItem from="1629619974265" duration="2760000" />
+      <workItem from="1629619974265" duration="3083000" />
     </task>
     <servers />
   </component>
