@@ -5,8 +5,8 @@
         <div class="big-contain" v-if="isLogin">
           <div class="btitle">账户登录</div>
           <div class="bform">
-            <input type="email" placeholder="邮箱" v-model="form.useremail">
-            <span class="errTips" v-if="emailError">* 邮箱填写错误 *</span>
+            <input type="text" placeholder="用户名" v-model="form.username">
+            <span class="errTips" v-if="nameError">* 用户名不存在 *</span>
             <input type="password" placeholder="密码" v-model="form.userpwd">
             <span class="errTips" v-if="passwordError">* 密码填写错误 *</span>
           </div>
@@ -17,12 +17,10 @@
           <div class="bform">
             <input type="text" placeholder="用户名" v-model="form.username">
             <span class="errTips" v-if="existed">* 用户名已经存在！ *</span>
-            <input type="text" placeholder="真实姓名" v-model="form.trueName">
-            <input type="text" placeholder="学号" v-model="form.studentID">
-            <span class="errTips" v-if="existed">* 姓名学号验证失败！ *</span>
             <input type="email" placeholder="邮箱" v-model="form.useremail">
             <span class="errTips" v-if="emailError">* 邮箱填写错误 *</span>
             <input type="password" placeholder="密码" v-model="form.userpwd">
+            <span class="errTips" v-if="passwordFormatError">* 密码格式错误 *</span>
           </div>
           <button class="bbutton" @click="register">注册</button>
         </div>
@@ -50,13 +48,13 @@ export default{
   data () {
     return {
       isLogin: false,
+      nameError: false,
       emailError: false,
       passwordError: false,
       existed: false,
+      passwordFormatError: false,
       form: {
         username: '',
-        trueName: '',
-        studentID: '',
         useremail: '',
         userpwd: ''
       }
@@ -75,16 +73,17 @@ export default{
     changeType () {
       this.isLogin = !this.isLogin
       this.form.username = ''
-      this.form.trueName = ''
-      this.form.stuentID = ''
       this.form.useremail = ''
       this.form.userpwd = ''
+      this.nameError = false
       this.emailError = false
       this.passwordError = false
+      this.passwordFormatError = false
       this.existed = false
-      this.confirmError = false
+
     },
     login () {
+<<<<<<< HEAD
        this.$router.push({path: "/questionnairelist"})
       // let self = this;
       // if (self.form.useremail !== '' && self.form.userpwd !== '') {
@@ -125,62 +124,90 @@ export default{
       //     title: '填写不能为空！'
       //   })
       // }
-    },
-    register () {
+=======
       let self = this;
-      if (self.form.username !== '' && self.form.useremail !== '' && self.form.userpwd !== '') {
+      if (self.form.userpwd !== '') {
         self.$axios({
           method: 'post',
-          url: '/api/login_register/register/',
+          url: 'http://47.94.221.172/login/',
           data: {
-            uid: self.form.username,
-            mail: self.form.useremail,
-            pwd: self.form.userpwd,
-            studentId: self.form.studentID,
-            trueName: self.form.trueName
+            username: self.form.username,
+            pass: self.form.userpwd
           }
         })
           .then(res => {
-            switch (res.data.status) {
+            switch (res.data.code) {
+              case 200:
+                this.$Notice.open({
+                  title: '成功登录'
+                })
+                sessionStorage.setItem('Authorization', /* "Bearer " + */ res.data.token)
+                this.$store.commit('SET_LOG_STATE', true)
+                this.$store.commit('SET_SITE_INFO', res.data)
+                sessionStorage.setItem('siteInfo', JSON.stringify(res.data))
+                this.$router.push({
+                   path:`/`}, onComplete => { }, onAbort => { })
+                break
               case 1:
+                this.$store.commit('SET_LOG_STATE', false)
+                this.$Notice.open({
+                  title: '用户名或密码错误'
+                })
+                break
+            }
+          })
+          .catch(err => {
+            console.log(err)
+          })
+      } else {
+        this.$Notice.open({
+          title: '填写不能为空！'
+        })
+      }
+>>>>>>> 7f1f5f6f1214fa45da0a15f7fd0cbb832130e855
+    },
+    register () {
+      let self = this;
+      if (self.form.username !== '' && self.form.userpwd !== '') {
+        self.$axios({
+          method: 'post',
+          url: 'http://47.94.221.172/register/',
+          data: {
+            username: self.form.username,
+            email: self.form.useremail,
+            pass: self.form.userpwd,
+          }
+        })
+          .then(res => {
+            switch (res.data.code) {
+              case 200:
                 this.$Notice.open({
                   title: '成功注册！'
                 })
                 this.existed = false
-                this.emailError = false
+                this.nameError = false
                 this.isLogin = true
                 this.form.username = ''
                 this.form.useremail = ''
                 this.form.userpwd = ''
-                self.form.studentID = ''
-                self.form.trueName = ''
                 this.$router.push({
                   path:`/login`}, () => { }, () => { })
                 // this.login()
                 break
-              case -2:
+              case 0:
                 this.$Notice.open({
                   title: '用户名已存在'
                 })
                 this.existed = true
-                this.emailError = false
+                this.nameError = false
                 break
-              case -1:
+              case 1:
                 this.$Notice.open({
-                  title: '邮箱格式错误'
+                  title: '密码格式错误，需要至少八位的数字和字母组合'
                 })
                 this.existed = false
-                this.emailError = true
+                this.passwordFormatError = true
                 break
-              case -3: {
-                this.$Notice.open({
-                      title: '学号已注册，请联系管理员'
-                    }
-                )
-                this.confirmError = true
-                break
-              }
-
             }
           })
           .catch(err => {
