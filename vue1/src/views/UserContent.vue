@@ -31,7 +31,6 @@ import NewInfo from "../components/log/newInfo";
 import SectionTitle from "../components/section-title";
 import ForumList from "../components/forum/forumList"
 import ForumPageMain from "../components/forum/main";
-import Discussion from "./Discussion";
 import {fetchSuggest} from "../api";
 import post from '../components/post'
 
