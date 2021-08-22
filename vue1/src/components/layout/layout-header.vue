@@ -203,8 +203,8 @@
   border-radius: 24px;
   border: none;
   outline: none;
-  background-color: #13c2c2;
-  color: #ffffff;
+  background-color: #FFE116;
+  color: black;
   font-size: 0.9em;
   cursor: pointer;
 }
@@ -250,7 +250,8 @@
             margin-top: -40px;
           &:hover {
             //color: #ff6d6d;
-            color: #EDC653;
+            //color: #EDC653;
+            color: #FFE116
           }
         }
 

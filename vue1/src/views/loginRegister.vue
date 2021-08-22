@@ -218,7 +218,8 @@ export default{
 .btitle{
   font-size: 2.0em;
   font-weight: bold;
-  color: rgb(57,167,176);
+  /*color: rgb(57,167,176);*/
+  color: #FFE116;
 }
 .bform{
   width: 100%;
@@ -252,15 +253,19 @@ export default{
   border-radius: 24px;
   border: none;
   outline: none;
-  background-color: rgb(57,167,176);
-  color: #fff;
+  /*background-color: rgb(57,167,176);*/
+  background-color: #FFE116;
+  color: black;
   font-size: 0.9em;
   cursor: pointer;
+}
+.bbutton:hover{
+  color: white;
 }
 .small-box{
   width: 30%;
   height: 100%;
-  background: linear-gradient(135deg,rgb(57,167,176),rgb(56,183,145));
+  background: linear-gradient(135deg,#FFE116,#FFF10F);
   position: absolute;
   top: 0;
   left: 0;
@@ -280,7 +285,7 @@ export default{
 .stitle{
   font-size: 1.8em;
   font-weight: bold;
-  color: #fff;
+  color: #EE7623;
 }
 .scontent{
   font-size: 1.2em;
@@ -293,13 +298,16 @@ export default{
   width: 60%;
   height: 40px;
   border-radius: 24px;
-  border: 1px solid #fff;
+  border: 1px solid black;
   outline: none;
   background-color: transparent;
-  color: #ffffff;
+  color: black;
   font-size: 1.2em;
   cursor: pointer;
 }
+.sbutton:hover {
+  color: white
+ }
 
 .big-box.active{
   left: 0;
