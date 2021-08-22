@@ -49,7 +49,8 @@
     display: inline-block;
     position: relative;
     i{
-        color: red;
+        //color: #EDC653;
+        color: gold;
         font-size: 18px;
         position: relative;
         top: 3px;
