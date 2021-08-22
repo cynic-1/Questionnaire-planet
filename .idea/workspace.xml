@@ -2,43 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0e372b6f-a806-4342-a93a-e202f699ceb5" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/jsLinters/eslint.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/.yarn-integrity" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue/.idea/vue.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue3/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue3/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue3/babel.config.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue3/eslintrc.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue3/package-lock.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue3/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue3/public/favicon.ico" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue3/public/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue3/src/App.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue3/src/assets/logo.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue3/src/assets/panda.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue3/src/assets/pentacle_PNG51.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue3/src/assets/rzdf.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue3/src/assets/xwmr.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue3/src/components/HelloWorld.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue3/src/components/back-top.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue3/src/components/layout/layout-body.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue3/src/components/layout/layout-footer.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue3/src/components/layout/layout-header.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue3/src/main.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue3/src/router/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue3/src/store/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue3/src/utils/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue3/src/utils/request.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue3/src/views/Home.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue3/src/views/LoginRegister.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue3/src/views/NotLogin.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue3/yarn.lock" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/src/components/layout/layout-header.vue" beforeDir="false" afterPath="$PROJECT_DIR$/vue1/src/components/layout/layout-header.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,6 +23,12 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
@@ -69,7 +40,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1629595806427</updated>
-      <workItem from="1629595807940" duration="1303000" />
+      <workItem from="1629595807940" duration="3041000" />
     </task>
     <servers />
   </component>

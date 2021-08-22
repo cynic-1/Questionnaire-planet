@@ -3,8 +3,8 @@
         <div class="site-logo">
             <router-link to="/home">
 <!--                <img src="@/assets/site-logo.svg" alt="">-->
-              <img src="@/assets/reading.png" alt="">
-                <p class="site-name">墨韵 | MoYun</p>
+              <img src="@/assets/pentacle_PNG51.png" alt="">
+                <p class="site-name">天问 | TechWin</p>
             </router-link>
         </div>
         <div class="menus-btn" @click.stop="mobileShow=!mobileShow">
@@ -12,27 +12,27 @@
         </div>
         <div v-if="$store.state.isLogging" class="site-menus" :class="{'mobileShow':mobileShow}" @click.stop="mobileShow=!mobileShow">
             <div class="menu-item header-search"><header-search/></div>
-            <div class="menu-item">
-              <router-link v-if="this.$store.state.hasLogin" to="/log">笔记坊</router-link>
-              <router-link v-else to="/login">笔记坊</router-link>
-            </div>
-            <div class="menu-item">
-              <router-link v-if="this.$store.state.hasLogin" to="/discussion">争鸣殿</router-link>
-              <router-link v-else to="/login">争鸣殿</router-link>
-            </div>
-            <div class="menu-item">
-              <router-link v-if="this.$store.state.hasLogin" to="/book-ground">藏书阁</router-link>
-              <router-link v-else to="/login">藏书阁</router-link>
-            </div>
+<!--            <div class="menu-item">-->
+<!--              <router-link v-if="this.$store.state.hasLogin" to="/log">笔记坊</router-link>-->
+<!--              <router-link v-else to="/login">笔记坊</router-link>-->
+<!--            </div>-->
+<!--            <div class="menu-item">-->
+<!--              <router-link v-if="this.$store.state.hasLogin" to="/discussion">争鸣殿</router-link>-->
+<!--              <router-link v-else to="/login">争鸣殿</router-link>-->
+<!--            </div>-->
+<!--            <div class="menu-item">-->
+<!--              <router-link v-if="this.$store.state.hasLogin" to="/book-ground">藏书阁</router-link>-->
+<!--              <router-link v-else to="/login">藏书阁</router-link>-->
+<!--            </div>-->
 
-<!--               <div class="menu-item hasChild"><router-link to="/writeBlog">创作中心</router-link></div>-->
-            <div class="menu-item hasChild">
-                <a>文书房</a>
-                <div class="childMenu" v-if="category.length">
-                    <div class="sub-menu" v-for="item in category" :key="item.title"><router-link :to="`${item.href}`">
-                      {{item.title}}</router-link></div>
-                </div>
-            </div>
+<!--&lt;!&ndash;               <div class="menu-item hasChild"><router-link to="/writeBlog">创作中心</router-link></div>&ndash;&gt;-->
+<!--            <div class="menu-item hasChild">-->
+<!--                <a>文书房</a>-->
+<!--                <div class="childMenu" v-if="category.length">-->
+<!--                    <div class="sub-menu" v-for="item in category" :key="item.title"><router-link :to="`${item.href}`">-->
+<!--                      {{item.title}}</router-link></div>-->
+<!--                </div>-->
+<!--            </div>-->
           <div class="menu-item" v-if="!$store.state.hasLogin">
             <router-link to="/login">登录/注册</router-link>
           </div>
