@@ -3,23 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="0e372b6f-a806-4342-a93a-e202f699ceb5" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue1/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue1/license" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue1/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/vue1/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue1/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/vue1/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue1/src/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/vue1/src/App.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue1/src/components/Books/analysis.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue1/src/components/Books/book-in-lib.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue1/src/components/Books/count.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue1/src/components/Books/forecast.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue1/src/components/Books/publish.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue1/src/components/forum/forumList.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue1/src/components/forum/main.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue1/src/components/log/content-list.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue1/src/components/log/main.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue1/src/components/log/newInfo.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue1/src/router/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/vue1/src/router/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue1/src/store/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/vue1/src/store/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/src/components/layout/layout-header.vue" beforeDir="false" afterPath="$PROJECT_DIR$/vue1/src/components/layout/layout-header.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

@@ -11,7 +11,7 @@
 							<!-- label绑定答案的值,可以绑定索引index,也可以绑定答案内容city -->
 							<el-checkbox
 							v-for="(option,index) in test.answers"
-							:label="index"
+							:label="option.value"
 							:key="index"
 							>{{option.value}}</el-checkbox>
 						</el-checkbox-group>
@@ -19,7 +19,7 @@
 						<el-radio-group v-else-if="test.type == '0'" v-model="test.useranswer">
 							<el-radio
 								v-for="(option,index) in test.answers"
-								:label="index"
+								:label="option.value"
 								:key="index"
 							>{{option.value}}</el-radio>
 						</el-radio-group>
@@ -118,7 +118,7 @@ export default {
 					'Content-Type': 'application/x-www-form-urlencoded'
 				},
 				data:{
-					testid: '2',
+					testid: '18',
 					username: '19231163'
 				},
 				transformRequest:[function(data){
@@ -135,9 +135,13 @@ export default {
 				this.title = dic.title
 				this.publisher = dic.userid
 				this.tests = dic.topic
-				//for(let item of this.tests){
-					//item.cover = 'http://47.94.221.172/' + item.cover
-				//}
+				for(let item of this.tests){
+					if(item.type == 1){
+						if(item.useranswer[0] == ''){
+							item.useranswer.pop()
+						}
+					}
+				}
 			})	
 		},
 		submitCount() {
@@ -153,6 +157,29 @@ export default {
 
 			if(isComplete){
 			// 答题完整,可以提交,在这里进行提交数据操作
+				const usercard = []
+				for(let item of this.tests){
+					usercard.push({questionid:item.questionid, useranswer:item.useranswer})
+				}
+				this.$axios({
+					method:"post",
+					url:"http://47.94.221.172:80/userfillquestionnaire/",
+					header:{
+						'Content-Type': 'application/x-www-form-urlencoded'
+					},
+					data:{
+						testid: '2',
+						userid: '19231163',
+						usercard: usercard
+					},
+					traditinal: true,
+					paramsSerializer: data => {
+						return qs.stringify(data, { indices: false })
+					}
+				}).then((res)=>{
+					console.log(res.data)
+					if (res.data.code !== '200') return this.$message.error(res.data.message);
+				})	
 				alert('交卷成功!');
 			}else{
 				alert('未打完,请继续答卷!');
