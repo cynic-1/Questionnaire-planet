@@ -1,6 +1,12 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import store from '../store'
+import CreateTest from '../views/questionnaire/createtest.vue'
+import Fill from '../views/questionnaire/fill.vue'
+import personal_home from '../views/questionnaire/personalhome.vue'
+import Questionnairelist from '../views/questionnaire/questionnairelist.vue'
+import RecycleBin from '../views/questionnaire/RecycleBin.vue'
+
 
 import 'element-ui/lib/theme-chalk/index.css'
 
@@ -108,7 +114,26 @@ const routes = [
         name: 'tag',
         component: () => import('../views/book-sort'),
         meta: { title: '书籍分类', params: 'tag'}
-    }
+    },
+    {
+        path: '/personal_home',
+        name: 'personal_home',
+        component: personal_home,
+        children:[
+            {path:'/questionnairelist',component:Questionnairelist},
+            {path:'/recyclebin',component:RecycleBin},
+        ]
+      },
+      {
+        path:'/createtest',
+        name:'createtest',
+        component: CreateTest
+      },
+      {
+        path:'/fill',
+        name:'fill',
+        component: Fill
+      }
 ]
 
 const router = new VueRouter({
