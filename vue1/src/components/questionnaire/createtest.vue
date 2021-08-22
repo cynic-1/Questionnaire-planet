@@ -119,8 +119,13 @@
 	import vuedraggable from 'vuedraggable'
 	import qs from 'qs'
 	export default {
+		components:{
+			vuedraggable
+		},
 		data() {
 			return {
+				url: "http://47.94.221.172:80/modifyquestionnaire/",
+				testid: '',
 				rules: {},
 				modelForm: {
 					userid:'19231163',
@@ -143,9 +148,51 @@
 			}
 		},
 		created(){
-			this.modelForm.title = this.$route.query.title
+			const type = this.$route.query.type
+			if(type == 0){
+				this.modelForm.title = this.$route.query.title
+				this.url = "http://47.94.221.172:80/publishquestionnaire/"
+			}
+			else{
+				this.testid = this.$route.query.testid
+				this.loadtest()
+			}
 		},
 		methods: {
+			loadtest(){
+				var _this = this
+				this.$axios({
+					method:"post",
+					url:"http://47.94.221.172:80/getquestionnaire/",
+					header:{
+						'Content-Type': 'application/x-www-form-urlencoded'
+					},
+					data:{
+						testid: this.testid
+					},
+					transformRequest:[function(data){
+						let ret = ''
+						for(let it in data){
+							ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
+						}
+						return ret
+					}],
+				}).then((res)=>{
+					const dic = res.data.dic
+					console.log(res.data.dic)
+					//if (res.data.code !== '200') return this.$router.push('/404');
+					this.modelForm.title = dic.title
+					for(let item of dic.topic){
+						const question = { type: '', questionName: '',key: '', answers: '' }
+						question.type = String(item.type)
+						question.questionName = item.stem
+						question.key = item.mustdo == 1?'true':'false'
+						question.answers = item.answers
+						//console.log(question)
+						this.modelForm.topic.push(question)
+					}
+				})	
+			},
 			end(evt) {
 			  this.$refs.modelForm.clearValidate()
 			},
@@ -176,7 +223,7 @@
 					//if (valid) {
 						this.$axios({
 							method:"post",
-							url:"http://47.94.221.172:80/publishquestionnaire/",
+							url: this.url,
 							header:{
 								'Content-Type': 'application/x-www-form-urlencoded'
 							},
@@ -184,7 +231,7 @@
 								title: this.modelForm.title,
 								topic: this.modelForm.topic,
 								userid: this.modelForm.userid,
-								testid: ''
+								testid: this.testid
 							},
 							traditinal: true,
 							paramsSerializer: data => {
@@ -192,22 +239,24 @@
 							}
 						}).then((res)=>{
 							console.log(res.data)
-							if (res.data.code !== '200') return this.$message.error(res.data.message);
+							if (res.data.code !== '200') return this.$message.error('保存失败');
+							this.$message.success('保存成功')
+							this.$router.push('/questionnairelist')
 						})	
 					//}
 				//})
 			},
 			addSingle(){
-				this.modelForm.topic.push({ type: '0', questionName: '',key: false, answers: [{ value: '' }] })
+				this.modelForm.topic.push({ type: '0', questionName: '',key: 'false', answers: [{ value: '' }] })
 			},
 			addMulti(){
-				this.modelForm.topic.push({ type: '1', questionName: '',key: false, answers: [{ value: '' }] })
+				this.modelForm.topic.push({ type: '1', questionName: '',key: 'false', answers: [{ value: '' }] })
 			},
 			addBlank(){
-				this.modelForm.topic.push({ type: '2', questionName: '',key: false, answers: [{ value: '' }] })
+				this.modelForm.topic.push({ type: '2', questionName: '',key: 'false', answers: [{ value: '' }] })
 			},
 			addRank(){
-				this.modelForm.topic.push({ type: '3', questionName: '',key: false, answers: { value: ''} })
+				this.modelForm.topic.push({ type: '3', questionName: '',key: 'false', answers: { value: ''} })
 			},
 			copy(item){
 				this.modelForm.topic.push(item)
@@ -223,3 +272,6 @@
 		width: 200px;
 	}
 </style>
+
+
+

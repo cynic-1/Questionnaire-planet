@@ -25,8 +25,8 @@
                             <el-form-item >
                                 <div>
                                     <el-button type="text" class="el-icon-view" @click="checkClick(props.row.id)">预览</el-button>
-                                    <el-button type="text" class="el-icon-edit" @click="checkClick(props.row.id)">设计问卷</el-button>
-                                    <el-button type="text" class="el-icon-data-analysis" @click="checkreport(props.row)">查看数据分析</el-button>
+                                    <el-button type="text" class="el-icon-edit" @click="designClick(props.row)">设计问卷</el-button>
+                                    <el-button type="text" class="el-icon-data-analysis" @click="deleteClick(props.row.id)">查看数据分析</el-button>
                                     <el-button type="text" class="el-icon-download" @click="checkClick(props.row.id)">导出</el-button>
                                     <el-button type="text" size="small" class="el-icon-document-copy" @click="copyquestionnaire(props.row.id)">复制</el-button>
                                     <el-button type="text" size="small" class="el-icon-delete" @click="deletequestionnaire(props.row)">删除</el-button>
@@ -56,7 +56,7 @@
                         label="发布状态"
                         width="100">
                         <template slot-scope="scope">
-                            <el-switch v-model="scope.row.isopen"
+                            <el-switch v-model="scope.row.isopen" 
                             active-value="1"
                             inactive-value="0"
                             @change="useStateChange(scope.row)">
@@ -95,10 +95,6 @@
 		  this.loadquestionnaire()
 		},
         methods:{
-            checkreport(){
-                var _this=this
-                this.$router.push({path: "/report"});
-            },
             loadquestionnaire(){
                 var _this = this
 				this.$axios({
@@ -143,7 +139,7 @@
 							return ret
 						}],
                     })
-
+                	
             },
             async QuestionnaireBatchdelete(){  //批量删除
                 const confirmResult = await this.$confirm('此操作将移动该问卷到回收站, 是否继续?', '提示', {
@@ -177,7 +173,7 @@
                     this.loadquestionnaire()
                 }
                 this.$message.success('删除问卷成功')
-
+                
             },
             async deletequestionnaire(row){ //删除
                 const confirmResult = await this.$confirm('此操作将移动该问卷到回收站, 是否继续?', '提示', {
@@ -214,17 +210,19 @@
             memberSelectionChange(val) {
                 let id = val.map(item => item.testid)
                 this.memberSelection = id;
-            }
+            },
+			designClick(row){
+				this.$router.push({path: "/test", query: {testid:row.testid,type:1}});
+			}
         }
     }
 </script>
 
 <style>
     .box-card-questionnaire {
-      width: 1144px;
-      height: 600px;
-		/*margin-top: 10%;*/
-    /*  alignment: center;*/
+	    width: 1144px;
+        height: 600px;
+		margin-top: 30px;
 	}
     .demo-table-expand {
         font-size: 0;
@@ -238,5 +236,5 @@
         margin-bottom: 0;
         width: 50%;
     }
-
+    
 </style>
