@@ -85,45 +85,46 @@ export default{
       this.confirmError = false
     },
     login () {
-      let self = this;
-      if (self.form.useremail !== '' && self.form.userpwd !== '') {
-        self.$axios({
-          method: 'post',
-          url: 'api/login_register/login/',
-          data: {
-            uid: self.form.useremail,
-            pwd: self.form.userpwd
-          }
-        })
-          .then(res => {
-            switch (res.data.status) {
-              case 1:
-                this.$Notice.open({
-                  title: '成功登录'
-                })
-                sessionStorage.setItem('Authorization', /* "Bearer " + */ res.data.token)
-                this.$store.commit('SET_LOG_STATE', true)
-                this.$store.commit('SET_SITE_INFO', res.data)
-                sessionStorage.setItem('siteInfo', JSON.stringify(res.data))
-                this.$router.push({
-                   path:`/`}, onComplete => { }, onAbort => { })
-                break
-              case -1:
-                this.$store.commit('SET_LOG_STATE', false)
-                this.$Notice.open({
-                  title: '邮箱或密码错误'
-                })
-                break
-            }
-          })
-          .catch(err => {
-            console.log(err)
-          })
-      } else {
-        this.$Notice.open({
-          title: '填写不能为空！'
-        })
-      }
+       this.$router.push({path: "/questionnairelist"})
+      // let self = this;
+      // if (self.form.useremail !== '' && self.form.userpwd !== '') {
+      //   self.$axios({
+      //     method: 'post',
+      //     url: 'api/login_register/login/',
+      //     data: {
+      //       uid: self.form.useremail,
+      //       pwd: self.form.userpwd
+      //     }
+      //   })
+      //     .then(res => {
+      //       switch (res.data.status) {
+      //         case 1:
+      //           this.$Notice.open({
+      //             title: '成功登录'
+      //           })
+      //           sessionStorage.setItem('Authorization', /* "Bearer " + */ res.data.token)
+      //           this.$store.commit('SET_LOG_STATE', true)
+      //           this.$store.commit('SET_SITE_INFO', res.data)
+      //           sessionStorage.setItem('siteInfo', JSON.stringify(res.data))
+      //           this.$router.push({
+      //              path:`/`}, onComplete => { }, onAbort => { })
+      //           break
+      //         case -1:
+      //           this.$store.commit('SET_LOG_STATE', false)
+      //           this.$Notice.open({
+      //             title: '邮箱或密码错误'
+      //           })
+      //           break
+      //       }
+      //     })
+      //     .catch(err => {
+      //       console.log(err)
+      //     })
+      // } else {
+      //   this.$Notice.open({
+      //     title: '填写不能为空！'
+      //   })
+      // }
     },
     register () {
       let self = this;
