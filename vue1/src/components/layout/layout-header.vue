@@ -278,7 +278,7 @@
                 font-size: 20px;
                 &:hover {
                     //color: #ff6d6d;
-                  color: #EDC653;
+                  color: gold;
                 }
             }
             &:not(:last-child) {
