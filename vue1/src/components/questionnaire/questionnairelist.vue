@@ -212,7 +212,7 @@
                 this.memberSelection = id;
             },
 			designClick(row){
-				this.$router.push({path: "/test", query: {testid:row.testid,type:1}});
+				this.$router.push({path: "/createtest", query: {testid:row.testid,type:1}});
 			}
         }
     }
