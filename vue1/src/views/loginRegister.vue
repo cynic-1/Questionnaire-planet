@@ -160,7 +160,7 @@ export default{
                 break
               case 1:
                 this.$Notice.open({
-                  title: '密码格式错误'
+                  title: '密码格式错误，需要至少八位的数字和字母组合'
                 })
                 this.existed = false
                 this.passwordFormatError = true
