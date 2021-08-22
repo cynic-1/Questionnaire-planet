@@ -15,7 +15,7 @@
 <!--                <div><a target="_blank" class="out-link" href="#">☞后台管理</a></div>-->
 <!--            </div>-->
 <!--        </div>-->
-        <div class="copyright">Copyright © 2020 by <a target="_blank" class="out-link" href="https://github.com/LeewayTang">Leeway</a> . All rights reserved. | <a target="_blank" class="out-link" href="http://www.beian.miit.gov.cn">闽ICP备20016027号-1</a></div>
+        <div class="copyright">Copyright © 2021 by <a target="_blank" class="out-link" href="https://github.com/cynic-1">cynic</a> . All rights reserved. | <a target="_blank" class="out-link" href="http://www.beian.miit.gov.cn">闽ICP备20016027号-1</a></div>
     </div>
 </template>
 
