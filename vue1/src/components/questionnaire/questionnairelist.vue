@@ -56,7 +56,7 @@
                         label="发布状态"
                         width="100">
                         <template slot-scope="scope">
-                            <el-switch v-model="scope.row.isopen" 
+                            <el-switch v-model="scope.row.isopen"
                             active-value="1"
                             inactive-value="0"
                             @change="useStateChange(scope.row)">
@@ -105,7 +105,7 @@
 					},
 					data:{
 						username:this.username,
-                        title:this.title,
+            title:this.title,
 					},
 					transformRequest:[function(data){
 						let ret = ''
@@ -121,25 +121,25 @@
             },
 
             useStateChange(row){
-                var _this = this
-					this.$axios({
-						method:"post",
-						url:"http://47.94.221.172/changeopen/",
-						header:{
-							'Content-Type': 'application/x-www-form-urlencoded'
-						},
-						data:{
-							testid:row.testid,
-						},
-						transformRequest:[function(data){
-							let ret = ''
-							for(let it in data){
-								ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
-							}
-							return ret
-						}],
-                    })
-                	
+                var self = this
+                self.$axios({
+                  method:"post",
+                  url:"http://47.94.221.172/changeopen/",
+                  header:{
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                  },
+                  data:{
+                    testid:row.testid,
+                  },
+                transformRequest:[function(data){
+                  let ret = ''
+                  for(let it in data){
+                    ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
+                  }
+                  return ret
+                }],
+                        })
+
             },
             async QuestionnaireBatchdelete(){  //批量删除
                 const confirmResult = await this.$confirm('此操作将移动该问卷到回收站, 是否继续?', '提示', {
@@ -173,7 +173,7 @@
                     this.loadquestionnaire()
                 }
                 this.$message.success('删除问卷成功')
-                
+
             },
             async deletequestionnaire(row){ //删除
                 const confirmResult = await this.$confirm('此操作将移动该问卷到回收站, 是否继续?', '提示', {
@@ -236,5 +236,5 @@
         margin-bottom: 0;
         width: 50%;
     }
-    
+
 </style>

@@ -3,7 +3,7 @@
 		<lizi></lizi>
 		<el-aside width="200px">
 			<div class="create_qustionnaire">
-				<el-button style="width:100%;" @click="create" type="primary" icon="el-icon-plus">创建问卷</el-button>
+				<el-button style="width:100%;" @click="create" type="primary" icon="el-icon-circle-plus">创建问卷</el-button>
 				<el-dialog title="问卷标题" :visible.sync="dialogFormVisible" center>
 					<el-input v-model="title"  placeholder="请输入问卷标题"></el-input>
 					<div slot="footer" class="dialog-footer">
@@ -19,18 +19,18 @@
 				    background-color="#545c64"
 				    text-color="#fff"
 
-				    active-text-color="#409EFF"
+				    active-text-color="#ffd04b"
 					:router="true">
 				    <el-menu-item index="/questionnairelist">
                 	    <i class="el-icon-menu"></i>
                 	    <span slot="title">全部问卷</span>
                		</el-menu-item>
 					<el-menu-item index="/administerblog">
-                	    <i class="el-icon-menu"></i>
+                	    <i class="el-icon-star-on"></i>
                 	    <span slot="title">星标问卷</span>
                 	</el-menu-item>
                 	<el-menu-item index="/recyclebin">
-                	    <i class="el-icon-menu"></i>
+                	    <i class="el-icon-document-delete"></i>
                 	    <span slot="title">回收站</span>
                 	</el-menu-item>
 				</el-menu>
