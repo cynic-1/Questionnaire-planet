@@ -3,7 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="0e372b6f-a806-4342-a93a-e202f699ceb5" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue1/src/components/layout/layout-header.vue" beforeDir="false" afterPath="$PROJECT_DIR$/vue1/src/components/layout/layout-header.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/src/assets/css/style.less" beforeDir="false" afterPath="$PROJECT_DIR$/vue1/src/assets/css/style.less" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/src/components/questionnaire/personalhome.vue" beforeDir="false" afterPath="$PROJECT_DIR$/vue1/src/components/questionnaire/leftBlockAtHome.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/src/components/questionnaire/questionnairelist.vue" beforeDir="false" afterPath="$PROJECT_DIR$/vue1/src/components/questionnaire/questionnairelist.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/src/router/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/vue1/src/router/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/src/views/Home.vue" beforeDir="false" afterPath="$PROJECT_DIR$/vue1/src/views/Home.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,7 +26,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/vue1" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -41,6 +45,7 @@
       <option name="presentableId" value="Default" />
       <updated>1629595806427</updated>
       <workItem from="1629595807940" duration="19789000" />
+      <workItem from="1629619974265" duration="2760000" />
     </task>
     <servers />
   </component>
@@ -57,5 +62,6 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
 </project>

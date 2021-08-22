@@ -56,7 +56,7 @@
                         label="发布状态"
                         width="100">
                         <template slot-scope="scope">
-                            <el-switch v-model="scope.row.isopen" 
+                            <el-switch v-model="scope.row.isopen"
                             active-value="1"
                             inactive-value="0"
                             @change="useStateChange(scope.row)">
@@ -139,7 +139,7 @@
 							return ret
 						}],
                     })
-                	
+
             },
             async QuestionnaireBatchdelete(){  //批量删除
                 const confirmResult = await this.$confirm('此操作将移动该问卷到回收站, 是否继续?', '提示', {
@@ -173,7 +173,7 @@
                     this.loadquestionnaire()
                 }
                 this.$message.success('删除问卷成功')
-                
+
             },
             async deletequestionnaire(row){ //删除
                 const confirmResult = await this.$confirm('此操作将移动该问卷到回收站, 是否继续?', '提示', {
@@ -217,9 +217,9 @@
 
 <style>
     .box-card-questionnaire {
-	    width: 1144px;
-        height: 600px;
-		margin-top: 30px;
+	    /*width: 60%;*/
+      /*  height: 40%;*/
+		/*margin-top: 10%;*/
 	}
     .demo-table-expand {
         font-size: 0;
@@ -233,5 +233,5 @@
         margin-bottom: 0;
         width: 50%;
     }
-    
+
 </style>

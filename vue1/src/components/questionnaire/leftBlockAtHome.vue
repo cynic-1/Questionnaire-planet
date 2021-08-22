@@ -18,7 +18,7 @@
 				    class="el-menu-vertical-demo"
 				    background-color="#545c64"
 				    text-color="#fff"
-	
+
 				    active-text-color="#409EFF"
 					:router="true">
 				    <el-menu-item index="/questionnairelist">
@@ -37,7 +37,7 @@
 			</div>
 		</el-aside>
 		<el-main>
-			
+
 			<router-view></router-view>
 		</el-main>
 	</el-container>
@@ -62,7 +62,7 @@
 				this.dialogFormVisible = false
 			}
         }
-    
+
     }
 </script>
 
@@ -73,10 +73,10 @@
 		height: 200px;
 		width: 199px;
 		text-align: center;
-		padding-top: 10px;
+		/*padding-top: 10px;*/
 	}
     .create_qustionnaire{
-        padding-top: 40px;
+        /*padding-top: 40px;*/
     }
 	.homemenu{
 		padding-top: 60px;

@@ -1,18 +1,21 @@
 <template>
     <div class="home">
-<!--        <banner isHome="true" v-if="!hideSlogan"></banner>-->
-        <div class="site-content animate">
+<!--        <div class="site-content">-->
             <!--通知栏-->
-            <div class="notify">
-                <div class="search-result" v-if="hideSlogan">
-                    <span v-if="searchWords">搜索结果："{{searchWords}}" 相关文章</span>
-                    <span v-else-if="category">分类 "{{category}}" 相关文章</span>
-                </div>
+<!--            <div class="notify">-->
+<!--                <div class="search-result" v-if="hideSlogan">-->
+<!--                    <span v-if="searchWords">搜索结果："{{searchWords}}" 相关文章</span>-->
+<!--                    <span v-else-if="category">分类 "{{category}}" 相关文章</span>-->
+<!--                </div>-->
 <!--                <quote v-else>{{notice}}</quote>-->
-            </div>
-
-
+<!--        </div>-->
+        <div class="left">
+          <leftBlock></leftBlock>
+        </div>
+        <div class="main">
           <questionnairelist></questionnairelist>
+        </div>
+
 
 <!--            &lt;!&ndash;问卷列表&ndash;&gt;-->
 <!--            <main class="site-main" :class="{'search':hideSlogan}">-->
@@ -28,7 +31,7 @@
 <!--            <div class="more" v-show="hasNextPage">-->
 <!--                <div class="more-btn" @click="loadMore">More</div>-->
 <!--            </div>-->
-        </div>
+
     </div>
 </template>
 
@@ -40,7 +43,8 @@
     import SmallIco from '@/components/small-ico'
     import Quote from '@/components/quote'
     import {fetchFocus, fetchList} from '../api'
-    import questionnairelist from "@/components/questionnaire/questionnairelist";
+    import questionnairelist from "@/components/questionnaire/questionnairelist"
+    import leftBlock from '@/components/questionnaire/leftBlockAtHome'
 
     export default {
         name: 'Home',
@@ -60,6 +64,7 @@
             SmallIco,
             Quote,
             questionnairelist,
+            leftBlock
         },
       computed: {
             searchWords() {
@@ -158,16 +163,30 @@
 </script>
 <style scoped lang="less">
 
+.home {
+  display: flex;
+  padding-top: 60px;
+  .left {
+    width: 20%;
+    height: 40%;
+    margin-left: 5%;
+  }
 
+  .main {
+    width: 70%;
+    height: 40%;
+    margin-right: 5%;
+  }
+}
     .site-content {
+      //display: flex;
         .notify {
-            margin: 60px 0;
+            //margin: 60px 0;
             border-radius: 3px;
             & > div {
                 padding: 20px;
             }
         }
-
 
         .search-result {
             padding: 15px 20px;

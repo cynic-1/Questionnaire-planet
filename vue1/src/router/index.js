@@ -3,7 +3,7 @@ import VueRouter from 'vue-router'
 import store from '../store'
 import CreateTest from '../components/questionnaire/createtest.vue'
 import Fill from '../components/questionnaire/fill.vue'
-import personal_home from '../components/questionnaire/personalhome.vue'
+import personal_home from '../components/questionnaire/leftBlockAtHome.vue'
 import Questionnairelist from '../components/questionnaire/questionnairelist.vue'
 import RecycleBin from '../components/questionnaire/RecycleBin.vue'
 
@@ -142,7 +142,7 @@ const router = new VueRouter({
     routes
 })
 router.beforeResolve(async (to, from, next) => {
-    let title = '墨韵：软院学生读书交流平台'
+    let title = '天问：一站式问卷收集管理平台'
     if (to.meta.params){
         title = `${to.meta.title}: ${to.params[to.meta.params] || ''} - ${title}`
     }else {
