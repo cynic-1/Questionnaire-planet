@@ -11,7 +11,7 @@ let timer = null;
 const state = {
     loading: false,
     isLogging: true,
-    hasLogin:false,
+    hasLogin:true,
     runTimeInterval: '',
     socials: '',
     websiteInfo: '',

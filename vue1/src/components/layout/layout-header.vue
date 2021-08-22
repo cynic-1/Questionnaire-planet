@@ -3,7 +3,7 @@
         <div class="site-logo">
             <router-link to="/home">
 <!--                <img src="@/assets/site-logo.svg" alt="">-->
-              <img src="@/assets/pentacle_PNG51.png" alt="">
+              <img src="@/assets/logo.png" alt="">
                 <p class="site-name">天问 | TechWin</p>
             </router-link>
         </div>
@@ -213,7 +213,7 @@
         top: 0;
         z-index: 9;
         width: 100%;
-        height: 80px;
+        height: 100px;
         color: white;
         padding: 0 80px;
         display: flex;
@@ -235,10 +235,10 @@
 
     .site-logo {
         text-align: center;
-
         img {
-            width: 60px;
-            height: 60px;
+            width: 150px;
+            height: 150px;
+            margin-top: -30px;
         }
 
         p.site-name {
@@ -247,8 +247,10 @@
             font-weight: bold;
             position: relative;
             top: -10px;
+            margin-top: -40px;
           &:hover {
-            color: #ff6d6d;
+            //color: #ff6d6d;
+            color: #EDC653;
           }
         }
 
@@ -272,9 +274,10 @@
                 color: #b9bec1;
 
                 font-weight: bold;
-                font-size: 16px;
+                font-size: 20px;
                 &:hover {
-                    color: #ff6d6d;
+                    //color: #ff6d6d;
+                  color: #EDC653;
                 }
             }
             &:not(:last-child) {

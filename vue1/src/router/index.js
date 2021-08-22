@@ -92,12 +92,6 @@ const routes = [
         meta: { title: '搜索', params: {type: 'type', words: 'words'}}
     },
     {
-        path: '/markdown_test',
-        name: 'markdown',
-        component: () => import('../views/Markdown.vue'),
-        meta: { title: 'markdown'}
-    },
-    {
         path: '/article/:id',
         name: 'article',
         component: () => import('../views/Articles.vue'),
