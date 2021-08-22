@@ -1,11 +1,9 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import store from '../store'
-import CreateTest from '../components/questionnaire/createtest.vue'
-import Fill from '../components/questionnaire/fill.vue'
-import personal_home from '../components/questionnaire/leftBlockAtHome.vue'
-import Questionnairelist from '../components/questionnaire/questionnairelist.vue'
-import RecycleBin from '../components/questionnaire/RecycleBin.vue'
+// import CreateTest from '../components/questionnaire/createtest.vue'
+// import Fill from '../components/questionnaire/fill.vue'
+
 
 
 import 'element-ui/lib/theme-chalk/index.css'
@@ -58,16 +56,16 @@ const routes = [
     //         {path:'/recyclebin',component:RecycleBin},
     //     ]
     //   },
-      {
-        path:'/createtest',
-        name:'createtest',
-        component: CreateTest
-      },
-      {
-        path:'/fill',
-        name: 'fill',
-        component: Fill
-      }
+    //   {
+    //     path:'/createtest',
+    //     name:'createtest',
+    //     component: CreateTest
+    //   },
+    //   {
+    //     path:'/fill',
+    //     name: 'fill',
+    //     component: Fill
+    //   }
 ]
 
 const router = new VueRouter({
