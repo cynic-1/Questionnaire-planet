@@ -99,6 +99,24 @@
                 var _this=this
                 this.$router.push({path: "/report"});
             },
+            copyquestionnaire(row){
+                var _this=this
+                this.$prompt('请输入复制后问卷名', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                inputPattern: '',
+                 }).then(({ value }) => {
+                    this.$message({
+                        type: 'success',
+                        message: '复制保存成功 '
+                    });
+                 }).catch(() => {
+            this.$message({
+            type: 'info',
+            message: '取消复制'
+          });       
+        });
+            },
             loadquestionnaire(){
                 var _this = this
 				this.$axios({
