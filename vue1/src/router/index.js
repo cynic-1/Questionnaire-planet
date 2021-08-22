@@ -6,7 +6,7 @@ import Fill from '../components/questionnaire/fill.vue'
 import personal_home from '../components/questionnaire/leftBlockAtHome.vue'
 import Questionnairelist from '../components/questionnaire/questionnairelist.vue'
 import RecycleBin from '../components/questionnaire/RecycleBin.vue'
-
+import Report from '../components/questionnaire/report.vue'
 
 import 'element-ui/lib/theme-chalk/index.css'
 
@@ -115,19 +115,24 @@ const routes = [
     //     component: () => import('../views/questionnaire/questionnairelist.vue'),
     //     meta: { title: 'fuck'}
     // },
-    // {
-    //     path: '/personal_home',
-    //     name: 'personal_home',
-    //     component: personal_home,
-    //     children:[
-    //         {path:'/questionnairelist',component:Questionnairelist},
-    //         {path:'/recyclebin',component:RecycleBin},
-    //     ]
-    //   },
+    {
+        path: '/personal_home',
+        name: 'personal_home',
+        component: personal_home,
+        children:[
+            {path:'/questionnairelist',component:Questionnairelist},
+            {path:'/recyclebin',component:RecycleBin},
+        ]
+      },
       {
         path:'/createtest',
         name:'createtest',
         component: CreateTest
+      },
+      {
+        path:'/report',
+        name:'report',
+        component: Report
       },
       {
         path:'/fill',

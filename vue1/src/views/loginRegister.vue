@@ -83,17 +83,27 @@ export default{
 
     },
     login () {
-      this.$router.push({path: "/questionnairelist"});
-      return;
+      // this.$router.push({path: "/questionnairelist"});
+      // return;
       let self = this;
       if (self.form.userpwd !== '') {
         self.$axios({
           method: 'post',
           url: 'http://47.94.221.172/login/',
+          header:{
+					'Content-Type': 'application/x-www-form-urlencoded'
+				  },
           data: {
             username: self.form.username,
             pass: self.form.userpwd
-          }
+          },
+          transformRequest:[function(data){
+								let ret = ''
+								for(let it in data){
+									ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
+								}
+								return ret
+							}],
         })
           .then(res => {
             switch (res.data.code) {
@@ -106,7 +116,7 @@ export default{
                 this.$store.commit('SET_SITE_INFO', res.data)
                 sessionStorage.setItem('siteInfo', JSON.stringify(res.data))
                 this.$router.push({
-                   path:`/`}, onComplete => { }, onAbort => { })
+                   path:`/questionnairelist`}, onComplete => { }, onAbort => { })
                 break
               case 1:
                 this.$store.commit('SET_LOG_STATE', false)
@@ -131,11 +141,21 @@ export default{
         self.$axios({
           method: 'post',
           url: 'http://47.94.221.172/register/',
+          header:{
+					'Content-Type': 'application/x-www-form-urlencoded'
+				  },
           data: {
             username: self.form.username,
             email: self.form.useremail,
             pass: self.form.userpwd,
-          }
+          },
+          transformRequest:[function(data){
+								let ret = ''
+								for(let it in data){
+									ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
+								}
+								return ret
+							}],
         })
           .then(res => {
             console.log("Into then")
