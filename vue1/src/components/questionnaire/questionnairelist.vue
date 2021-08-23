@@ -26,7 +26,7 @@
                                 <div>
                                     <el-button type="text" class="el-icon-view" @click="checkClick(props.row.id)">预览</el-button>
                                     <el-button type="text" class="el-icon-edit" @click="designClick(props.row)">设计问卷</el-button>
-                                    <el-button type="text" class="el-icon-data-analysis" @click="deleteClick(props.row)">查看数据分析</el-button>
+                                    <el-button type="text" class="el-icon-data-analysis" @click="checkreport(props.row)">查看数据分析</el-button>
                                     <el-button type="text" class="el-icon-download" @click="checkClick(props.row)">导出</el-button>
                                     <el-button type="text" size="small" class="el-icon-document-copy" @click="copy">复制</el-button>
                                     <el-dialog title="问卷标题" :visible.sync="dialogFormVisible" center>
@@ -106,7 +106,7 @@
         methods:{
             checkreport(row){
                 var _this=this
-                this.$router.push({path: "/report"});
+                this.$router.push({path: "/report" , query: {testid:row.testid}});
             },
             copy(){
                 this.dialogFormVisible = true
