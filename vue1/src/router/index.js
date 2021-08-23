@@ -67,15 +67,15 @@ const routes = [
     //     component: () => import('../views/questionnaire/questionnairelist.vue'),
     //     meta: { title: 'fuck'}
     // },
-    // {
-    //     path: '/personal_home',
-    //     name: 'personal_home',
-    //     component: personal_home,
-    //     children:[
-    //         {path:'/questionnairelist',component:Questionnairelist},
-    //         {path:'/recyclebin',component:RecycleBin},
-    //     ]
-    //   },
+    {
+        path: '/personal_home',
+        name: 'personal_home',
+        component: () => import('@/components/questionnaire/leftBlockAtHome'),
+        children:[
+            {path:'/questionnairelist',component:() => import('@/components/questionnaire/questionnairelist')},
+            {path:'/recyclebin',component: () => import('@/components/questionnaire/RecycleBin')},
+        ]
+      },
       {
         path:'/createtest',
         name:'createtest',
