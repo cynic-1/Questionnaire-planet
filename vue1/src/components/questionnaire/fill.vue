@@ -2,7 +2,7 @@
 	<el-container>
 	    <el-main>
 	      <el-row>
-			  <h2>{{title}}</h2>
+			  <h1>{{title}}</h1>
 	        <el-col :span="16">
 				<div class="grid-content bg-purple">
 					<div v-for="(test, index) in tests" :key="index">
@@ -26,22 +26,7 @@
 						
 						<el-select v-else-if="test.type == '3'" v-model="test.useranswer">
 							<el-option
-								v-if="test.value == '1'"
 							    v-for="item in 10"
-							    :key="item"
-							    :label="item"
-							    :value="item">
-							</el-option>
-							<el-option
-								v-else-if="test.value == '2'"
-							    v-for="item in 100"
-							    :key="item"
-							    :label="item"
-							    :value="item">
-							</el-option>
-							<el-option
-								v-else
-							    v-for="item in 5"
 							    :key="item"
 							    :label="item"
 							    :value="item">
@@ -57,7 +42,8 @@
 			  <br />
 			  
 			  <div>
-			    <el-button @click="submitCount" type="primary">提交问卷</el-button>
+			    <el-button @click="save" type="primary">保存</el-button>
+			    <el-button @click="submitCount" type="success">提交问卷</el-button>
 			  </div>
 			  
 	          <br />
@@ -100,7 +86,8 @@ export default {
 			title: '',
 			publisher:'',
 			tests: [],
-			username:this.$store.state.username
+			username:this.$store.state.username,
+			isSubmit: '0'
 		};
 	},
 	mounted() {
@@ -119,8 +106,8 @@ export default {
 					'Content-Type': 'application/x-www-form-urlencoded'
 				},
 				data:{
-					testid: '18',
-					username: this.username
+					testid: '75',
+					username: this.username,	
 				},
 				transformRequest:[function(data){
 					let ret = ''
@@ -130,8 +117,16 @@ export default {
 					return ret
 				}],
 			}).then((res)=>{
+				if (res.data.code === '0'){
+					this.$message.warning('问卷不存在或未开放')
+					return this.$router.push('/questionnairelist')
+				}
+				if(res.data.code === '1'){
+					this.$message.info('你已经填过该问卷了')
+					return this.$router.push('/questionnairelist')
+				}
 				const dic = res.data.dic
-				console.log(res.data.dic)
+				console.log(res.data)
 				//if (res.data.code !== '200') return this.$router.push('/404');
 				this.title = dic.title
 				this.publisher = dic.userid
@@ -157,9 +152,10 @@ export default {
 					'Content-Type': 'application/x-www-form-urlencoded'
 				},
 				data:{
-					testid: this.testid,
+					testid: '75',
 					userid: this.username,
-					usercard: usercard
+					usercard: usercard,
+					issubmit: this.isSubmit
 				},
 				traditinal: true,
 				paramsSerializer: data => {
@@ -183,8 +179,10 @@ export default {
 		
 			if(isComplete){
 				// 答题完整,可以提交,在这里进行提交数据操作
+				this.isSubmit = '1'
 				this.save()
 				alert('提交成功!');
+				this.$router.push('/questionnairelist')
 			}else{
 				alert('未答完,请完成问卷再提交!');
 			}
