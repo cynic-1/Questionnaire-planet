@@ -7,12 +7,19 @@
                     <div>如果您想释放上传文件题的空间，请点击“清空数据”，数据清空后将无法恢复，请谨慎操作！</div>
                 </el-col>
                 <el-col :span="5">
-                    <el-button type="danger" icon="el-icon-delete" size="small" @click="QuestionnaireBatchdelete">清空回收站</el-button>
+                    <el-button type="danger" icon="el-icon-delete" size="small" @click="QuestionnaireBatchdelete">批量删除</el-button>
+                </el-col>
+                <el-col :span="5">
+                  <el-button type="success" icon="el-icon-refresh" size="small" @click="batchRecover">批量恢复</el-button>
                 </el-col>
             </el-row>
             </div>
-            <el-table :data="tableData" height="500" stripe  style="width: 100%;opacity: 90%" class="table-questionnaire" >
-                <el-table-column label="问卷列表">
+            <el-table :data="tableData" height="500" stripe  style="width: 100%;opacity: 90%" class="table-questionnaire" @selection-change="memberSelectionChange">
+              <el-table-column
+                  type="selection"
+                  width="55">
+              </el-table-column>
+              <el-table-column label="问卷列表">
                         <el-table-column
                             prop="title"
                             label="问卷名称"
@@ -65,6 +72,11 @@
 		  this.loadrecyclebin()
 		},
         methods:{
+          memberSelectionChange(val) {
+            let id = val.map(item => item.testid)
+            this.memberSelection = id;
+          },
+
             loadrecyclebin(){
                 var _this = this
 				this.$axios.get("http://47.94.221.172/getmydeletetest/",{params : {username: this.username}})
@@ -73,6 +85,40 @@
                     this.tableData=res.data.list
 				})
             },
+          async batchRecover(){ //恢复问卷
+            const confirmResult = await this.$confirm('此操作将恢复该问卷, 是否继续?', '提示', {
+              confirmButtonText: '确定',
+              cancelButtonText: '取消',
+              type: 'warning'
+            }).catch(err => err)
+            //如果用户确认删除，则返回值为字符串 confirm
+            //如果用户取消删除，则返回值为字符串 cancel
+            if(confirmResult !=='confirm'){
+              return this.$message.info('已取消删除')
+            }
+
+            await this.$axios({
+              method:"post",
+              url:"http://47.94.221.172/changerecycle/",
+              header:{
+                'Content-Type': 'application/x-www-form-urlencoded'
+              },
+              data:{
+                testid:this.memberSelection,
+              },
+              transformRequest:[function(data){
+                let ret = ''
+                for(let it in data){
+                  ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
+                }
+                return ret
+              }],
+            })
+            .then(() => {
+              this.$message.success('恢复问卷成功')
+              this.loadrecyclebin()
+            })
+          },
             async recover($index, row){ //恢复问卷
                 const confirmResult = await this.$confirm('此操作将恢复该问卷, 是否继续?', '提示', {
                 confirmButtonText: '确定',
@@ -106,7 +152,7 @@
                 this.loadrecyclebin()
             },
              async QuestionnaireBatchdelete(){  //清空回收站
-                const confirmResult = await this.$confirm('此操作将清空回收站, 是否继续?', '提示', {
+                const confirmResult = await this.$confirm('此操作将永久删除这些问卷, 是否继续?', '提示', {
                 confirmButtonText: '确定',
                 cancelButtonText: '取消',
                   type: 'warning'
@@ -116,28 +162,27 @@
                 if(confirmResult !=='confirm'){
                     return this.$message.info('已取消删除')
                 }
-                for(let key in this.tableData){
-                    this.$axios({
-                        method:"post",
-                        url:"http://47.94.221.172/deletemyquestionnaire/",
-                        header:{
-					    	'Content-Type': 'application/x-www-form-urlencoded'
-					    },
-                        data:{
-					    	testid:this.tableData[key].testid,
-					    },
-                        transformRequest:[function(data){
-					    	let ret = ''
-					    	for(let it in data){
-				    			ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
-						    }
-					    	return ret
-				        }],
-                    })
-                   this.loadrecyclebin()
-                }
-                this.$message.success('清空回收站成功')
-                
+
+                      this.$axios({
+                          method:"post",
+                          url:"http://47.94.221.172/deletemyquestionnaire/",
+                          header:{
+                  'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                          data:{
+                  testid:this.memberSelection,
+                },
+                          transformRequest:[function(data){
+                  let ret = ''
+                  for(let it in data){
+                    ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
+                  }
+                  return ret
+                  }],
+                      }).then(() => {
+                        this.loadrecyclebin()
+                        this.$message.success('清空回收站成功')
+                      })
             },
             async DeleteForever($index, row){ //彻底删除问卷
                 const confirmResult = await this.$confirm('此操作将彻底删除该问卷, 是否继续?', '提示', {
@@ -181,5 +226,5 @@
         height: 600px;
 		margin-top: 30px;
 	}
-    
+
 </style>
