@@ -23,12 +23,13 @@
                     <template slot-scope="props">
                         <el-form label-position="left" inline class="demo-table-expand">
                             <el-form-item >
-                                <div>
+                                <div class="actions">
                                     <el-button type="text" class="el-icon-view" @click="checkClick(props.row.id)">预览</el-button>
                                     <el-button type="text" class="el-icon-edit" @click="designClick(props.row)">设计问卷</el-button>
                                     <el-button type="text" class="el-icon-data-analysis" @click="checkreport(props.row)">查看数据分析</el-button>
                                     <el-button type="text" class="el-icon-download" @click="downloadquestionnaire(props.row)">导出</el-button>
-                                    <el-button type="text" size="small" class="el-icon-document-copy" @click="copy">复制</el-button>
+                                    <el-button type="text" class="el-icon-share" @click="share(props.row)">分享</el-button>
+                                    <el-button type="text" class="el-icon-document-copy" @click="copy">复制</el-button>
                                     <el-dialog title="问卷标题" :visible.sync="dialogFormVisible" center :modal-append-to-body="false" style="margin-top: 30px;">
 					                    <el-input v-model="title"  placeholder="请输入问卷标题"></el-input>
 					                    <div slot="footer" class="dialog-footer">
@@ -36,7 +37,7 @@
 					                        <el-button type="primary" @click="copyquestionnaire(props.row)">确定</el-button>
 					                    </div>
 				                    </el-dialog>
-                                    <el-button type="text" size="small" class="el-icon-delete" @click="deletequestionnaire(props.row)">删除</el-button>
+                                    <el-button type="text" class="el-icon-delete" @click="deletequestionnaire(props.row)">删除</el-button>
                                 </div>
                             </el-form-item>
                         </el-form>
@@ -53,7 +54,7 @@
                          width="100">
                     </el-table-column>
                     <el-table-column
-                        prop="sequenced"
+                        prop="ansernum"
                         label="回收量"
                         sortable
                         width="100">
@@ -104,11 +105,16 @@
 			this.loadquestionnaire()
 		},
         methods:{
+            share(row){
+                this.$alert('这是一段内容', '您的问卷链接为', {
+                confirmButtonText: '确定',
+        });
+            },
             checkreport(row){   // 查看数据统计
                 var _this=this
                 this.$router.push({path: "/report" , query: {testid:row.testid}});
             },
-            copy(){             
+            copy(){
                 this.dialogFormVisible = true
             },
             copyquestionnaire(row){     // 复制问卷
@@ -142,7 +148,7 @@
 			    return new Promise((resolve, reject) => {
 			        this.$axios({
 						method: 'post',
-			            url: "http://47.94.221.172/getdocx/", 
+			            url: "http://47.94.221.172/getdocx/",
 						header:{
 							'Content-Type': 'application/x-www-form-urlencoded'
 						},
@@ -259,7 +265,8 @@
               return ret
               }],
                   })
-              .then(() => {
+              .then((res) => {
+                console.log(res)
                 this.loadquestionnaire()
                 this.$message.success('删除问卷成功')
               })
@@ -315,6 +322,7 @@
 		margin-top: 30px;
 	}
     .demo-table-expand {
+        width: 15000px;
         font-size: 0;
     }
     .demo-table-expand label {
@@ -325,6 +333,9 @@
         margin-right: 0;
         margin-bottom: 0;
         width: 50%;
+    }
+    .actions{
+        width: 950px;
     }
 
 </style>

@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="0e372b6f-a806-4342-a93a-e202f699ceb5" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue1/src/router/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/vue1/src/router/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/src/components/questionnaire/RecycleBin.vue" beforeDir="false" afterPath="$PROJECT_DIR$/vue1/src/components/questionnaire/RecycleBin.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,6 +42,7 @@
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="settings.javascript.linters.eslint" />
+    <property name="ts.external.directory.path" value="C:\Program Files\JetBrains\WebStorm 2020.3.2\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
