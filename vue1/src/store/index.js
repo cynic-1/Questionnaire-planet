@@ -10,7 +10,7 @@ let timer = null;
 const state = {
     loading: false,
     isLogging: true,
-    hasLogin:window.localStorage.getItem('hasLogin') == null ? true : JSON.parse(window.localStorage.getItem('username' || '[]')),
+    hasLogin: window.localStorage.getItem('hasLogin') == null ? true : JSON.parse(window.localStorage.getItem('username' || '[]')),
     runTimeInterval: '',
     socials: '',
     websiteInfo: '',
