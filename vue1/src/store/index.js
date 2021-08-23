@@ -10,12 +10,12 @@ let timer = null;
 const state = {
     loading: false,
     isLogging: true,
-    hasLogin:window.localStorage.getItem('hasLogin') == null ? true : JSON.parse(window.localStorage.getItem('username' || '[]')),
+    hasLogin: window.localStorage.getItem('hasLogin') == null ? true : JSON.parse(window.localStorage.getItem('username' || '[]')),
     runTimeInterval: '',
     socials: '',
     websiteInfo: '',
     username: window.localStorage.getItem('username') == null ? '' : JSON.parse(window.localStorage.getItem('username' || '[]')),
-
+}
 const mutations = {
     SET_LOADING: (state, v) => {
         state.loading = v;

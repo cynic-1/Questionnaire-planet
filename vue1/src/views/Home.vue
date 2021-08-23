@@ -56,27 +56,27 @@
     alignment: center;
   }
 }
-    .site-content {
-      //display: flex;
-        .notify {
-            //margin: 60px 0;
-            border-radius: 3px;
-            & > div {
-                padding: 20px;
-            }
-        }
-
-        .search-result {
-            padding: 15px 20px;
-            text-align: center;
-            font-size: 20px;
-            font-weight: 400;
-            border: 1px dashed #ddd;
-            color: #828282;
-        }
-    }
-    .el-card {
-      margin-bottom: 10px;
-    }
-    /******/
+    //.site-content {
+    //  //display: flex;
+    //    .notify {
+    //        //margin: 60px 0;
+    //        border-radius: 3px;
+    //        & > div {
+    //            padding: 20px;
+    //        }
+    //    }
+    //
+    //    .search-result {
+    //        padding: 15px 20px;
+    //        text-align: center;
+    //        font-size: 20px;
+    //        font-weight: 400;
+    //        border: 1px dashed #ddd;
+    //        color: #828282;
+    //    }
+    //}
+    //.el-card {
+    //  margin-bottom: 10px;
+    //}
+    ///******/
 </style>

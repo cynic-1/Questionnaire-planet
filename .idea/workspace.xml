@@ -3,7 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="0e372b6f-a806-4342-a93a-e202f699ceb5" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue1/src/components/questionnaire/leftBlockAtHome.vue" beforeDir="false" afterPath="$PROJECT_DIR$/vue1/src/components/questionnaire/leftBlockAtHome.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/src/router/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/vue1/src/router/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/src/store/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/vue1/src/store/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/src/views/Home.vue" beforeDir="false" afterPath="$PROJECT_DIR$/vue1/src/views/Home.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,6 +23,9 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1x3tsbjcLsUZiZrjMl9PejIJBdv" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
