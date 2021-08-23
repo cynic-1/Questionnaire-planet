@@ -4,12 +4,12 @@
             <div>
 			<el-row :gutter="300">
                 <el-col :span="15">
-                    <el-input placeholder="请输入问卷名进行搜索" v-model="title" clearable @clear="loadquestionnaire">
+                    <el-input placeholder="请输入问卷名进行搜索" v-model="key" clearable @clear="loadquestionnaire">
                         <el-button slot="append" icon="el-icon-search" @click="loadquestionnaire"></el-button>
                     </el-input>
                 </el-col>
                 <el-col :span="5">
-                    <el-button type="danger" icon="el-icon-delete" circle @click="QuestionnaireBatchdelete">批量删除</el-button>
+                    <el-button type="danger" icon="el-icon-delete" circle @click="QuestionnaireBatchDelete">批量删除</el-button>
                 </el-col>
             </el-row>
             </div>
@@ -28,7 +28,14 @@
                                     <el-button type="text" class="el-icon-edit" @click="designClick(props.row)">设计问卷</el-button>
                                     <el-button type="text" class="el-icon-data-analysis" @click="deleteClick(props.row)">查看数据分析</el-button>
                                     <el-button type="text" class="el-icon-download" @click="checkClick(props.row)">导出</el-button>
-                                    <el-button type="text" size="small" class="el-icon-document-copy" @click="copyquestionnaire(props.row)">复制</el-button>
+                                    <el-button type="text" size="small" class="el-icon-document-copy" @click="copy">复制</el-button>
+                                    <el-dialog title="问卷标题" :visible.sync="dialogFormVisible" center>
+					                    <el-input v-model="title"  placeholder="请输入问卷标题"></el-input>
+					                    <div slot="footer" class="dialog-footer">
+					                        <el-button @click="cancel">取 消</el-button>
+					                        <el-button type="primary" @click="copyquestionnaire(props.row)">确定</el-button>
+					                    </div>
+				                    </el-dialog>
                                     <el-button type="text" size="small" class="el-icon-delete" @click="deletequestionnaire(props.row)">删除</el-button>
                                 </div>
                             </el-form-item>
@@ -85,7 +92,9 @@
     export default {
         data(){
             return{
+                dialogFormVisible: false,
                 title:'',
+                key:'',
                 tableData:[],
                 username: this.$store.state.username,
                 memberSelection: [],
@@ -99,17 +108,11 @@
                 var _this=this
                 this.$router.push({path: "/report"});
             },
+            copy(){
+                this.dialogFormVisible = true
+            },
             copyquestionnaire(row){
                 var _this=this
-                this.$prompt('请输入复制后问卷名', '提示', {
-                confirmButtonText: '确定',
-                cancelButtonText: '取消',
-                inputPattern: '',
-                 }).then(({ value }) => {
-                    this.$message({
-                        type: 'success',
-                        message: '复制保存成功 '
-                    })
                     this.$axios({
 					method:"post",
 					url:"http://47.94.221.172/copyquestionnaire/",
@@ -118,7 +121,7 @@
 					},
 					data:{
 						testid:row.testid,
-                        title:value,
+                        title:this.title,
 					},
 					transformRequest:[function(data){
 						let ret = ''
@@ -128,14 +131,13 @@
 						return ret
 					    }],
                     })
+                    this.$message.success('复制成功')
                     this.loadquestionnaire()
-                 }).catch(() => {
-            this.$message({
-            type: 'info',
-            message: '取消复制'
-          });
-        });
             },
+            cancel(){
+				this.dialogFormVisible = false
+                this.title=''
+			},
             loadquestionnaire(){
                 var _this = this
 				this.$axios({
@@ -146,7 +148,7 @@
 					},
 					data:{
 						username:this.username,
-                        title:this.title,
+                        title:this.key,
 					},
 					transformRequest:[function(data){
 						let ret = ''
@@ -182,7 +184,11 @@
                         })
 
             },
-            async QuestionnaireBatchdelete(){  //批量删除
+            async QuestionnaireBatchDelete(){  //批量删除
+              if (this.memberSelection.length === 0) {
+                await this.$alert('你尚未选中任何问卷！');
+                return
+              }
                 const confirmResult = await this.$confirm('此操作将移动该问卷到回收站, 是否继续?', '提示', {
                 confirmButtonText: '确定',
                 cancelButtonText: '取消',

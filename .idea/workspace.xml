@@ -3,8 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="0e372b6f-a806-4342-a93a-e202f699ceb5" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue1/src/store/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/vue1/src/store/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue1/src/views/loginRegister.vue" beforeDir="false" afterPath="$PROJECT_DIR$/vue1/src/views/loginRegister.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/src/components/questionnaire/questionnairelist.vue" beforeDir="false" afterPath="$PROJECT_DIR$/vue1/src/components/questionnaire/questionnairelist.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,6 +22,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="js.linters.configure.manually.selectedeslint" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.standard" value="true" />
@@ -30,7 +30,7 @@
     <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.path.for.package.standard" value="project" />
     <property name="node.js.path.for.package.tslint" value="project" />
-    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.eslint" value="C:\Users\song\github\Questionnaire-planet\vue1\node_modules\eslint" />
     <property name="node.js.selected.package.standard" value="" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />
@@ -47,7 +47,7 @@
       <updated>1629595806427</updated>
       <workItem from="1629595807940" duration="19789000" />
       <workItem from="1629619974265" duration="7449000" />
-      <workItem from="1629680973270" duration="3089000" />
+      <workItem from="1629680973270" duration="5527000" />
     </task>
     <servers />
   </component>
