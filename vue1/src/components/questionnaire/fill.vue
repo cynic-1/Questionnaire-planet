@@ -99,7 +99,8 @@ export default {
 		return {
 			title: '',
 			publisher:'',
-			tests: []
+			tests: [],
+			username:this.$store.state.username
 		};
 	},
 	mounted() {
@@ -119,7 +120,7 @@ export default {
 				},
 				data:{
 					testid: '18',
-					username: '19231163'
+					username: this.username
 				},
 				transformRequest:[function(data){
 					let ret = ''
@@ -144,8 +145,33 @@ export default {
 				}
 			})	
 		},
+		save(){
+			const usercard = []
+			for(let item of this.tests){
+				usercard.push({questionid:item.questionid, useranswer:item.useranswer})
+			}
+			this.$axios({
+				method:"post",
+				url:"http://47.94.221.172:80/userfillquestionnaire/",
+				header:{
+					'Content-Type': 'application/x-www-form-urlencoded'
+				},
+				data:{
+					testid: this.testid,
+					userid: this.username,
+					usercard: usercard
+				},
+				traditinal: true,
+				paramsSerializer: data => {
+					return qs.stringify(data, { indices: false })
+				}
+			}).then((res)=>{
+				console.log(res.data)
+				if (res.data.code !== '200') return this.$message.error(res.data.message);
+				this.$message.success("保存成功")
+			})
+		},
 		submitCount() {
-			console.log("提交试卷");
 			// 是否答完
 			let isComplete = true;
 			this.tests.forEach((val,i) =>{
@@ -154,38 +180,16 @@ export default {
 					return;
 				}
 			})
-
+		
 			if(isComplete){
-			// 答题完整,可以提交,在这里进行提交数据操作
-				const usercard = []
-				for(let item of this.tests){
-					usercard.push({questionid:item.questionid, useranswer:item.useranswer})
-				}
-				this.$axios({
-					method:"post",
-					url:"http://47.94.221.172:80/userfillquestionnaire/",
-					header:{
-						'Content-Type': 'application/x-www-form-urlencoded'
-					},
-					data:{
-						testid: '2',
-						userid: '19231163',
-						usercard: usercard
-					},
-					traditinal: true,
-					paramsSerializer: data => {
-						return qs.stringify(data, { indices: false })
-					}
-				}).then((res)=>{
-					console.log(res.data)
-					if (res.data.code !== '200') return this.$message.error(res.data.message);
-				})	
-				alert('交卷成功!');
+				// 答题完整,可以提交,在这里进行提交数据操作
+				this.save()
+				alert('提交成功!');
 			}else{
-				alert('未打完,请继续答卷!');
+				alert('未答完,请完成问卷再提交!');
 			}
-    }
-  }
+		}
+	}
 };
 </script>
 

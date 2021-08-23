@@ -1,6 +1,6 @@
 <template>
     <el-container>
-		<lizi></lizi>
+	
 		<el-aside width="200px">
 			<div class="create_qustionnaire">
 				<el-button style="width:100%;" @click="create" type="primary" icon="el-icon-circle-plus">创建问卷</el-button>
@@ -56,7 +56,12 @@
 				this.dialogFormVisible = true
 			},
             createquestionnaire(){
-                this.$router.push({path: "/createtest", query: {title:this.title}});
+            	if(this.title === ''){
+            		this.$message.warning("请输入标题")
+            	}
+            	else{
+            		this.$router.push({path: "/createtest", query: {title:this.title,type:0}});
+            	}
             },
 			cancel(){
 				this.dialogFormVisible = false

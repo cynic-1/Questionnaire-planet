@@ -53,7 +53,7 @@
 								<!-- 答案 -->
 								<el-form-item
 									v-for="(opt, idx) in item.answers"
-									v-show="item.type!=2 && item.type !=3"
+									v-if="item.type!=2 && item.type !=3"
 									:key="idx"
 									:label="`选项${idx + 1}`"
 									:prop="`topic.${index}.answers.${idx}.value`"
@@ -65,7 +65,7 @@
 								</el-form-item>
 								
 								<el-form-item
-									v-show="item.type==3"
+									v-else-if="item.type==3"
 									:prop="`topic.${index}.answers.value`"
 									:rules="[
 										{ required: true, message: '请输入范围', trigger: 'blur' },
@@ -128,7 +128,7 @@
 				testid: '',
 				rules: {},
 				modelForm: {
-					userid:'19231163',
+					userid: this.$store.state.username,
 					topic: [],
 					title: '',
 					time: '',
@@ -219,8 +219,8 @@
 			},
 			addSubmit() {
 				//console.log(this.modelForm.topic[0].answers[1].value)
-				//this.$refs.modelForm.validate(valid => {
-					//if (valid) {
+				this.$refs.modelForm.validate(valid => {
+					if (valid) {
 						this.$axios({
 							method:"post",
 							url: this.url,
@@ -243,8 +243,8 @@
 							this.$message.success('保存成功')
 							this.$router.push('/questionnairelist')
 						})	
-					//}
-				//})
+					}
+				})
 			},
 			addSingle(){
 				this.modelForm.topic.push({ type: '0', questionName: '',key: 'false', answers: [{ value: '' }] })

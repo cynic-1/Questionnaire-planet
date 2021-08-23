@@ -87,12 +87,12 @@
             return{
                 title:'',
                 tableData:[],
-                username:19231163,
+                username: this.$store.state.username,
                 memberSelection: [],
             }
         },
 		mounted: function () {
-		  this.loadquestionnaire()
+			this.loadquestionnaire()
 		},
         methods:{
             checkreport(row){

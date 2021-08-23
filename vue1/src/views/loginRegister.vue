@@ -115,7 +115,8 @@ export default{
                 sessionStorage.setItem('Authorization', /* "Bearer " + */ res.data.token)
                 this.$store.commit('SET_LOG_STATE', true)
                 this.$store.commit('SET_SITE_INFO', res.data)
-                  this.$store.commit('SET_USERNAME', res.data.username)
+                this.$store.commit('SET_USERNAME', res.data.data.username)
+				console.log(JSON.stringify(res.data))         
                 sessionStorage.setItem('siteInfo', JSON.stringify(res.data))
                 this.$router.push({
                    path:'/'}, onComplete => { }, onAbort => { })

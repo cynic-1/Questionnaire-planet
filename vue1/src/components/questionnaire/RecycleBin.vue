@@ -58,7 +58,7 @@
                 tableData:[],
 
                 memberSelection: [],
-                username:19231163
+                username: this.$store.state.username
             }
         },
 		mounted: function () {
