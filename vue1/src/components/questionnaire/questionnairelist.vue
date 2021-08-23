@@ -27,7 +27,7 @@
                                     <el-button type="text" class="el-icon-view" @click="checkClick(props.row.id)">预览</el-button>
                                     <el-button type="text" class="el-icon-edit" @click="designClick(props.row)">设计问卷</el-button>
                                     <el-button type="text" class="el-icon-data-analysis" @click="checkreport(props.row)">查看数据分析</el-button>
-                                    <el-button type="text" class="el-icon-download" @click="checkClick(props.row)">导出</el-button>
+                                    <el-button type="text" class="el-icon-download" @click="downloadquestionnaire(props.row)">导出</el-button>
                                     <el-button type="text" size="small" class="el-icon-document-copy" @click="copy">复制</el-button>
                                     <el-dialog title="问卷标题" :visible.sync="dialogFormVisible" center>
 					                    <el-input v-model="title"  placeholder="请输入问卷标题"></el-input>
@@ -104,14 +104,14 @@
 			this.loadquestionnaire()
 		},
         methods:{
-            checkreport(row){
+            checkreport(row){   // 查看数据统计
                 var _this=this
                 this.$router.push({path: "/report" , query: {testid:row.testid}});
             },
-            copy(){
+            copy(){             
                 this.dialogFormVisible = true
             },
-            copyquestionnaire(row){
+            copyquestionnaire(row){     // 复制问卷
                 var _this=this
                     this.$axios({
 					method:"post",
@@ -137,6 +137,49 @@
             cancel(){
 				this.dialogFormVisible = false
                 this.title=''
+			},
+            downloadquestionnaire(row){         // 导出问卷
+			    return new Promise((resolve, reject) => {
+			        this.$axios({
+						method: 'post',
+			            url: "http://47.94.221.172/getdocx/", 
+						header:{
+							'Content-Type': 'application/x-www-form-urlencoded'
+						},
+			            data: {
+                            testid:row.testid
+                        },
+						transformRequest:[function(data){
+							let ret = ''
+							for(let it in data){
+								ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
+							}
+							return ret
+						}],
+			            responseType: 'blob'
+			        }).then(
+			            response => {
+			            resolve(response.data)
+			            let blob = new Blob([response.data], {
+							type: 'application/msword'
+			            })
+						console.log(response.headers)
+						let fileName = row.title
+			            if (window.navigator.msSaveOrOpenBlob) {
+			                navigator.msSaveBlob(blob, fileName)
+			            } else {
+			                var link = document.createElement('a')
+			                link.href = window.URL.createObjectURL(blob)
+			                link.download = fileName
+			                link.click()
+			                window.URL.revokeObjectURL(link.href)
+			            }
+						},
+			            err => {
+							reject(err)
+			            }
+			        )
+			    })
 			},
             loadquestionnaire(){
                 var _this = this
