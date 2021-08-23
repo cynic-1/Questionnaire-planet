@@ -109,7 +109,26 @@
                     this.$message({
                         type: 'success',
                         message: '复制保存成功 '
-                    });
+                    })
+                    this.$axios({
+					method:"post",
+					url:"http://47.94.221.172/copyquestionnaire/",
+					header:{
+						'Content-Type': 'application/x-www-form-urlencoded'
+					},
+					data:{
+						testid:row.testid,
+                        title:value,
+					},
+					transformRequest:[function(data){
+						let ret = ''
+						for(let it in data){
+							ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
+						}
+						return ret
+					    }],
+                    })
+                    this.loadquestionnaire()
                  }).catch(() => {
             this.$message({
             type: 'info',
@@ -127,7 +146,7 @@
 					},
 					data:{
 						username:this.username,
-            title:this.title,
+                        title:this.title,
 					},
 					transformRequest:[function(data){
 						let ret = ''
