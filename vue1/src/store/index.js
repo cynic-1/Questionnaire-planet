@@ -14,6 +14,7 @@ const state = {
     runTimeInterval: '',
     socials: '',
     websiteInfo: '',
+    avatar: require('../assets/defaultAvatar.png'),
     username: window.sessionStorage.getItem('username') == null ? '' : JSON.parse(window.sessionStorage.getItem('username' || '[]')),
 }
 

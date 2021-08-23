@@ -37,7 +37,7 @@
             <router-link to="/login">登录/注册</router-link>
           </div>
           <div class="menu-item hasChild" v-else>
-                <img class="menu-img" :src="$store.state.avatar" :alt="this.$store.state.username">
+                <img class="menu-img" :src="$store.state.avatar">
                 <div class="childMenu">
                     <div class="sub-menu" v-for="item in profile" :key="item.title">
                         <router-link :to="$route.fullPath" v-if="item.href === '/'" active-class="active"
