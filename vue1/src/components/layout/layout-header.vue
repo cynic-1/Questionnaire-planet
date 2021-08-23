@@ -37,8 +37,8 @@
             <router-link to="/login">登录/注册</router-link>
           </div>
           <div class="menu-item hasChild" v-else>
-                <img class="menu-img" :src="$store.state.websiteInfo.avatar" >
-                <div class="childMenu" v-if="category.length">
+                <img class="menu-img" :src="$store.state.avatar">
+                <div class="childMenu">
                     <div class="sub-menu" v-for="item in profile" :key="item.title">
                         <router-link :to="$route.fullPath" v-if="item.href === '/'" active-class="active"
                                      @click.native="quit(item.title)">
@@ -55,15 +55,24 @@
 
 <script>
   import HeaderSearch from '@/components/header-search'
-  import {fetchCategory, fetchProfile} from '../../api'
   export default {
     name: "layout-header",
     components: {HeaderSearch},
     data() {
       return {
         lastScrollTop: 0,
-        category: [],
-        profile:[],
+        // category: [],
+        // 原来是用Mock，现在直接写出，以移除Mock的使用。
+        profile:[{
+          id: 1,
+          title: '个人资料',
+          href: '/personalCenter/'
+        },
+          {
+            id: 2,
+            title: '退出',
+            href: '/',
+          }],
         mobileShow: false
       }
     },
@@ -86,8 +95,6 @@
     },
     created(){
       window.addEventListener('scroll', this.watchScroll)
-      this.fetchCategory()
-      this.fetchProfile()
       this.checkLogin()
     },
     beforeDestroy () {
@@ -168,20 +175,6 @@
         }
         this.lastScrollTop = scrollTop
       },
-      fetchCategory() {
-        fetchCategory().then(res => {
-          this.category = res.data
-        }).catch(err => {
-          console.log(err)
-        })
-      },
-      fetchProfile(){
-        fetchProfile().then(res=>{
-          this.profile = res.data
-        }).catch(err => {
-          console.log(err)
-        })
-      }
     }
   }
 </script>
