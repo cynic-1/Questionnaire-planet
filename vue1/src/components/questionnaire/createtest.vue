@@ -49,9 +49,9 @@
 										<el-radio v-model="item.key" label=true>必填</el-radio>
 										<el-radio v-model="item.key" label=false>选填</el-radio>
 									</template>
-									
+
 								</el-form-item>
-								
+
 								<el-form-item>
 									<el-input v-model.trim="item.describe" type="textarea" style="width:258px" clearable placeholder="请填写问题描述" />
 								</el-form-item>
@@ -158,8 +158,10 @@
 			}
 		},
 		created(){
-			const type = this.$route.query.type
-			if(type == 0){
+      window.addEventListener('beforeunload', this.leaveConfirm)
+      window.addEventListener('unload', this.updateRecord)
+			let type = this.$route.query.type
+			if(type === '0'){
 				this.modelForm.title = this.$route.query.title
 				this.url = "http://47.94.221.172:80/publishquestionnaire/"
 			}
@@ -169,6 +171,28 @@
 			}
 		},
 		methods: {
+		  updateRecord() {
+        if(this.modelForm.topic.length === 0)
+          return
+        var xmlhttp = new XMLHttpRequest();
+        let data = {
+              title: this.modelForm.title,
+              topic: this.modelForm.topic,
+              userid: this.modelForm.userid,
+              testid: this.testid
+            };
+        xmlhttp.open("POST", this.url, false);
+        xmlhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xmlhttp.send(JSON.stringify(data));
+          },
+      async leaveConfirm(e) {
+        e = e || window.event
+        if (e) {
+          e.returnValue = '关闭提示'
+        }
+        return '关闭提示'
+      },
+
 			loadtest(){
 				var _this = this
 				this.$axios({
@@ -230,7 +254,7 @@
 			},
 			addSubmit() {
 				//console.log(this.modelForm.topic[0].answers[1].value)
-				if(this.modelForm.topic.length == 0)
+				if(this.modelForm.topic.length === 0)
 					return this.$message.info("问卷至少包含一个题目！")
 				this.$refs.modelForm.validate(valid => {
 					if (valid) {
@@ -246,16 +270,16 @@
 								userid: this.modelForm.userid,
 								testid: this.testid
 							},
-							traditinal: true,
+							traditional: true,
 							paramsSerializer: data => {
 								return qs.stringify(data, { indices: false })
 							}
-						}).then((res)=>{
+						}).then(res => {
 							console.log(res.data)
 							if (res.data.code !== '200') return this.$message.error('保存失败');
 							this.$message.success('保存成功')
 							this.$router.push('/home')
-						})	
+						})
 
 					}
 				})
@@ -276,8 +300,12 @@
 				var newitem = JSON.parse(JSON.stringify(item))
 				this.modelForm.topic.push(newitem)
 			}
-		}
-	}
+		},
+    destroyed() {
+      window.removeEventListener('beforeunload', this.leaveConfirm)
+      window.removeEventListener('unload', this.updateRecord)
+    }
+  }
 </script>
 
 <style scoped>
