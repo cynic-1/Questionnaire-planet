@@ -48,6 +48,11 @@
 										<el-radio v-model="item.key" label=true>必填</el-radio>
 										<el-radio v-model="item.key" label=false>选填</el-radio>
 									</template>
+									
+								</el-form-item>
+								
+								<el-form-item>
+									<el-input v-model.trim="item.describe" type="textarea" style="width:258px" clearable placeholder="请填写问题描述" />
 								</el-form-item>
 
 								<!-- 答案 -->
@@ -183,11 +188,12 @@
 					//if (res.data.code !== '200') return this.$router.push('/404');
 					this.modelForm.title = dic.title
 					for(let item of dic.topic){
-						const question = { type: '', questionName: '',key: '', answers: '' }
+						const question = { type: '', questionName: '',key: '', answers: '',describe: '' }
 						question.type = String(item.type)
 						question.questionName = item.stem
 						question.key = item.mustdo == 1?'true':'false'
 						question.answers = item.answers
+						question.describe = item.describe
 						//console.log(question)
 						this.modelForm.topic.push(question)
 					}
@@ -247,16 +253,16 @@
 				})
 			},
 			addSingle(){
-				this.modelForm.topic.push({ type: '0', questionName: '',key: 'false', answers: [{ value: '' }] })
+				this.modelForm.topic.push({ type: '0', questionName: '',key: 'false', answers: [{ value: '' }] ,describe: ''})
 			},
 			addMulti(){
-				this.modelForm.topic.push({ type: '1', questionName: '',key: 'false', answers: [{ value: '' }] })
+				this.modelForm.topic.push({ type: '1', questionName: '',key: 'false', answers: [{ value: '' }] , describe: ''})
 			},
 			addBlank(){
-				this.modelForm.topic.push({ type: '2', questionName: '',key: 'false', answers: [{ value: '' }] })
+				this.modelForm.topic.push({ type: '2', questionName: '',key: 'false', answers: [{ value: '' }] , describe: ''})
 			},
 			addRank(){
-				this.modelForm.topic.push({ type: '3', questionName: '',key: 'false', answers: { value: ''} })
+				this.modelForm.topic.push({ type: '3', questionName: '',key: 'false', answers: { value: ''} , describe: ''})
 			},
 			copy(item){
 				var newitem = JSON.parse(JSON.stringify(item))
