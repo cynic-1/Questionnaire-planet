@@ -173,57 +173,18 @@
 		  updateRecord() {
         if(this.modelForm.topic.length === 0)
           return
-
-        this.$refs.modelForm.validate(valid => {
-          if (valid) {
-            var xmlhttp = new XMLHttpRequest();
-            let data = {
-                  title: this.modelForm.title,
-                  topic: this.modelForm.topic,
-                  userid: this.modelForm.userid,
-                  testid: this.testid
-                };
-            xmlhttp.open("POST", this.url);
-            xmlhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            xmlhttp.send(JSON.stringify(data));
-            // this.$axios({
-            //   method:"post",
-            //   url: this.url,
-            //   header:{
-            //     'Content-Type': 'application/x-www-form-urlencoded'
-            //   },
-            //   data:{
-            //     title: this.modelForm.title,
-            //     topic: this.modelForm.topic,
-            //     userid: this.modelForm.userid,
-            //     testid: this.testid
-            //   },
-            //   traditional: true,
-            //   paramsSerializer: data => {
-            //     return qs.stringify(data, { indices: false })
-            //   }
-            // }).then(res => {
-            //   console.log('into then!!!!!!')
-            //   console.log(res.data)
-            //   if (res.data.code !== '200') return this.$message.error('保存失败');
-            //   this.$message.success('保存成功')
-            //   this.$router.push('/home')
-            // })
-          }
-        })
-      },
-
+        var xmlhttp = new XMLHttpRequest();
+        let data = {
+              title: this.modelForm.title,
+              topic: this.modelForm.topic,
+              userid: this.modelForm.userid,
+              testid: this.testid
+            };
+        xmlhttp.open("POST", this.url, false);
+        xmlhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xmlhttp.send(JSON.stringify(data));
+          },
       async leaveConfirm(e) {
-        // const confirmResult = await this.$confirm('您的问卷还未保存，确认退出吗？', '提示', {
-        //   confirmButtonText: '确定',
-        //   cancelButtonText: '取消',
-        //   type: 'warning'
-        // }).catch(err => err)
-        // //如果用户确认删除，则返回值为字符串 confirm
-        // //如果用户取消删除，则返回值为字符串 cancel
-        // if (confirmResult !== 'confirm') {
-        //   return this.$message.info('已取消删除')
-        // }
         e = e || window.event
         if (e) {
           e.returnValue = '关闭提示'
