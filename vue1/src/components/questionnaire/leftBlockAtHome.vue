@@ -60,6 +60,7 @@
             },
 			cancel(){
 				this.dialogFormVisible = false
+				this.title=''
 			}
         }
 
