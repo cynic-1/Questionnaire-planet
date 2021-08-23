@@ -24,20 +24,20 @@
                         <el-form label-position="left" inline class="demo-table-expand">
                             <el-form-item >
                                 <div class="actions">
-                                        <el-button type="text" class="el-icon-view" @click="checkClick(props.row.id)">预览</el-button>
-                                        <el-button type="text" class="el-icon-edit" @click="designClick(props.row)">设计问卷</el-button>
-                                        <el-button type="text" class="el-icon-data-analysis" @click="checkreport(props.row)">查看数据分析</el-button>
-                                        <el-button type="text" class="el-icon-download" @click="downloadquestionnaire(props.row)">导出</el-button>
-                                        <el-button type="text" class="el-icon-share" @click="share(props.row)">分享</el-button>
-                                        <el-button type="text"  class="el-icon-document-copy" @click="copy">复制</el-button>
-                                        <el-dialog title="问卷标题" :visible.sync="dialogFormVisible" center>
-					                        <el-input v-model="title"  placeholder="请输入问卷标题"></el-input>
-					                        <div slot="footer" class="dialog-footer">
-					                            <el-button @click="cancel">取 消</el-button>
-					                            <el-button type="primary" @click="copyquestionnaire(props.row)">确定</el-button>
-					                        </div>
-				                        </el-dialog>
-                                        <el-button type="text"  class="el-icon-delete" @click="deletequestionnaire(props.row)">删除</el-button>
+                                    <el-button type="text" class="el-icon-view" @click="checkClick(props.row.id)">预览</el-button>
+                                    <el-button type="text" class="el-icon-edit" @click="designClick(props.row)">设计问卷</el-button>
+                                    <el-button type="text" class="el-icon-data-analysis" @click="checkreport(props.row)">查看数据分析</el-button>
+                                    <el-button type="text" class="el-icon-download" @click="downloadquestionnaire(props.row)">导出</el-button>
+                                    <el-button type="text" class="el-icon-share" @click="share(props.row)">分享</el-button>
+                                    <el-button type="text" class="el-icon-document-copy" @click="copy">复制</el-button>
+                                    <el-dialog title="问卷标题" :visible.sync="dialogFormVisible" center :modal-append-to-body="false" style="margin-top: 30px;">
+					                    <el-input v-model="title"  placeholder="请输入问卷标题"></el-input>
+					                    <div slot="footer" class="dialog-footer">
+					                        <el-button @click="cancel">取 消</el-button>
+					                        <el-button type="primary" @click="copyquestionnaire(props.row)">确定</el-button>
+					                    </div>
+				                    </el-dialog>
+                                    <el-button type="text" class="el-icon-delete" @click="deletequestionnaire(props.row)">删除</el-button>
                                 </div>
                             </el-form-item>
                         </el-form>
