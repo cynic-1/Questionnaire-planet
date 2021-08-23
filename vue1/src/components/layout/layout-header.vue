@@ -99,6 +99,7 @@
           this.$confirm('你真的要退出吗？', '将要退出账号').then(()=>{
             let self = this
             self.$store.commit('SET_LOG_STATE', false)
+			window.localStorage.removeItem('username')
             sessionStorage.removeItem('Authorization')
             sessionStorage.removeItem('siteInfo')
             self.$router.push({
