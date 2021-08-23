@@ -21,7 +21,10 @@
 	          </div>
 			  
 			  <br />
-			  
+			  <div class="downloaddate">
+			    <el-button @click="downloaddate" type="primary">导出数据信息</el-button>
+			  </div>  
+			
 			  <div class="back_home">
 			    <el-button @click="backhome" type="primary">返回</el-button>
 			  </div>
@@ -54,6 +57,49 @@ export default {
             var _this=this
             this.$router.push({path: "/questionnairelist"})
         },
+		downloaddate(){
+			return new Promise((resolve, reject) => {
+			        this.$axios({
+						method: 'post',
+			            url: "http://47.94.221.172/getexcel/",
+						header:{
+							'Content-Type': 'application/x-www-form-urlencoded'
+						},
+			            data: {
+                            testid:this.testid
+                        },
+						transformRequest:[function(data){
+							let ret = ''
+							for(let it in data){
+								ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
+							}
+							return ret
+						}],
+			            responseType: 'blob'
+			        }).then(
+			            response => {
+			            resolve(response.data)
+			            let blob = new Blob([response.data], {
+							type: 'application/vnd.ms-excel'
+			            })
+						console.log(response.headers)
+						let fileName = this.title
+			            if (window.navigator.msSaveOrOpenBlob) {
+			                navigator.msSaveBlob(blob, fileName)
+			            } else {
+			                var link = document.createElement('a')
+			                link.href = window.URL.createObjectURL(blob)
+			                link.download = fileName
+			                link.click()
+			                window.URL.revokeObjectURL(link.href)
+			            }
+						},
+			            err => {
+							reject(err)
+			            }
+			        )
+			    })
+		},
 		loadreport(){
 			var _this = this
 			this.$axios({
