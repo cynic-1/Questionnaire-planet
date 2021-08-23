@@ -170,8 +170,8 @@
 			            let blob = new Blob([response.data], {
 							type: 'application/msword'
 			            })
-						console.log(response.headers)
-						let fileName = row.title
+						console.log(response)
+						let fileName = `${row.title}.doc`
 			            if (window.navigator.msSaveOrOpenBlob) {
 			                navigator.msSaveBlob(blob, fileName)
 			            } else {
