@@ -1,6 +1,6 @@
 <template>
     <el-container>
-	
+
 		<el-aside width="200px">
 			<div class="create_qustionnaire">
 				<el-button style="width:100%;margin-top: 80px;" @click="create" type="primary" icon="el-icon-circle-plus">创建问卷</el-button>
@@ -21,7 +21,7 @@
 
 				    active-text-color="#ffd04b"
 					:router="true">
-				    <el-menu-item index="/questionnairelist">
+				    <el-menu-item index="/home">
                 	    <i class="el-icon-menu"></i>
                 	    <span slot="title">全部问卷</span>
                		</el-menu-item>
