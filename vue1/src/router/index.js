@@ -116,7 +116,7 @@ router.beforeResolve(async (to, from, next) => {
     }
     document.title = title
     let token = sessionStorage.getItem('Authorization')
-    if(to.path === '/login' || to.path === '/' || to.path === '/book-ground' || to.path === '/home')
+    if(to.path === '/login' || to.path === '/' || to.path === '/book-ground')
         // alert(token),
         next();
     else{

@@ -10,11 +10,11 @@ let timer = null;
 const state = {
     loading: false,
     isLogging: true,
-    hasLogin: window.localStorage.getItem('hasLogin') == null ? true : JSON.parse(window.localStorage.getItem('username' || '[]')),
+    hasLogin: window.sessionStorage.getItem('HasLogin') == null ? true : JSON.parse(window.sessionStorage.getItem('HasLogin' || '[]')),
     runTimeInterval: '',
     socials: '',
     websiteInfo: '',
-    username: window.localStorage.getItem('username') == null ? '' : JSON.parse(window.localStorage.getItem('username' || '[]')),
+    username: window.sessionStorage.getItem('username') == null ? '' : JSON.parse(window.sessionStorage.getItem('username' || '[]')),
 }
 
 const mutations = {
@@ -29,7 +29,7 @@ const mutations = {
     },
     SET_USERNAME: (state, v) => {
         state.username = v;
-		window.localStorage.setItem('username', JSON.stringify(v))
+		window.sessionStorage.setItem('username', JSON.stringify(v))
     },
     GET_RUNTIME_INTERVAL: (state) => {
         if (!timer || !state.runTimeInterval) {
@@ -47,7 +47,7 @@ const mutations = {
     },
     SET_LOG_STATE:(state ,v)=>{
         state.hasLogin = v
-		window.localStorage.setItem('hasLogin', JSON.stringify(v))
+		window.sessionStorage.setItem('HasLogin', JSON.stringify(v))
     }
 }
 
