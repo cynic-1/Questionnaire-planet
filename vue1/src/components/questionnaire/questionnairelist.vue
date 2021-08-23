@@ -139,13 +139,13 @@
                     }).then((res)=>{
                     this.avator = 'http://47.94.221.172/' + res.data.path;
 				})
-                this.dialogFormVisible = true
+                this.dialogFormVisible1 = true
             },
             sharequestionnaire(row){
                 
             },
             sharecancel(){
-                this.dialogFormVisible = false
+                this.dialogFormVisible1 = false
                 this.link=''
             },
             checkreport(row){   // 查看数据统计
