@@ -106,7 +106,8 @@ export default{
 							}],
         })
           .then(res => {
-            switch (res.data.code) {
+            let code = parseInt(res.data.code)
+            switch (code) {
               case 200:
                 this.$Notice.open({
                   title: '成功登录'
@@ -142,7 +143,9 @@ export default{
           method: 'post',
           url: 'http://47.94.221.172/register/',
           header:{
-					'Content-Type': 'application/x-www-form-urlencoded'
+					'Content-Type': 'application/x-www-form-urlencoded',
+            'Access-Control-Allow-Credentials': true,
+            "Access-Control-Allow-Origin": "*"
 				  },
           data: {
             username: self.form.username,
@@ -158,9 +161,10 @@ export default{
 							}],
         })
           .then(res => {
-            console.log("Into then")
-            switch (res.data.code) {
+            let code = parseInt(res.data.code)
+            switch (code) {
               case 200:
+                console.log('reg success')
                 this.$Notice.open({
                   title: '成功注册！'
                 })
@@ -188,6 +192,8 @@ export default{
                 this.existed = false
                 this.passwordFormatError = true
                 break
+              default:
+                console.log('No case in!')
             }
           })
           .catch(err => {

@@ -43,13 +43,13 @@
                     <el-table-column
                          prop="testid"
                          label="ID"
-                         width="180">
+                         width="100">
                     </el-table-column>
                     <el-table-column
                         prop="sequenced"
                         label="回收量"
                         sortable
-                        width="180">
+                        width="100">
                     </el-table-column>
                     <el-table-column
                         prop="isopen"
@@ -133,7 +133,7 @@
             this.$message({
             type: 'info',
             message: '取消复制'
-          });       
+          });
         });
             },
             loadquestionnaire(){
@@ -261,7 +261,7 @@
 
 <style>
     .box-card-questionnaire {
-	    width: 1144px;
+	    width: 984px;
         height: 600px;
 		margin-top: 30px;
 	}
