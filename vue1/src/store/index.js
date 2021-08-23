@@ -14,7 +14,7 @@ const state = {
     runTimeInterval: '',
     socials: '',
     websiteInfo: '',
-    username: '没有共产党就没有新中国'
+    username: ''
 }
 const mutations = {
     SET_LOADING: (state, v) => {
