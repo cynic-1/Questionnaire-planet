@@ -84,6 +84,7 @@
 export default {
 	data() {
 		return {
+			testid: '',
 			title: '',
 			publisher:'',
 			tests: [],
@@ -92,6 +93,7 @@ export default {
 		};
 	},
 	mounted() {
+		this.testid = this.$route.query.testid
 		this.loadmyquestionnaire()
 	},
 	updated() {
@@ -107,7 +109,7 @@ export default {
 					'Content-Type': 'application/x-www-form-urlencoded'
 				},
 				data:{
-					testid: '100',
+					testid: this.testid,
 					username: this.username,	
 				},
 				transformRequest:[function(data){
@@ -120,11 +122,11 @@ export default {
 			}).then((res)=>{
 				if (res.data.code === '0'){
 					this.$message.warning('问卷不存在或未开放')
-					return this.$router.push('/questionnairelist')
+					return this.$router.push('/home')
 				}
 				if(res.data.code === '1'){
 					this.$message.info('你已经填过该问卷了')
-					return this.$router.push('/questionnairelist')
+					return this.$router.push('/home')
 				}
 				const dic = res.data.dic
 				console.log(res.data)
@@ -153,7 +155,7 @@ export default {
 					'Content-Type': 'application/x-www-form-urlencoded'
 				},
 				data:{
-					testid: '100',
+					testid: this.testid,
 					userid: this.username,
 					usercard: usercard,
 					issubmit: this.isSubmit
@@ -183,7 +185,7 @@ export default {
 				this.isSubmit = '1'
 				this.save()
 				alert('提交成功!');
-				this.$router.push('/questionnairelist')
+				this.$router.push('/home')
 			}else{
 				alert('未答完,请完成问卷再提交!');
 			}
