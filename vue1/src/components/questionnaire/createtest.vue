@@ -259,7 +259,8 @@
 				this.modelForm.topic.push({ type: '3', questionName: '',key: 'false', answers: { value: ''} })
 			},
 			copy(item){
-				this.modelForm.topic.push(item)
+				var newitem = JSON.parse(JSON.stringify(item))
+				this.modelForm.topic.push(newitem)
 			}
 		}
 	}

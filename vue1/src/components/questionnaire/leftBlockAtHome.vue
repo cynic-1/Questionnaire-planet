@@ -3,7 +3,7 @@
 	
 		<el-aside width="200px">
 			<div class="create_qustionnaire">
-				<el-button style="width:100%;" @click="create" type="primary" icon="el-icon-circle-plus">创建问卷</el-button>
+				<el-button style="width:100%;margin-top: 80px;" @click="create" type="primary" icon="el-icon-circle-plus">创建问卷</el-button>
 				<el-dialog title="问卷标题" :visible.sync="dialogFormVisible" center>
 					<el-input v-model="title"  placeholder="请输入问卷标题"></el-input>
 					<div slot="footer" class="dialog-footer">

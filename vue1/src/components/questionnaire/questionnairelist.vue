@@ -242,29 +242,29 @@
                 if(confirmResult !=='confirm'){
                     return this.$message.info('已取消删除')
                 }
-                for(let key in this.memberSelection){
-                    this.$axios({
-                        method:"post",
-                        url:"http://47.94.221.172/changerecycle/",
-                        header:{
-					    	'Content-Type': 'application/x-www-form-urlencoded'
-					    },
-                        data:{
-					    	testid:this.memberSelection[key],
-					    },
-                        transformRequest:[function(data){
-					    	let ret = ''
-					    	for(let it in data){
-				    			ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
-						    }
-					    	return ret
-				        }],
-                    })
-                    this.loadquestionnaire()
-                }
-                this.$message.success('删除问卷成功')
-
+                  this.$axios({
+                      method:"post",
+                      url:"http://47.94.221.172/changerecycle/",
+                      header:{
+              'Content-Type': 'application/x-www-form-urlencoded'
             },
+                      data:{
+              testid:this.memberSelection,
+            },
+                      transformRequest:[function(data){
+              let ret = ''
+              for(let it in data){
+                ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
+              }
+              return ret
+              }],
+                  })
+              .then(() => {
+                this.loadquestionnaire()
+                this.$message.success('删除问卷成功')
+              })
+            },
+
             async deletequestionnaire(row){ //删除
                 const confirmResult = await this.$confirm('此操作将移动该问卷到回收站, 是否继续?', '提示', {
                 confirmButtonText: '确定',

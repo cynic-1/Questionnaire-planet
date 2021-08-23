@@ -98,28 +98,20 @@
         if(v === '退出'){
           this.$confirm('你真的要退出吗？', '将要退出账号').then(()=>{
             let self = this
-            self.$axios({
-              method: 'post',
-              url: 'api/login_register/logout/',
-              data: {
-                token: sessionStorage.getItem('Authorization'),
-              }
-            }).then(res => {
-              self.$store.commit('SET_LOG_STATE', false)
-              sessionStorage.removeItem('Authorization')
-              sessionStorage.removeItem('siteInfo')
-              self.$router.push({
-                path:'/'
-              },
-              // 没有这两句会Uncaught (in promise) undefined
-              onComplete => {},
-              onAbort => {}
-              )
-            }).catch(err => {console.log(err)})
+            self.$store.commit('SET_LOG_STATE', false)
+            sessionStorage.removeItem('Authorization')
+            sessionStorage.removeItem('siteInfo')
+            self.$router.push({
+              path:'/'
+            },
+            // 没有这两句会Uncaught (in promise) undefined
+            onComplete => {},
+            onAbort => {}
+            )
           })
         }else {
           this.$router.push({
-            path: '/personalCenter/'+ this.$store.state.websiteInfo.username
+            path: '/personalCenter/'+ this.$store.state.username
           })
         }
       },
