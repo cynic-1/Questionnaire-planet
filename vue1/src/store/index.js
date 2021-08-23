@@ -15,6 +15,7 @@ const state = {
     socials: '',
     websiteInfo: '',
     username: window.localStorage.getItem('username') == null ? '' : JSON.parse(window.localStorage.getItem('username' || '[]')),
+}
 
 const mutations = {
     SET_LOADING: (state, v) => {
