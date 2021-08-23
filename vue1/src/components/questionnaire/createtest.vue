@@ -180,6 +180,7 @@
               userid: this.modelForm.userid,
               testid: this.testid
             };
+        xmlhttp.onreadystatechange=state_Change;
         xmlhttp.open("POST", this.url, false);
         xmlhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
         xmlhttp.send(JSON.stringify(data));
@@ -190,6 +191,22 @@
           e.returnValue = '关闭提示'
         }
         return '关闭提示'
+      },
+
+      state_Change()
+      {
+        if (xmlhttp.readyState==4)
+        {// 4 = "loaded"
+          if (xmlhttp.status==200)
+          {// 200 = OK
+            console.log('200_OK')
+          }
+          else
+          {
+            console.log("Problem retrieving XML data")
+            alert("Problem retrieving XML data");
+          }
+        }
       },
 
 			loadtest(){
