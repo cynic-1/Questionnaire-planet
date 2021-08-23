@@ -115,9 +115,10 @@ export default{
                 sessionStorage.setItem('Authorization', /* "Bearer " + */ res.data.token)
                 this.$store.commit('SET_LOG_STATE', true)
                 this.$store.commit('SET_SITE_INFO', res.data)
+                  this.$store.commit('SET_USERNAME', res.data.username)
                 sessionStorage.setItem('siteInfo', JSON.stringify(res.data))
                 this.$router.push({
-                   path:`/questionnairelist`}, onComplete => { }, onAbort => { })
+                   path:'/'}, onComplete => { }, onAbort => { })
                 break
               case 1:
                 this.$store.commit('SET_LOG_STATE', false)

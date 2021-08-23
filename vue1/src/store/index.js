@@ -26,6 +26,9 @@ const mutations = {
     SET_SITE_INFO: (state, v) =>{
       state.websiteInfo = v;
     },
+    SET_USERNAME: (state, v) => {
+        state.username = v;
+    },
     GET_RUNTIME_INTERVAL: (state) => {
         if (!timer || !state.runTimeInterval) {
             clearInterval(timer)
