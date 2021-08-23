@@ -10,7 +10,7 @@
 					<div v-for="(test, index) in tests" :key="index">
                         <el-card>
 						<p>{{index + 1}}.{{test.stem}}</p>
-                        <p>{{test.answer}}</p>
+                        <p >答案：{{test.answer}}</p>
                         <div v-for="(value,key,index) in test.all_answer"
 							:key="index">
                             {{key}} : {{value}}
@@ -39,8 +39,12 @@ export default {
 	data() {
 		return {
 			title: '',
-			tests: []
+			tests: [],
+			testid:''
 		};
+	},
+	created(){
+		this.testid=this.$route.query.testid
 	},
 	mounted() {
 		this.loadreport()
@@ -59,7 +63,7 @@ export default {
 					'Content-Type': 'application/x-www-form-urlencoded'
 				},
 				data:{
-					testid: '2',
+					testid: this.testid,
 				},
 				transformRequest:[function(data){
 					let ret = ''
