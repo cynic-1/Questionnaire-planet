@@ -54,7 +54,7 @@
                          width="100">
                     </el-table-column>
                     <el-table-column
-                        prop="sequenced"
+                        prop="ansernum"
                         label="回收量"
                         sortable
                         width="100">
