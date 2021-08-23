@@ -9,7 +9,7 @@
                     </el-input>
                 </el-col>
                 <el-col :span="5">
-                    <el-button type="danger" icon="el-icon-delete" circle @click="QuestionnaireBatchdelete">批量删除</el-button>
+                    <el-button type="danger" icon="el-icon-delete" circle @click="QuestionnaireBatchDelete">批量删除</el-button>
                 </el-col>
             </el-row>
             </div>
@@ -184,7 +184,11 @@
                         })
 
             },
-            async QuestionnaireBatchdelete(){  //批量删除
+            async QuestionnaireBatchDelete(){  //批量删除
+              if (this.memberSelection.length === 0) {
+                await this.$alert('你尚未选中任何问卷！');
+                return
+              }
                 const confirmResult = await this.$confirm('此操作将移动该问卷到回收站, 是否继续?', '提示', {
                 confirmButtonText: '确定',
                 cancelButtonText: '取消',
