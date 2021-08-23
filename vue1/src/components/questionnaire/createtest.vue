@@ -17,7 +17,7 @@
 						<el-menu-item @click="addMulti">多选题</el-menu-item>
 					</el-menu-item-group>
 				</el-submenu>
-				
+
 				<el-menu-item-group>
 					<el-menu-item @click="addBlank">填空题</el-menu-item>
 					<el-menu-item @click="addRank">评分题</el-menu-item>
@@ -36,20 +36,25 @@
 									第{{ index+1 }}题&emsp;{{modelForm.table[item.type]}}题,&emsp;&emsp;题目:{{ item.questionName }}
 								</template>
 								<!-- 问题 -->
-							 
+
 								<el-form-item
 									:prop="`topic.${index}.questionName`"
 									label="问题"
 									:rules="{ required: true, message: '请填写问题', trigger: 'change' }">
 									<el-input v-model.trim="item.questionName" style="width:258px" clearable placeholder="请填写问题" />
-						
+
 									<br />
 									<template>
 										<el-radio v-model="item.key" label=true>必填</el-radio>
 										<el-radio v-model="item.key" label=false>选填</el-radio>
 									</template>
+									
 								</el-form-item>
 								
+								<el-form-item>
+									<el-input v-model.trim="item.describe" type="textarea" style="width:258px" clearable placeholder="请填写问题描述" />
+								</el-form-item>
+
 								<!-- 答案 -->
 								<el-form-item
 									v-for="(opt, idx) in item.answers"
@@ -63,7 +68,7 @@
 									<el-input v-model.trim="opt.value" style="width:258px" clearable placeholder="请输入答案" />
 									<el-button style="margin-left: 20px" @click.prevent="removeDomain(index,idx)">删除</el-button>
 								</el-form-item>
-								
+
 								<el-form-item
 									v-else-if="item.type==3"
 									:prop="`topic.${index}.answers.value`"
@@ -79,7 +84,7 @@
 									    </el-option>
 									</el-select>
 								</el-form-item>
-								
+
 								<el-form-item>
 									<el-button v-show="item.type!=2 && item.type !=3" @click="addDomain(index)">新增选项</el-button>
 									<el-button @click="removeQuestion(index)">删除题目</el-button>
@@ -92,7 +97,9 @@
 						</el-collapse>
 					</div>
 				</vuedraggable>
-				
+
+				<!--  设置问卷时间
+
 				<el-form-item label="截止时间" style="margin-top: 30px;">
 					<el-date-picker
 						label="有效时间"
@@ -104,7 +111,9 @@
 						end-placeholder="结束日期">
 					</el-date-picker>
 				</el-form-item>
-				
+
+				-->
+
 				<el-form-item>
 					<el-button style="margin-top: 10px" @click="addSubmit()">编辑完成</el-button>
 					<el-button @click="resetForm('modelForm')">重置</el-button>
@@ -183,15 +192,16 @@
 					//if (res.data.code !== '200') return this.$router.push('/404');
 					this.modelForm.title = dic.title
 					for(let item of dic.topic){
-						const question = { type: '', questionName: '',key: '', answers: '' }
+						const question = { type: '', questionName: '',key: '', answers: '',describe: '' }
 						question.type = String(item.type)
 						question.questionName = item.stem
 						question.key = item.mustdo == 1?'true':'false'
 						question.answers = item.answers
+						question.describe = item.describe
 						//console.log(question)
 						this.modelForm.topic.push(question)
 					}
-				})	
+				})
 			},
 			end(evt) {
 			  this.$refs.modelForm.clearValidate()
@@ -219,6 +229,8 @@
 			},
 			addSubmit() {
 				//console.log(this.modelForm.topic[0].answers[1].value)
+				if(this.modelForm.topic.length == 0)
+					return this.$message.info("问卷至少包含一个题目！")
 				this.$refs.modelForm.validate(valid => {
 					if (valid) {
 						this.$axios({
@@ -241,22 +253,23 @@
 							console.log(res.data)
 							if (res.data.code !== '200') return this.$message.error('保存失败');
 							this.$message.success('保存成功')
-							this.$router.push('/questionnairelist')
+							this.$router.push('/home')
 						})	
+
 					}
 				})
 			},
 			addSingle(){
-				this.modelForm.topic.push({ type: '0', questionName: '',key: 'false', answers: [{ value: '' }] })
+				this.modelForm.topic.push({ type: '0', questionName: '',key: 'false', answers: [{ value: '' }] ,describe: ''})
 			},
 			addMulti(){
-				this.modelForm.topic.push({ type: '1', questionName: '',key: 'false', answers: [{ value: '' }] })
+				this.modelForm.topic.push({ type: '1', questionName: '',key: 'false', answers: [{ value: '' }] , describe: ''})
 			},
 			addBlank(){
-				this.modelForm.topic.push({ type: '2', questionName: '',key: 'false', answers: [{ value: '' }] })
+				this.modelForm.topic.push({ type: '2', questionName: '',key: 'false', answers: [{ value: '' }] , describe: ''})
 			},
 			addRank(){
-				this.modelForm.topic.push({ type: '3', questionName: '',key: 'false', answers: { value: ''} })
+				this.modelForm.topic.push({ type: '3', questionName: '',key: 'false', answers: { value: ''} , describe: ''})
 			},
 			copy(item){
 				var newitem = JSON.parse(JSON.stringify(item))

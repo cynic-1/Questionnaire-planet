@@ -67,15 +67,21 @@ const routes = [
     //     component: () => import('../views/questionnaire/questionnairelist.vue'),
     //     meta: { title: 'fuck'}
     // },
+    // {
+    //     path: '/personal_home',
+    //     name: 'personal_home',
+    //     component: () => import('@/components/questionnaire/leftBlockAtHome'),
+    //     children:[
+    //         {path:'/questionnairelist',component:() => import('@/components/questionnaire/questionnairelist')},
+    //         {path:'/recyclebin',component: () => import('@/components/questionnaire/RecycleBin')},
+    //     ]
+    //   },
     {
-        path: '/personal_home',
-        name: 'personal_home',
-        component: () => import('@/components/questionnaire/leftBlockAtHome'),
-        children:[
-            {path:'/questionnairelist',component:() => import('@/components/questionnaire/questionnairelist')},
-            {path:'/recyclebin',component: () => import('@/components/questionnaire/RecycleBin')},
-        ]
-      },
+        path: '/recycleBin',
+        name: 'recycleBin',
+        component: () => import('@/views/Recycle'),
+        meta: {title: '回收站'}
+    },
       {
         path:'/createtest',
         name:'createtest',

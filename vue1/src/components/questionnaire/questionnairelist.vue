@@ -106,9 +106,10 @@
 		},
         methods:{
             share(row){
-                this.$alert('这是一段内容', '您的问卷链接为', {
-                confirmButtonText: '确定',
-        });
+				var link = `http://localhost:8080/#/fill?testid=${row.testid}`
+                this.$alert(`${link}`, '分享问卷链接为', {
+					confirmButtonText: '确定',
+				});
             },
             checkreport(row){   // 查看数据统计
                 var _this=this
