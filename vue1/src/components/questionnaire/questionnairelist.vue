@@ -108,7 +108,7 @@
                 var _this=this
                 this.$router.push({path: "/report" , query: {testid:row.testid}});
             },
-            copy(){             
+            copy(){
                 this.dialogFormVisible = true
             },
             copyquestionnaire(row){     // 复制问卷
@@ -142,7 +142,7 @@
 			    return new Promise((resolve, reject) => {
 			        this.$axios({
 						method: 'post',
-			            url: "http://47.94.221.172/getdocx/", 
+			            url: "http://47.94.221.172/getdocx/",
 						header:{
 							'Content-Type': 'application/x-www-form-urlencoded'
 						},
@@ -259,7 +259,8 @@
               return ret
               }],
                   })
-              .then(() => {
+              .then((res) => {
+                console.log(res)
                 this.loadquestionnaire()
                 this.$message.success('删除问卷成功')
               })
