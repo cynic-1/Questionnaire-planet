@@ -99,6 +99,12 @@ const routes = [
         name: 'fill',
         component: () => import('@/components/questionnaire/fill.vue'),
         meta: { title: '填充' }
+      },
+      {
+        path:'/preview',
+        name: 'preview',
+        component: () => import('@/components/questionnaire/Preview.vue'),
+        meta: { title: '预览' }
       }
 ]
 

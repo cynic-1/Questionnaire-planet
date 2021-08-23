@@ -6,17 +6,17 @@
 	        <el-col :span="16">
 				<div class="grid-content bg-purple">
 					<div v-for="(test, index) in tests" :key="index">
-						<p>{{index + 1}}.{{test.stem}}</p>
-						<el-checkbox-group v-if="test.type == '1'" v-model="test.useranswer">
-							<!-- label绑定答案的值,可以绑定索引index,也可以绑定答案内容city -->
+						<p style="font-size: 24px;">{{index + 1}}.{{test.stem}}</p>
+						<p style="font-size: 10px">{{test.describe}}</p>
+						<el-checkbox-group v-if="test.type == '1'">
 							<el-checkbox
-							v-for="(option,index) in test.answers"
-							:label="option.value"
-							:key="index"
+								v-for="(option,index) in test.answers"
+								:label="option.value"
+								:key="index"
 							>{{option.value}}</el-checkbox>
 						</el-checkbox-group>
 						
-						<el-radio-group v-else-if="test.type == '0'" v-model="test.useranswer">
+						<el-radio-group v-else-if="test.type == '0'">
 							<el-radio
 								v-for="(option,index) in test.answers"
 								:label="option.value"
@@ -24,7 +24,7 @@
 							>{{option.value}}</el-radio>
 						</el-radio-group>
 						
-						<el-select v-else-if="test.type == '3'" v-model="test.useranswer">
+						<el-select v-else-if="test.type == '3'">
 							<el-option
 							    v-for="item in 10"
 							    :key="item"
@@ -34,7 +34,7 @@
 						</el-select>
 						
 						<div v-else>
-							<el-input  placeholder="请输入内容" v-model="test.useranswer"></el-input>
+							<el-input  placeholder="请输入内容"  :disabled="true"></el-input>
 						</div>
 	            </div>
 	          </div>
@@ -42,8 +42,7 @@
 			  <br />
 			  
 			  <div>
-			    <el-button @click="save" type="primary">保存</el-button>
-			    <el-button @click="submitCount" type="success">提交问卷</el-button>
+			    <el-button @click="back" type="primary">返回</el-button>
 			  </div>
 			  
 	          <br />
@@ -56,19 +55,13 @@
 	            <div class="tihao">
 	              <!-- <span class="ti active">{{index + 1}}</span> -->
 	              <div v-for="(test,index) in tests" :key="index">
-	                <span v-if="test.useranswer.length == '0' && test.mustdo == 1" class="ti">
+	                <span v-if="test.mustdo == 1" class="ti">
 						{{index + 1}}
 	                </span>
-					<span v-else-if="test.useranswer.length == '0' && test.mustdo == 0" class="ti unkey">
+					<span v-else-if="test.mustdo == 0" class="ti unkey">
 						{{index + 1}}
 					</span>
 					
-					<span v-else-if="test.useranswer.length == '0' && test.mustdo == 0" class="ti unkey">
-						{{index + 1}}
-					</span>
-	                <span v-else class="ti active">
-						{{index + 1}}
-					</span>
 					
 	              </div>
 	            </div>
@@ -87,27 +80,26 @@ export default {
 			publisher:'',
 			tests: [],
 			username:this.$store.state.username,
-			isSubmit: '0'
+            testid:'',
 		};
 	},
-	mounted() {
-		this.loadmyquestionnaire()
+    created(){
+		this.testid=this.$route.query.testid
 	},
-	updated() {
-		//console.log(tests);
+	mounted() {
+		this.previewmyquestionnaire()
 	},
 	methods: {
-		loadmyquestionnaire(){
+		previewmyquestionnaire(){
 			var _this = this
 			this.$axios({
 				method:"post",
-				url:"http://47.94.221.172:80/usergettest/",
+				url:"http://47.94.221.172:80/previewquestionnaire/",
 				header:{
 					'Content-Type': 'application/x-www-form-urlencoded'
 				},
 				data:{
-					testid: '75',
-					username: this.username,	
+					testid: this.testid,	
 				},
 				transformRequest:[function(data){
 					let ret = ''
@@ -117,76 +109,18 @@ export default {
 					return ret
 				}],
 			}).then((res)=>{
-				if (res.data.code === '0'){
-					this.$message.warning('问卷不存在或未开放')
-					return this.$router.push('/questionnairelist')
-				}
-				if(res.data.code === '1'){
-					this.$message.info('你已经填过该问卷了')
-					return this.$router.push('/questionnairelist')
-				}
 				const dic = res.data.dic
 				console.log(res.data)
 				//if (res.data.code !== '200') return this.$router.push('/404');
 				this.title = dic.title
 				this.publisher = dic.userid
 				this.tests = dic.topic
-				for(let item of this.tests){
-					if(item.type == 1){
-						if(item.useranswer[0] == ''){
-							item.useranswer.pop()
-						}
-					}
-				}
+				console.log(dic)
 			})	
 		},
-		save(){
-			const usercard = []
-			for(let item of this.tests){
-				usercard.push({questionid:item.questionid, useranswer:item.useranswer})
-			}
-			this.$axios({
-				method:"post",
-				url:"http://47.94.221.172:80/userfillquestionnaire/",
-				header:{
-					'Content-Type': 'application/x-www-form-urlencoded'
-				},
-				data:{
-					testid: '75',
-					userid: this.username,
-					usercard: usercard,
-					issubmit: this.isSubmit
-				},
-				traditinal: true,
-				paramsSerializer: data => {
-					return qs.stringify(data, { indices: false })
-				}
-			}).then((res)=>{
-				console.log(res.data)
-				if (res.data.code !== '200') return this.$message.error(res.data.message);
-				this.$message.success("保存成功")
-			})
-		},
-		submitCount() {
-			// 是否答完
-			let isComplete = true;
-			this.tests.forEach((val,i) =>{
-				if(val.useranswer.length == 0 && val.mustdo == 1){
-					isComplete = false;
-					return;
-				}
-			})
-		
-			if(isComplete){
-				// 答题完整,可以提交,在这里进行提交数据操作
-				this.isSubmit = '1'
-				this.save()
-				alert('提交成功!');
-				this.$router.push('/questionnairelist')
-			}else{
-				alert('未答完,请完成问卷再提交!');
-			}
-		}
+        back(){
+            this.$router.push({path: "/home"});
+        }
 	}
 };
 </script>

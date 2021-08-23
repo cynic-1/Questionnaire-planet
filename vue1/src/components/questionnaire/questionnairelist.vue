@@ -24,7 +24,7 @@
                         <el-form label-position="left" inline class="demo-table-expand">
                             <el-form-item >
                                 <div class="actions">
-                                    <el-button type="text" class="el-icon-view" @click="checkClick(props.row.id)">预览</el-button>
+                                    <el-button type="text" class="el-icon-view" @click="previewquestionnaire(props.row)">预览</el-button>
                                     <el-button type="text" class="el-icon-edit" @click="designClick(props.row)">设计问卷</el-button>
                                     <el-button type="text" class="el-icon-data-analysis" @click="checkreport(props.row)">查看数据分析</el-button>
                                     <el-button type="text" class="el-icon-download" @click="downloadquestionnaire(props.row)">导出</el-button>
@@ -310,7 +310,16 @@
                 this.memberSelection = id;
             },
 			designClick(row){
-				this.$router.push({path: "/createtest", query: {testid:row.testid,type:1}});
+                if(row.isopen==='1'||row.ansernum>0){
+                    this.$alert('您的问卷已发布，无法修改', '注意', {
+                        confirmButtonText: '确定',
+                    });
+                }else{
+				    this.$router.push({path: "/createtest", query: {testid:row.testid,type:1}});
+                }
+			},
+            previewquestionnaire(row){
+				this.$router.push({path: "/preview", query: {testid:row.testid}});
 			}
         }
     }
