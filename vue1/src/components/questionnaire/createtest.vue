@@ -7,7 +7,8 @@
 			    class="el-menu-vertical-demo"
 			    background-color="#545c64"
 			    text-color="#fff"
-			    active-text-color="#409EFF">
+			    active-text-color="#409EFF"
+				style="margin-top: 20px;">
 			    <el-submenu index="1">
 					<template slot="title">
 						<span>选择题</span>
