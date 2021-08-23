@@ -10,12 +10,12 @@ let timer = null;
 const state = {
     loading: false,
     isLogging: true,
-    hasLogin:true,
+    hasLogin:window.localStorage.getItem('hasLogin') == null ? true : JSON.parse(window.localStorage.getItem('username' || '[]')),
     runTimeInterval: '',
     socials: '',
     websiteInfo: '',
-    username: ''
-}
+    username: window.localStorage.getItem('username') == null ? '' : JSON.parse(window.localStorage.getItem('username' || '[]')),
+
 const mutations = {
     SET_LOADING: (state, v) => {
         state.loading = v;
@@ -28,6 +28,7 @@ const mutations = {
     },
     SET_USERNAME: (state, v) => {
         state.username = v;
+		window.localStorage.setItem('username', JSON.stringify(v))
     },
     GET_RUNTIME_INTERVAL: (state) => {
         if (!timer || !state.runTimeInterval) {
@@ -45,6 +46,7 @@ const mutations = {
     },
     SET_LOG_STATE:(state ,v)=>{
         state.hasLogin = v
+		window.localStorage.setItem('hasLogin', JSON.stringify(v))
     }
 }
 

@@ -32,6 +32,7 @@
         methods: {
         },
         mounted() {
+			console.log(this.$store.state.hasLogin)
         },
         watch:{
       }
