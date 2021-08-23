@@ -29,7 +29,7 @@
                                     <el-button type="text" class="el-icon-data-analysis" @click="checkreport(props.row)">查看数据分析</el-button>
                                     <el-button type="text" class="el-icon-download" @click="checkClick(props.row)">导出</el-button>
                                     <el-button type="text" size="small" class="el-icon-document-copy" @click="copy">复制</el-button>
-                                    <el-dialog title="问卷标题" :visible.sync="dialogFormVisible" center>
+                                    <el-dialog title="问卷标题" :visible.sync="dialogFormVisible" center :modal-append-to-body="false" style="margin-top: 30px;">
 					                    <el-input v-model="title"  placeholder="请输入问卷标题"></el-input>
 					                    <div slot="footer" class="dialog-footer">
 					                        <el-button @click="cancel">取 消</el-button>
