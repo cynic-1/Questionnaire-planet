@@ -8,14 +8,15 @@
 					<div v-for="(test, index) in tests" :key="index">
 						<p style="font-size: 24px;">{{index + 1}}.{{test.stem}}</p>
 						<p style="font-size: 10px">{{test.describe}}</p>
-						<el-checkbox-group v-if="test.type == '1'">
+						
+						<el-checkbox-group v-if="test.type == '1'" v-model="test.answers">
 							<el-checkbox
-								v-for="(option,index) in test.answers"
-								:label="option.value"
-								:key="index"
+							v-for="(option,index) in test.answers"
+							:label="option.value"
+							:key="index"
 							>{{option.value}}</el-checkbox>
 						</el-checkbox-group>
-						
+				
 						<el-radio-group v-else-if="test.type == '0'">
 							<el-radio
 								v-for="(option,index) in test.answers"
@@ -49,24 +50,6 @@
 
 	        </el-col>
 			
-	        <el-col :span="8">
-	          <div class="grid-content bg-purple-light">
-	            <h3>题号:</h3>
-	            <div class="tihao">
-	              <!-- <span class="ti active">{{index + 1}}</span> -->
-	              <div v-for="(test,index) in tests" :key="index">
-	                <span v-if="test.mustdo == 1" class="ti">
-						{{index + 1}}
-	                </span>
-					<span v-else-if="test.mustdo == 0" class="ti unkey">
-						{{index + 1}}
-					</span>
-					
-					
-	              </div>
-	            </div>
-	          </div>
-	        </el-col>
 	      </el-row>
 	    </el-main>
 	  </el-container>
@@ -115,7 +98,8 @@ export default {
 				this.title = dic.title
 				this.publisher = dic.userid
 				this.tests = dic.topic
-				console.log(dic)
+				console.log(this.tests[0].answers)
+				
 			})	
 		},
         back(){
