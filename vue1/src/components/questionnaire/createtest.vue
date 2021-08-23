@@ -97,7 +97,7 @@
 						</el-collapse>
 					</div>
 				</vuedraggable>
-				
+				<!--  设置问卷时间
 				<el-form-item label="截止时间" style="margin-top: 30px;">
 					<el-date-picker
 						label="有效时间"
@@ -109,7 +109,7 @@
 						end-placeholder="结束日期">
 					</el-date-picker>
 				</el-form-item>
-				
+				-->
 				<el-form-item>
 					<el-button style="margin-top: 10px" @click="addSubmit()">编辑完成</el-button>
 					<el-button @click="resetForm('modelForm')">重置</el-button>
@@ -225,6 +225,8 @@
 			},
 			addSubmit() {
 				//console.log(this.modelForm.topic[0].answers[1].value)
+				if(this.modelForm.topic.length == 0)
+					return this.$message.info("问卷至少包含一个题目！")
 				this.$refs.modelForm.validate(valid => {
 					if (valid) {
 						this.$axios({
@@ -247,7 +249,7 @@
 							console.log(res.data)
 							if (res.data.code !== '200') return this.$message.error('保存失败');
 							this.$message.success('保存成功')
-							this.$router.push('/questionnairelist')
+							this.$router.push('/home')
 						})	
 					}
 				})
