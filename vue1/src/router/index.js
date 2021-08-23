@@ -1,12 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import store from '../store'
-import CreateTest from '../components/questionnaire/createtest.vue'
-import Fill from '../components/questionnaire/fill.vue'
-import personal_home from '../components/questionnaire/leftBlockAtHome.vue'
-import Questionnairelist from '../components/questionnaire/questionnairelist.vue'
-import RecycleBin from '../components/questionnaire/RecycleBin.vue'
-import Report from '../components/questionnaire/report.vue'
 
 import 'element-ui/lib/theme-chalk/index.css'
 
@@ -73,29 +67,32 @@ const routes = [
     //     component: () => import('../views/questionnaire/questionnairelist.vue'),
     //     meta: { title: 'fuck'}
     // },
-    {
-        path: '/personal_home',
-        name: 'personal_home',
-        component: personal_home,
-        children:[
-            {path:'/questionnairelist',component:Questionnairelist},
-            {path:'/recyclebin',component:RecycleBin},
-        ]
-      },
+    // {
+    //     path: '/personal_home',
+    //     name: 'personal_home',
+    //     component: personal_home,
+    //     children:[
+    //         {path:'/questionnairelist',component:Questionnairelist},
+    //         {path:'/recyclebin',component:RecycleBin},
+    //     ]
+    //   },
       {
         path:'/createtest',
         name:'createtest',
-        component: CreateTest
+        component: () => import('@/components/questionnaire/createtest.vue'),
+        meta: { title: '创建问卷' }
       },
       {
         path:'/report',
         name:'report',
-        component: Report
+        component: () => import('@/components/questionnaire/report.vue'),
+        meta: { title: '报告' }
       },
       {
         path:'/fill',
         name: 'fill',
-        component: Fill
+        component: () => import('@/components/questionnaire/fill.vue'),
+        meta: { title: '填充' }
       }
 ]
 
