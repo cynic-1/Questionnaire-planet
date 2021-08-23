@@ -9,12 +9,22 @@
 				<div>
 					<div v-for="(test, index) in tests" :key="index">
                         <el-card>
-						<p>{{index + 1}}.{{test.stem}}</p>
-                        <p >答案：{{test.answer}}</p>
-                        <div v-for="(value,key,index) in test.all_answer"
-							:key="index">
-                            {{key}} : {{value}}
-                        </div>
+							<p>{{index + 1}}.{{test.stem}}</p>
+                        	<p >{{test.answer}}</p>
+							<div v-if="test.type!=='3'">
+								<div v-for="(value,key,index) in test.answer_rate"
+									:key="index">
+                            		{{key}} : {{value}}
+                        		</div>
+							</div>
+							<el-collapse>
+  								<el-collapse-item title="查看所有用户个人答案">
+    								<div v-for="(value,key,index) in test.all_answer"
+										:key="index">
+                            			{{key}} : {{value}}
+                        			</div>
+  								</el-collapse-item>
+							</el-collapse>
                         </el-card>
                         <br/>
 	            </div>
