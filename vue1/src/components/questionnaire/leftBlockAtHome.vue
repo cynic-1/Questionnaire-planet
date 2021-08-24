@@ -27,12 +27,12 @@
                 	    <span>全部问卷</span>
               </router-link>
                		</el-menu-item>
-					<el-menu-item>
-            <router-link to="/administerblog">
-                	    <i class="el-icon-star-on"></i>
-                	    <span>星标问卷</span>
-            </router-link>
-                	</el-menu-item>
+<!--					<el-menu-item>-->
+<!--            <router-link to="/administerblog">-->
+<!--                	    <i class="el-icon-star-on"></i>-->
+<!--                	    <span>星标问卷</span>-->
+<!--            </router-link>-->
+<!--                	</el-menu-item>-->
                 	<el-menu-item>
                     <router-link to="/recyclebin">
                 	    <i class="el-icon-document-delete"></i>
