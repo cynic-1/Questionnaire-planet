@@ -118,6 +118,7 @@
                 memberSelection: [],
                 link:'',
                 avator:'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png',
+                avatorpath:'',
             }
         },
 		mounted: function () {
@@ -146,12 +147,53 @@
 					    }],
                     }).then((res)=>{
                     this.avator = 'http://47.94.221.172/' + res.data.path;
-                    
+                    this.avatorpath=res.data.path
 				})
                 this.dialogFormVisible1 = true
             },
             sharequestionnaire(row){
-                
+                console.log(this.avator)
+                return new Promise((resolve, reject) => {
+			        this.$axios({
+						method: 'post',
+			            url: "http://47.94.221.172/downlowdqrcode/",
+						header:{
+							'Content-Type': 'application/x-www-form-urlencoded'
+						},
+			            data: {
+                            path:this.avatorpath
+                        },
+						transformRequest:[function(data){
+							let ret = ''
+							for(let it in data){
+								ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
+							}
+							return ret
+						}],
+			            responseType: 'blob'
+			        }).then(
+			            response => {
+			            resolve(response.data)
+			            let blob = new Blob([response.data], {
+							type: 'application/x-png'
+			            })
+						console.log(response)
+						let fileName = `${row.title}.png`
+			            if (window.navigator.msSaveOrOpenBlob) {
+			                navigator.msSaveBlob(blob, fileName)
+			            } else {
+			                var link = document.createElement('a')
+			                link.href = window.URL.createObjectURL(blob)
+			                link.download = fileName
+			                link.click()
+			                window.URL.revokeObjectURL(link.href)
+			            }
+						},
+			            err => {
+							reject(err)
+			            }
+			        )
+			    })
             },
             sharecancel(){
                 this.dialogFormVisible1 = false
@@ -442,5 +484,4 @@
     .actions{
         width: 950px;
     }
-
 </style>
