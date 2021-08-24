@@ -225,9 +225,11 @@
 						}
 						return ret
 					    }],
+                    }).then(() => {
+                      this.$message.success('复制成功')
+                      this.loadquestionnaire()
                     })
-                    this.$message.success('复制成功')
-                    this.loadquestionnaire()
+
             },
             cancel(){
 				this.dialogFormVisible = false
