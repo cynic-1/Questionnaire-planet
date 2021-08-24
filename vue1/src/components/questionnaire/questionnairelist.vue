@@ -118,7 +118,7 @@
         methods:{
             share(row){
                 var _this=this
-				this.link = `http://localhost:8080/#/fill?testid=${row.testid}`
+				this.link = `http://47.94.221.172/#/fill?testid=${row.testid}`
                 this.$axios({
 					method:"post",
 					url:"http://47.94.221.172/makeqrcode/",
