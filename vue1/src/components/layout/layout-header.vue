@@ -63,11 +63,12 @@
         lastScrollTop: 0,
         // category: [],
         // 原来是用Mock，现在直接写出，以移除Mock的使用。
-        profile:[{
-          id: 1,
-          title: '个人资料',
-          href: '/personalCenter/'
-        },
+        profile:[
+            // {
+        //   id: 1,
+        //   title: '个人资料',
+        //   href: '/personalCenter/'
+        // },
           {
             id: 2,
             title: '退出',

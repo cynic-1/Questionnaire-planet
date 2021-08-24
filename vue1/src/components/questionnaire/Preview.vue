@@ -5,9 +5,10 @@
 
 				<div class="grid-content bg-purple">
 					<div class="element" v-for="(test, index) in tests" :key="index">
+            <div style="margin-bottom: 10px">
 						<p style="font-size: 24px; margin-top: 10px">{{index + 1}}.{{test.stem}}</p>
-						<p style="font-size: 10px; margin-top: 10px;">{{test.describe}}</p>
-
+						<p style="font-size: 10px; margin-top: 10px; ">{{test.describe}}</p>
+            </div>
 						<el-checkbox-group v-if="test.type === 1" v-model="test.answers">
 							<el-checkbox
 							v-for="(option,index) in test.answers"
