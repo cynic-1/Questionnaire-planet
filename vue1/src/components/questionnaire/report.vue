@@ -33,11 +33,17 @@
 			  <br />
 			  <div class="downloaddate">
 			    <el-button @click="downloaddate" type="primary">导出数据信息</el-button>
+				<el-dialog title="请选择导出类型" :visible.sync="dialogFormVisible3" center :modal-append-to-body="false" style="margin-top: 30px;">
+					<div slot="footer" class="dialog-footer">
+					    <el-button @click="downloaddatecancel">取 消</el-button>
+					    <el-button type="primary" @click="downloaddate_doc">导出为word</el-button>
+                        <el-button type="primary" @click="downloaddate_excel">导出为excel</el-button>
+					</div>
+				</el-dialog>
+				<div class="back_home">
+			    	<el-button @click="backhome" type="primary">返回</el-button>
+			  	</div>
 			  </div>  
-			
-			  <div class="back_home">
-			    <el-button @click="backhome" type="primary">返回</el-button>
-			  </div>
 			  
 	          <br />
 
@@ -53,7 +59,8 @@ export default {
 		return {
 			title: '',
 			tests: [],
-			testid:''
+			testid:'',
+			dialogFormVisible3:false,
 		};
 	},
 	created(){
@@ -68,47 +75,96 @@ export default {
             this.$router.push({path: "/questionnairelist"})
         },
 		downloaddate(){
-			return new Promise((resolve, reject) => {
-			        this.$axios({
-						method: 'post',
-			            url: "http://47.94.221.172/getexcel/",
-						header:{
-							'Content-Type': 'application/x-www-form-urlencoded'
-						},
-			            data: {
-                            testid:this.testid
-                        },
-						transformRequest:[function(data){
-							let ret = ''
-							for(let it in data){
-								ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
-							}
-							return ret
-						}],
-			            responseType: 'blob'
-			        }).then(
-			            response => {
-			            resolve(response.data)
-			            let blob = new Blob([response.data], {
-							type: 'application/vnd.ms-excel'
-			            })
-						console.log(response.headers)
-						let fileName = this.title
-			            if (window.navigator.msSaveOrOpenBlob) {
-			                navigator.msSaveBlob(blob, fileName)
-			            } else {
-			                var link = document.createElement('a')
-			                link.href = window.URL.createObjectURL(blob)
-			                link.download = fileName
-			                link.click()
-			                window.URL.revokeObjectURL(link.href)
-			            }
-						},
-			            err => {
-							reject(err)
-			            }
-			        )
-			    })
+                this.dialogFormVisible3 = true
+            },
+        downloaddatecancel(){
+            this.dialogFormVisible3 = false
+        },
+        downloaddate_doc(){         // 导出数据doc
+		    return new Promise((resolve, reject) => {
+		        this.$axios({
+					method: 'post',
+		            url: "http://47.94.221.172/getdocx1/",
+					header:{
+						'Content-Type': 'application/x-www-form-urlencoded'
+					},
+			        data: {
+                        testid:this.testid
+                    },
+					transformRequest:[function(data){
+						let ret = ''
+						for(let it in data){
+							ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
+						}
+						return ret
+					}],
+			        responseType: 'blob'
+			    }).then(
+			        response => {
+			        resolve(response.data)
+			        let blob = new Blob([response.data], {
+						type: 'application/msword'
+			        })
+					console.log(response.headers)
+					let fileName = `${this.title}(数据)`
+			         if (window.navigator.msSaveOrOpenBlob) {
+			            navigator.msSaveBlob(blob, fileName)
+			        } else {
+			            var link = document.createElement('a')
+			            link.href = window.URL.createObjectURL(blob)
+			            link.download = fileName
+			            link.click()
+			            window.URL.revokeObjectURL(link.href)
+			        }
+					},
+			        err => {
+						reject(err)
+			        }
+		        )
+		    })
+		},
+        downloaddate_excel(){         // 导出数据excel
+		    return new Promise((resolve, reject) => {
+		        this.$axios({
+					method: 'post',
+		            url: "http://47.94.221.172/getexcel/",
+					header:{
+						'Content-Type': 'application/x-www-form-urlencoded'
+					},
+			        data: {
+                        testid:this.testid
+                    },
+					transformRequest:[function(data){
+						let ret = ''
+						for(let it in data){
+							ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
+						}
+						return ret
+					}],
+			        responseType: 'blob'
+			    }).then(
+			        response => {
+			        resolve(response.data)
+			        let blob = new Blob([response.data], {
+						type: 'application/vnd.ms-excel'
+			        })
+					console.log(response.headers)
+					let fileName = `${this.title}(数据)`
+			         if (window.navigator.msSaveOrOpenBlob) {
+			            navigator.msSaveBlob(blob, fileName)
+			        } else {
+			            var link = document.createElement('a')
+			            link.href = window.URL.createObjectURL(blob)
+			            link.download = fileName
+			            link.click()
+			            window.URL.revokeObjectURL(link.href)
+			        }
+					},
+			        err => {
+						reject(err)
+			        }
+		        )
+		    })
 		},
 		loadreport(){
 			var _this = this
