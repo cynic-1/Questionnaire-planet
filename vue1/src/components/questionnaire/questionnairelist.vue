@@ -27,7 +27,14 @@
                                     <el-button type="text" class="el-icon-view" @click="previewquestionnaire(props.row)">预览</el-button>
                                     <el-button type="text" class="el-icon-edit" @click="designClick(props.row)">设计问卷</el-button>
                                     <el-button type="text" class="el-icon-data-analysis" @click="checkreport(props.row)">查看数据分析</el-button>
-                                    <el-button type="text" class="el-icon-download" @click="downloadquestionnaire(props.row)">导出</el-button>
+                                    <el-button type="text" class="el-icon-download" @click="downloadquestionnaire()">导出</el-button>
+                                    <el-dialog title="请选择导出类型" :visible.sync="dialogFormVisible2" center :modal-append-to-body="false" style="margin-top: 30px;">
+					                    <div slot="footer" class="dialog-footer">
+					                        <el-button @click="downloadcancel">取 消</el-button>
+					                        <el-button type="primary" @click="downloadquestionnaire_doc(props.row)">导出为word</el-button>
+                                            <el-button type="primary" @click="downloadquestionnaire_pdf(props.row)">导出为pdf</el-button>
+					                    </div>
+				                    </el-dialog>
                                     <el-button type="text" class="el-icon-share" @click="share(props.row)">分享</el-button>
                                     <el-dialog title="问卷地址及二维码" :visible.sync="dialogFormVisible1" center :modal-append-to-body="false" style="margin-top: 30px;">
 					                    <div>{{link}}</div>
@@ -103,6 +110,7 @@
             return{
                 dialogFormVisible: false,
                 dialogFormVisible1: false,
+                dialogFormVisible2: false,
                 title:'',
                 key:'',
                 tableData:[],
@@ -183,7 +191,13 @@
 				this.dialogFormVisible = false
                 this.title=''
 			},
-            downloadquestionnaire(row){         // 导出问卷
+            downloadquestionnaire(){
+                this.dialogFormVisible2 = true
+            },
+            downloadcancel(){
+                this.dialogFormVisible2 = false
+            },
+            downloadquestionnaire_doc(row){         // 导出问卷doc
 			    return new Promise((resolve, reject) => {
 			        this.$axios({
 						method: 'post',
@@ -210,6 +224,49 @@
 			            })
 						console.log(response)
 						let fileName = `${row.title}.doc`
+			            if (window.navigator.msSaveOrOpenBlob) {
+			                navigator.msSaveBlob(blob, fileName)
+			            } else {
+			                var link = document.createElement('a')
+			                link.href = window.URL.createObjectURL(blob)
+			                link.download = fileName
+			                link.click()
+			                window.URL.revokeObjectURL(link.href)
+			            }
+						},
+			            err => {
+							reject(err)
+			            }
+			        )
+			    })
+			},
+            downloadquestionnaire_pdf(row){         // 导出问卷pdf
+			    return new Promise((resolve, reject) => {
+			        this.$axios({
+						method: 'post',
+			            url: "http://47.94.221.172/getpdf/",
+						header:{
+							'Content-Type': 'application/x-www-form-urlencoded'
+						},
+			            data: {
+                            testid:row.testid
+                        },
+						transformRequest:[function(data){
+							let ret = ''
+							for(let it in data){
+								ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
+							}
+							return ret
+						}],
+			            responseType: 'blob'
+			        }).then(
+			            response => {
+			            resolve(response.data)
+			            let blob = new Blob([response.data], {
+							type: 'application/pdf'
+			            })
+						console.log(response)
+						let fileName = `${row.title}.pdf`
 			            if (window.navigator.msSaveOrOpenBlob) {
 			                navigator.msSaveBlob(blob, fileName)
 			            } else {
