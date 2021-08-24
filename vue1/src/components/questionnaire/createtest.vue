@@ -1,22 +1,23 @@
 <template>
 	<div class="hello">
 		<el-container>
-      <el-aside width="200px">
-        <el-menu
-            default-active="2"
-            class="el-menu-vertical-demo"
-            background-color="#545c64"
-            text-color="#fff"
-            active-text-color="#409EFF">
-          <el-submenu index="1">
-            <template slot="title">
-              <span>选择题</span>
-            </template>
-            <el-menu-item-group>
-              <el-menu-item @click="addSingle">单选题</el-menu-item>
-              <el-menu-item @click="addMulti">多选题</el-menu-item>
-            </el-menu-item-group>
-          </el-submenu>
+		<el-aside width="200px">
+			<el-menu
+			    default-active="2"
+			    class="el-menu-vertical-demo"
+			    background-color="#545c64"
+			    text-color="#fff"
+			    active-text-color="#409EFF"
+				style="margin-top: 20px;">
+			    <el-submenu index="1">
+					<template slot="title">
+						<span>选择题</span>
+					</template>
+					<el-menu-item-group>
+						<el-menu-item @click="addSingle">单选题</el-menu-item>
+						<el-menu-item @click="addMulti">多选题</el-menu-item>
+					</el-menu-item-group>
+				</el-submenu>
 
           <el-menu-item-group>
             <el-menu-item @click="addBlank">填空题</el-menu-item>
@@ -58,7 +59,7 @@
 								<!-- 答案 -->
 								<el-form-item
 									v-for="(opt, idx) in item.answers"
-									v-if="item.type!==2 && item.type !==3"
+									v-if="item.type!=2 && item.type !=3"
 									:key="idx"
 									:label="`选项${idx + 1}`"
 									:prop="`topic.${index}.answers.${idx}.value`"
@@ -86,7 +87,7 @@
 								</el-form-item>
 
 								<el-form-item>
-									<el-button v-show="item.type!==2 && item.type !==3" @click="addDomain(index)">新增选项</el-button>
+									<el-button v-show="item.type!=2 && item.type !=3" @click="addDomain(index)">新增选项</el-button>
 									<el-button @click="removeQuestion(index)">删除题目</el-button>
 									<el-button style="margin-left: 20px" @click="copy(item)">复制题目</el-button>
 									<br /><br />

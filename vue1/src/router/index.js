@@ -125,6 +125,10 @@ router.beforeResolve(async (to, from, next) => {
     if(to.path === '/login' || to.path === '/' || to.path === '/book-ground')
         // alert(token),
         next();
+	if(to.path === '/fill' && window.sessionStorage.getItem('username') == null && window.sessionStorage.getItem('ip') == null){
+		window.sessionStorage.setItem('testid', JSON.stringify(to.query.testid))
+		next('/login')
+	}
     else{
         if(token === null || token === '')
             next('/login')

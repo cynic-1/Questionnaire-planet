@@ -113,11 +113,17 @@ export default {
 			publisher:'',
 			tests: [],
 			username:this.$store.state.username,
-			isSubmit: '0'
+			isSubmit: '0',
+			visitorip: '',
+			isVisitor: false
 		};
 	},
 	mounted() {
 		this.testid = this.$route.query.testid
+		if(window.sessionStorage.getItem('ip') !== null){
+			this.isVisitor = true
+			this.visitorip = JSON.parse(window.sessionStorage.getItem('ip' || '[]'))
+		}
 		this.loadmyquestionnaire()
 	},
 	updated() {
