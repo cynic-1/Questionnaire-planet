@@ -19,13 +19,13 @@
 					</el-menu-item-group>
 				</el-submenu>
 
-				<el-menu-item-group>
-					<el-menu-item @click="addBlank">填空题</el-menu-item>
-					<el-menu-item @click="addRank">评分题</el-menu-item>
-				</el-menu-item-group>
+          <el-menu-item-group>
+            <el-menu-item @click="addBlank">填空题</el-menu-item>
+            <el-menu-item @click="addRank">评分题</el-menu-item>
+          </el-menu-item-group>
+        </el-menu>
+      </el-aside>
 
-			</el-menu>
-		</el-aside>
 		<el-main>
 			<el-form ref="modelForm" :rule="rules" :model="modelForm" label-position="right" label-width="100px">
 				<h1 class="quetitle">{{modelForm.title}}</h1>
@@ -59,7 +59,7 @@
 								<!-- 答案 -->
 								<el-form-item
 									v-for="(opt, idx) in item.answers"
-									v-if="item.type!=2 && item.type !=3"
+									v-if="item.type!==2 && item.type !==3"
 									:key="idx"
 									:label="`选项${idx + 1}`"
 									:prop="`topic.${index}.answers.${idx}.value`"
@@ -71,7 +71,7 @@
 								</el-form-item>
 
 								<el-form-item
-									v-else-if="item.type==3"
+									v-else-if="item.type===3"
 									:prop="`topic.${index}.answers.value`"
 									:rules="[
 										{ required: true, message: '请输入范围', trigger: 'blur' },
@@ -87,12 +87,12 @@
 								</el-form-item>
 
 								<el-form-item>
-									<el-button v-show="item.type!=2 && item.type !=3" @click="addDomain(index)">新增选项</el-button>
+									<el-button v-show="item.type!==2 && item.type !==3" @click="addDomain(index)">新增选项</el-button>
 									<el-button @click="removeQuestion(index)">删除题目</el-button>
 									<el-button style="margin-left: 20px" @click="copy(item)">复制题目</el-button>
 									<br /><br />
-									<el-button size=small @click="moveup(item)" v-if="index!=0">上移</el-button>
-									<el-button size=small @click="movedown(item)" v-if="index!=modelForm.topic.length-1">下移</el-button>
+									<el-button size=small @click="moveup(item)" v-if="index!==0">上移</el-button>
+									<el-button size=small @click="movedown(item)" v-if="index!==modelForm.topic.length-1">下移</el-button>
 								</el-form-item>
 							</el-collapse-item>
 						</el-collapse>
@@ -161,7 +161,7 @@
       window.addEventListener('beforeunload', this.leaveConfirm)
       window.addEventListener('unload', this.updateRecord)
 			let type = this.$route.query.type
-			if(type === '0'){
+			if(type === 0){
 				this.modelForm.title = this.$route.query.title
 				this.url = "http://47.94.221.172:80/publishquestionnaire/"
 			}
@@ -181,6 +181,7 @@
               userid: this.modelForm.userid,
               testid: this.testid
             };
+        xmlhttp.onreadystatechange=state_Change;
         xmlhttp.open("POST", this.url, false);
         xmlhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
         xmlhttp.send(JSON.stringify(data));
@@ -191,6 +192,22 @@
           e.returnValue = '关闭提示'
         }
         return '关闭提示'
+      },
+
+      state_Change()
+      {
+        if (xmlhttp.readyState==4)
+        {// 4 = "loaded"
+          if (xmlhttp.status==200)
+          {// 200 = OK
+            console.log('200_OK')
+          }
+          else
+          {
+            console.log("Problem retrieving XML data")
+            alert("Problem retrieving XML data");
+          }
+        }
       },
 
 			loadtest(){
@@ -314,6 +331,21 @@
 		left: 45%;
 		width: 200px;
 	}
+  .el-aside {
+    display: block;
+    position: absolute;
+  }
+  .el-main {
+    position: absolute;
+    width: 80%;
+    /*left: 200px;*/
+    /*right: 0;*/
+    margin-left: 5%;
+    right: 0;
+    top: 100px;
+    bottom: 0;
+    overflow-y: scroll;
+  }
 </style>
 
 

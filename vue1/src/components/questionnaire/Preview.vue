@@ -1,31 +1,30 @@
 <template>
-	<el-container>
-	    <el-main>
-	      <el-row>
-			  <h1>{{title}}</h1>
-	        <el-col :span="16">
+
+<el-card>
+			  <div class="test-title">{{title}}</div>
+
 				<div class="grid-content bg-purple">
 					<div v-for="(test, index) in tests" :key="index">
 						<p style="font-size: 24px;">{{index + 1}}.{{test.stem}}</p>
 						<p style="font-size: 10px">{{test.describe}}</p>
-						
-						<el-checkbox-group v-if="test.type == '1'" v-model="test.answers">
+
+						<el-checkbox-group v-if="test.type === '1'" v-model="test.answers">
 							<el-checkbox
 							v-for="(option,index) in test.answers"
 							:label="option.value"
 							:key="index"
 							>{{option.value}}</el-checkbox>
 						</el-checkbox-group>
-				
-						<el-radio-group v-else-if="test.type == '0'">
+
+						<el-radio-group v-else-if="test.type === '0'">
 							<el-radio
 								v-for="(option,index) in test.answers"
 								:label="option.value"
 								:key="index"
 							>{{option.value}}</el-radio>
 						</el-radio-group>
-						
-						<el-select v-else-if="test.type == '3'">
+
+						<el-select v-else-if="test.type === '3'">
 							<el-option
 							    v-for="item in 10"
 							    :key="item"
@@ -33,26 +32,23 @@
 							    :value="item">
 							</el-option>
 						</el-select>
-						
+
 						<div v-else>
 							<el-input  placeholder="请输入内容"  :disabled="true"></el-input>
 						</div>
 	            </div>
 	          </div>
-			  
+
 			  <br />
-			  
-			  <div>
+
+			  <div class="return-button">
 			    <el-button @click="back" type="primary">返回</el-button>
 			  </div>
-			  
+
 	          <br />
 
-	        </el-col>
-			
-	      </el-row>
-	    </el-main>
-	  </el-container>
+
+</el-card>
 </template>
 
 <script>
@@ -82,7 +78,7 @@ export default {
 					'Content-Type': 'application/x-www-form-urlencoded'
 				},
 				data:{
-					testid: this.testid,	
+					testid: this.testid,
 				},
 				transformRequest:[function(data){
 					let ret = ''
@@ -99,8 +95,8 @@ export default {
 				this.publisher = dic.userid
 				this.tests = dic.topic
 				console.log(this.tests[0].answers)
-				
-			})	
+
+			})
 		},
         back(){
             this.$router.push({path: "/home"});
@@ -110,11 +106,20 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-h1,
-h2 {
-  font-weight: normal;
+<style scoped lang="less">
+.test-title {
+  text-align: center;
+  font-size: xxx-large;
+  font-weight: bolder;
+  /*color: #6cd0b9;*/
+  color: #fce33f;
 }
+
+.return-button {
+  margin: 0 auto;
+  text-align: center;
+}
+
 ul {
   list-style-type: none;
   padding: 0;
@@ -125,6 +130,10 @@ li {
 }
 a {
   color: #42b983;
+}
+
+.el-col {
+  alignment: center;
 }
 /* 题目*/
 .tihao {

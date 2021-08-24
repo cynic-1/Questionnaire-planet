@@ -3,7 +3,7 @@
 
 		<el-aside width="200px">
 			<div class="create_qustionnaire">
-				<el-button style="width:100%;margin-top: 80px;" @click="create" type="primary" icon="el-icon-circle-plus">创建问卷</el-button>
+				<el-button style="width:100%;" @click="create" type="primary" icon="el-icon-circle-plus">创建问卷</el-button>
 				<el-dialog title="问卷标题" :visible.sync="dialogFormVisible" center>
 					<el-input v-model="title"  placeholder="请输入问卷标题"></el-input>
 					<div slot="footer" class="dialog-footer">
@@ -22,24 +22,26 @@
 				    active-text-color="#ffd04b"
 					:router="true">
 				    <el-menu-item index="/home">
+              <router-link to="/home">
                 	    <i class="el-icon-menu"></i>
-                	    <span slot="title">全部问卷</span>
+                	    <span>全部问卷</span>
+              </router-link>
                		</el-menu-item>
-					<el-menu-item index="/administerblog">
+					<el-menu-item>
+            <router-link to="/administerblog">
                 	    <i class="el-icon-star-on"></i>
-                	    <span slot="title">星标问卷</span>
+                	    <span>星标问卷</span>
+            </router-link>
                 	</el-menu-item>
-                	<el-menu-item index="/recyclebin">
+                	<el-menu-item>
+                    <router-link to="/recyclebin">
                 	    <i class="el-icon-document-delete"></i>
-                	    <span slot="title">回收站</span>
-                	</el-menu-item>
+                	    <span>回收站</span>
+                      </router-link>
+                  </el-menu-item>
 				</el-menu>
 			</div>
 		</el-aside>
-		<el-main>
-
-			<router-view></router-view>
-		</el-main>
 	</el-container>
 </template>
 
@@ -72,7 +74,7 @@
     }
 </script>
 
-<style>
+<style lang="less">
     .avatar-container{
 		background-color: #545c64;
 		color: #ffff;
@@ -87,4 +89,18 @@
 	.homemenu{
 		padding-top: 60px;
 	}
+    .router-link-active {
+      color: #ffd04b !important;
+      i {
+        color: #ffd04b;
+      }
+    }
+
+    .el-menu-item:hover {
+      color: #ffd04b !important;
+      i {
+        color: #ffd04b;
+      }
+    }
+
 </style>

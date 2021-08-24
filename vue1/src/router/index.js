@@ -85,7 +85,7 @@ const routes = [
       {
         path:'/createtest',
         name:'createtest',
-        component: () => import('@/components/questionnaire/createtest.vue'),
+        component: () => import('@/views/CreateTestPage'),
         meta: { title: '创建问卷' }
       },
       {
@@ -103,7 +103,7 @@ const routes = [
       {
         path:'/preview',
         name: 'preview',
-        component: () => import('@/components/questionnaire/Preview.vue'),
+        component: () => import('@/views/PreviewPage'),
         meta: { title: '预览' }
       }
 ]
@@ -125,6 +125,10 @@ router.beforeResolve(async (to, from, next) => {
     if(to.path === '/login' || to.path === '/' || to.path === '/book-ground')
         // alert(token),
         next();
+	if(to.path === '/fill' && window.sessionStorage.getItem('username') == null && window.sessionStorage.getItem('ip') == null){
+		window.sessionStorage.setItem('testid', JSON.stringify(to.query.testid))
+		next('/login')
+	}
     else{
         if(token === null || token === '')
             next('/login')

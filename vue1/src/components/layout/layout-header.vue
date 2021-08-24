@@ -110,6 +110,7 @@
 			window.sessionStorage.removeItem('HasLogin')
             sessionStorage.removeItem('Authorization')
             sessionStorage.removeItem('siteInfo')
+			window.sessionStorage.removeItem('ip')
 			this.$router.go(0);
             /*self.$router.push({
               path:'/'
@@ -126,29 +127,33 @@
         }
       },
       travelerLogin(){
-        let self = this
-        self.$axios({
-            method: 'get',
-            url: 'api/login_register/loginTraveler/'
-        }).then(res => {
-              sessionStorage.setItem('Authorization', /* "Bearer " + */ res.data.token)
-              this.$store.commit('SET_LOG_STATE', true)
-              this.$store.commit('SET_SITE_INFO', res.data)
-              sessionStorage.setItem('siteInfo', JSON.stringify(res.data))
-              return;//这个可能有用可能没用
-        }).then(()=>{
-          self.$router.push({
-                path:'/'
-              },
+        //let self = this
+        /*self.$axios({
+            method: 'post',
+            url: 'http://47.94.221.172:80/Tourists',
+			header:{
+				'Content-Type': 'application/x-www-form-urlencoded'
+			}
+        }).then(res => {*/
+              //sessionStorage.setItem('Authorization', /* "Bearer " + */ 'Authorization')
+              //this.$store.commit('SET_LOG_STATE', true)
+              //this.$store.commit('SET_SITE_INFO', res.data)
+              //sessionStorage.setItem('siteInfo', JSON.stringify(res.data.ip))
+			  //window.sessionStorage.setItem('username', JSON.stringify('19231165'))
+              //return;//这个可能有用可能没用
+        //}).then(()=>{
+          //self.$router.push({
+                //path:'/'
+              //},
               // 没有这两句会Uncaught (in promise) undefined
-              onComplete => {},
-              onAbort => {}
-          )
-        }).catch(err => {
+              //onComplete => {},
+              //onAbort => {}
+          //)
+       /* }).catch(err => {
           console.log(err)
-        })
+        })*/
         this.$Notice.open({
-          title: '游客成功登录'
+          title: '游客登录暂未开放'
         })
       },
       checkLogin(){

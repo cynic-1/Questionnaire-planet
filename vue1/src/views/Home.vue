@@ -32,7 +32,11 @@
         methods: {
         },
         mounted() {
-			console.log(this.$store.state.hasLogin)
+			if(window.sessionStorage.getItem('testid') !== null){
+				const id = JSON.parse(window.sessionStorage.getItem('testid' || '[]'))
+				window.sessionStorage.removeItem('testid')
+				this.$router.push({path: "/fill", query: {testid: id}})
+			}
         },
         watch:{
       }
