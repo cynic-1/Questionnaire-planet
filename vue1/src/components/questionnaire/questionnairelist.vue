@@ -216,7 +216,7 @@
 					},
 					data:{
 						testid:row.testid,
-                        title:this.title,
+            title:this.title,
 					},
 					transformRequest:[function(data){
 						let ret = ''
@@ -225,6 +225,9 @@
 						}
 						return ret
 					    }],
+                    }).then(() => {
+                      this.$message.success('复制成功')
+                      this.loadquestionnaire()
                     })
                     this.$message.success('复制成功')
                     this.dialogFormVisible = false

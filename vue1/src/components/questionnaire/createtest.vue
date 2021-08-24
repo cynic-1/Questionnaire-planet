@@ -170,17 +170,17 @@
 				this.loadtest()
 			}
 		},
-    mounted() {
-      let type = this.$route.query.type
-      if(type == 0){
-        this.modelForm.title = this.$route.query.title
-        this.url = "http://47.94.221.172:80/publishquestionnaire/"
-      }
-      else{
-        this.testid = this.$route.query.testid
-        this.loadtest()
-      }
-    },
+    // mounted() {
+    //   let type = this.$route.query.type
+    //   if(type == 0){
+    //     this.modelForm.title = this.$route.query.title
+    //     this.url = "http://47.94.221.172:80/publishquestionnaire/"
+    //   }
+    //   else{
+    //     this.testid = this.$route.query.testid
+    //     this.loadtest()
+    //   }
+    // },
     methods: {
 		  updateRecord() {
         if(this.modelForm.topic.length === 0)
