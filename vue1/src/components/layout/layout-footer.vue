@@ -37,7 +37,7 @@
 
 <style scoped lang="less">
 #layout-footer{
-    padding: 2%;
+    padding: 4%;
     border-top: 1px solid #F7F7F7;
     font-size: 13px;
     color: #9c9c9c;

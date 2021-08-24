@@ -33,7 +33,7 @@
                         <el-table-column
                             prop="sequenced"
                             label="回收量"
-                            width="180">
+                            width="125">
                          </el-table-column>
                         <el-table-column
                             fixed="right"
@@ -224,7 +224,6 @@
     .box-card-recyclebin {
 	    width: 840px;
         height: 600px;
-		margin-top: 30px;
 	}
 
 </style>
