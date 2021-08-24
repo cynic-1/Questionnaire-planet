@@ -138,12 +138,12 @@
 					    }],
                     }).then((res)=>{
                     this.avator = 'http://47.94.221.172/' + res.data.path;
-                    
+
 				})
                 this.dialogFormVisible1 = true
             },
             sharequestionnaire(row){
-                
+
             },
             sharecancel(){
                 this.dialogFormVisible1 = false
@@ -367,7 +367,7 @@
     .box-card-questionnaire {
 	    width: 984px;
         height: 600px;
-		margin-top: 30px;
+		/*margin-top: 30px;*/
 	}
     .demo-table-expand {
         width: 15000px;

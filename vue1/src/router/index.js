@@ -103,7 +103,7 @@ const routes = [
       {
         path:'/preview',
         name: 'preview',
-        component: () => import('@/components/questionnaire/Preview.vue'),
+        component: () => import('@/views/PreviewPage'),
         meta: { title: '预览' }
       }
 ]
