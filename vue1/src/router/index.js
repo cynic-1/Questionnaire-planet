@@ -85,7 +85,7 @@ const routes = [
       {
         path:'/createtest',
         name:'createtest',
-        component: () => import('@/components/questionnaire/createtest.vue'),
+        component: () => import('@/views/CreateTestPage'),
         meta: { title: '创建问卷' }
       },
       {
