@@ -1,7 +1,7 @@
 <template>
     <div id="layout-header" class="fixed" @click.stop="mobileShow=false">
         <div class="site-logo">
-            <router-link to="/home">
+            <router-link to="/">
 <!--                <img src="@/assets/site-logo.svg" alt="">-->
               <img src="@/assets/logo.png" alt="">
                 <p class="site-name">天问 | TechWin</p>

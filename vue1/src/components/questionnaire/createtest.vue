@@ -59,7 +59,7 @@
 								<!-- 答案 -->
 								<el-form-item
 									v-for="(opt, idx) in item.answers"
-									v-if="item.type!==2 && item.type !==3"
+									v-if="item.type!=2 && item.type !=3"
 									:key="idx"
 									:label="`选项${idx + 1}`"
 									:prop="`topic.${index}.answers.${idx}.value`"
@@ -87,7 +87,7 @@
 								</el-form-item>
 
 								<el-form-item>
-									<el-button v-show="item.type!==2 && item.type !==3" @click="addDomain(index)">新增选项</el-button>
+									<el-button v-show="item.type!=2 && item.type !=3" @click="addDomain(index)">新增选项</el-button>
 									<el-button @click="removeQuestion(index)">删除题目</el-button>
 									<el-button style="margin-left: 20px" @click="copy(item)">复制题目</el-button>
 									<br /><br />
