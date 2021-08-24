@@ -4,11 +4,11 @@
 			  <div class="test-title">{{title}}</div>
 
 				<div class="grid-content bg-purple">
-					<div v-for="(test, index) in tests" :key="index">
-						<p style="font-size: 24px;">{{index + 1}}.{{test.stem}}</p>
-						<p style="font-size: 10px">{{test.describe}}</p>
+					<div class="element" v-for="(test, index) in tests" :key="index">
+						<p style="font-size: 24px; margin-top: 10px">{{index + 1}}.{{test.stem}}</p>
+						<p style="font-size: 10px; margin-top: 10px;">{{test.describe}}</p>
 
-						<el-checkbox-group v-if="test.type === '1'" v-model="test.answers">
+						<el-checkbox-group v-if="test.type === 1" v-model="test.answers">
 							<el-checkbox
 							v-for="(option,index) in test.answers"
 							:label="option.value"
@@ -16,7 +16,7 @@
 							>{{option.value}}</el-checkbox>
 						</el-checkbox-group>
 
-						<el-radio-group v-else-if="test.type === '0'">
+						<el-radio-group v-else-if="test.type === 0">
 							<el-radio
 								v-for="(option,index) in test.answers"
 								:label="option.value"
@@ -24,7 +24,7 @@
 							>{{option.value}}</el-radio>
 						</el-radio-group>
 
-						<el-select v-else-if="test.type === '3'">
+						<el-select v-else-if="test.type === 3">
 							<el-option
 							    v-for="item in 10"
 							    :key="item"
@@ -119,7 +119,9 @@ export default {
   margin: 0 auto;
   text-align: center;
 }
-
+.element {
+  margin-top: 10px;
+}
 ul {
   list-style-type: none;
   padding: 0;

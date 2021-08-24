@@ -2,8 +2,8 @@
 	<el-container>
 	    <el-main>
 	      <el-row>
-			  <h1>{{title}}</h1>
-	        <el-col :span="16">
+          <el-card>
+            <div class="test-title">{{title}}</div>
 				<div class="grid-content bg-purple">
 					<div v-for="(test, index) in tests" :key="index">
 						<p style="font-size: 24px;">{{index + 1}}.{{test.stem}}</p>
@@ -16,7 +16,7 @@
 							:key="index"
 							>{{option.value}}</el-checkbox>
 						</el-checkbox-group>
-						
+
 						<el-radio-group v-else-if="test.type == '0'" v-model="test.useranswer">
 							<el-radio
 								v-for="(option,index) in test.answers"
@@ -24,7 +24,7 @@
 								:key="index"
 							>{{option.value}}</el-radio>
 						</el-radio-group>
-						
+
 						<el-select v-else-if="test.type == '3'" v-model="test.useranswer">
 							<el-option
 							    v-for="item in 10"
@@ -33,48 +33,72 @@
 							    :value="item">
 							</el-option>
 						</el-select>
-						
+
 						<div v-else>
 							<el-input  placeholder="请输入内容" v-model="test.useranswer"></el-input>
 						</div>
 	            </div>
 	          </div>
-			  
+
 			  <br />
-			  
-			  <div>
+
+			  <div class="return-button">
 			    <el-button @click="save" type="primary">保存</el-button>
 			    <el-button @click="submitCount" type="success">提交问卷</el-button>
 			  </div>
-			  
+
 	          <br />
 
-	        </el-col>
-			
-	        <el-col :span="8">
-	          <div class="grid-content bg-purple-light">
-	            <h3>题号:</h3>
-	            <div class="tihao">
-	              <!-- <span class="ti active">{{index + 1}}</span> -->
-	              <div v-for="(test,index) in tests" :key="index">
-	                <span v-if="test.useranswer.length == '0' && test.mustdo == 1" class="ti">
-						{{index + 1}}
-	                </span>
-					<span v-else-if="test.useranswer.length == '0' && test.mustdo == 0" class="ti unkey">
-						{{index + 1}}
-					</span>
-					
-					<span v-else-if="test.useranswer.length == '0' && test.mustdo == 0" class="ti unkey">
-						{{index + 1}}
-					</span>
-	                <span v-else class="ti active">
-						{{index + 1}}
-					</span>
-					
-	              </div>
-	            </div>
-	          </div>
-	        </el-col>
+
+<!--            <div class="grid-content bg-purple-light">-->
+<!--              <h3>题号:</h3>-->
+<!--              <div class="tihao">-->
+<!--                &lt;!&ndash; <span class="ti active">{{index + 1}}</span> &ndash;&gt;-->
+<!--                <div v-for="(test,index) in tests" :key="index">-->
+<!--                  <span v-if="test.useranswer.length == '0' && test.mustdo == 1" class="ti">-->
+<!--            {{index + 1}}-->
+<!--                  </span>-->
+<!--          <span v-else-if="test.useranswer.length == '0' && test.mustdo == 0" class="ti unkey">-->
+<!--            {{index + 1}}-->
+<!--          </span>-->
+
+<!--          <span v-else-if="test.useranswer.length == '0' && test.mustdo == 0" class="ti unkey">-->
+<!--            {{index + 1}}-->
+<!--          </span>-->
+<!--                  <span v-else class="ti active">-->
+<!--            {{index + 1}}-->
+<!--          </span>-->
+
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
+
+          </el-card>
+
+<!--	        <el-col :span="8">-->
+<!--	          <div class="grid-content bg-purple-light">-->
+<!--	            <h3>题号:</h3>-->
+<!--	            <div class="tihao">-->
+<!--	              &lt;!&ndash; <span class="ti active">{{index + 1}}</span> &ndash;&gt;-->
+<!--	              <div v-for="(test,index) in tests" :key="index">-->
+<!--	                <span v-if="test.useranswer.length == '0' && test.mustdo == 1" class="ti">-->
+<!--						{{index + 1}}-->
+<!--	                </span>-->
+<!--					<span v-else-if="test.useranswer.length == '0' && test.mustdo == 0" class="ti unkey">-->
+<!--						{{index + 1}}-->
+<!--					</span>-->
+
+<!--					<span v-else-if="test.useranswer.length == '0' && test.mustdo == 0" class="ti unkey">-->
+<!--						{{index + 1}}-->
+<!--					</span>-->
+<!--	                <span v-else class="ti active">-->
+<!--						{{index + 1}}-->
+<!--					</span>-->
+
+<!--	              </div>-->
+<!--	            </div>-->
+<!--	          </div>-->
+<!--	        </el-col>-->
 	      </el-row>
 	    </el-main>
 	  </el-container>
@@ -110,7 +134,7 @@ export default {
 				},
 				data:{
 					testid: this.testid,
-					username: this.username,	
+					username: this.username,
 				},
 				transformRequest:[function(data){
 					let ret = ''
@@ -141,7 +165,7 @@ export default {
 						}
 					}
 				}
-			})	
+			})
 		},
 		save(){
 			const usercard = []
@@ -179,7 +203,7 @@ export default {
 					return;
 				}
 			})
-		
+
 			if(isComplete){
 				// 答题完整,可以提交,在这里进行提交数据操作
 				this.isSubmit = '1'
@@ -196,6 +220,21 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+
+.test-title {
+  text-align: center;
+  font-size: xxx-large;
+  font-weight: bolder;
+  /*color: #6cd0b9;*/
+  color: #fce33f;
+}
+.return-button {
+  margin: 0 auto;
+  text-align: center;
+}
+.grid-content {
+
+}
 h1,
 h2 {
   font-weight: normal;

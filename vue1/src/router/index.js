@@ -92,19 +92,19 @@ const routes = [
         path:'/report',
         name:'report',
         component: () => import('@/components/questionnaire/report.vue'),
-        meta: { title: '报告' }
+        meta: { title: '生成报告' }
       },
       {
         path:'/fill',
         name: 'fill',
-        component: () => import('@/components/questionnaire/fill.vue'),
-        meta: { title: '填充' }
+        component: () => import('@/views/FillTest'),
+        meta: { title: '填写问卷' }
       },
       {
         path:'/preview',
         name: 'preview',
         component: () => import('@/views/PreviewPage'),
-        meta: { title: '预览' }
+        meta: { title: '预览问卷' }
       }
 ]
 
