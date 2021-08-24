@@ -29,6 +29,14 @@
                                     <el-button type="text" class="el-icon-data-analysis" @click="checkreport(props.row)">查看数据分析</el-button>
                                     <el-button type="text" class="el-icon-download" @click="downloadquestionnaire(props.row)">导出</el-button>
                                     <el-button type="text" class="el-icon-share" @click="share(props.row)">分享</el-button>
+                                    <el-dialog title="问卷地址及二维码" :visible.sync="dialogFormVisible1" center :modal-append-to-body="false" style="margin-top: 30px;">
+					                    <div>{{link}}</div>
+                                        <el-avatar shape="square" :size="100" :src="avator"></el-avatar>
+					                    <div slot="footer" class="dialog-footer">
+					                        <el-button @click="sharecancel">取 消</el-button>
+					                        <el-button type="primary" @click="sharequestionnaire(props.row)">下载二维码</el-button>
+					                    </div>
+				                    </el-dialog>
                                     <el-button type="text" class="el-icon-document-copy" @click="copy">复制</el-button>
                                     <el-dialog title="问卷标题" :visible.sync="dialogFormVisible" center :modal-append-to-body="false" style="margin-top: 30px;">
 					                    <el-input v-model="title"  placeholder="请输入问卷标题"></el-input>
@@ -94,11 +102,14 @@
         data(){
             return{
                 dialogFormVisible: false,
+                dialogFormVisible1: false,
                 title:'',
                 key:'',
                 tableData:[],
                 username: this.$store.state.username,
                 memberSelection: [],
+                link:'',
+                avator:'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png',
             }
         },
 		mounted: function () {
@@ -106,10 +117,37 @@
 		},
         methods:{
             share(row){
-				var link = `http://localhost:8080/#/fill?testid=${row.testid}`
-                this.$alert(`${link}`, '分享问卷链接为', {
-					confirmButtonText: '确定',
-				});
+                var _this=this
+				this.link = `http://localhost:8080/#/fill?testid=${row.testid}`
+                this.$axios({
+					method:"post",
+					url:"http://47.94.221.172/makeqrcode/",
+					header:{
+						'Content-Type': 'application/x-www-form-urlencoded'
+					},
+					data:{
+						testid:row.testid,
+                        url:this.link,
+					},
+					transformRequest:[function(data){
+						let ret = ''
+						for(let it in data){
+							ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
+						}
+						return ret
+					    }],
+                    }).then((res)=>{
+                    this.avator = 'http://47.94.221.172/' + res.data.path;
+                    
+				})
+                this.dialogFormVisible1 = true
+            },
+            sharequestionnaire(row){
+                
+            },
+            sharecancel(){
+                this.dialogFormVisible1 = false
+                this.link=''
             },
             checkreport(row){   // 查看数据统计
                 var _this=this
