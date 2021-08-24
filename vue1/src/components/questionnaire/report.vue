@@ -72,7 +72,7 @@ export default {
 	methods: {
         backhome(){
             var _this=this
-            this.$router.push({path: "/questionnairelist"})
+            this.$router.push({path: "/home"})
         },
 		downloaddate(){
                 this.dialogFormVisible3 = true
