@@ -25,7 +25,7 @@ export default {
 <style scoped lang="less">
 .recycle {
   display: flex;
-  padding-top: 60px;
+  padding-top: 30px;
   .left {
     width: 20%;
     height: 40%;
