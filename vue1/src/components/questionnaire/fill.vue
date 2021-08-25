@@ -45,22 +45,86 @@
 			  <br />
 
 			  <div class="return-button">
-			    <el-button @click="save" type="primary">保存</el-button>
-			    <el-button @click="submitCount" type="success">提交问卷</el-button>
+			    <el-button  v-if="!isVisitor" @click="save({
+					testid: testid,
+					userid: username,
+					issubmit: isSubmit
+				},`http://47.94.221.172:80/userfillquestionnaire/`)" type="primary">保存</el-button>
+				<el-button  v-else @click="save({
+					testid: testid,
+					visitorip: visitorip,
+					issubmit: isSubmit
+				},`http://47.94.221.172:80/visitorfillquestionnaire/`)" type="primary">保存</el-button>
+			    <el-button v-if="!isVisitor" @click="submitCount({
+					testid: testid,
+					userid: username,
+					issubmit: isSubmit
+				},`http://47.94.221.172:80/userfillquestionnaire/`)" type="success">提交问卷</el-button>
+				<el-button v-else @click="submitCount({
+					testid: testid,
+					visitorip: visitorip,
+					issubmit: isSubmit
+				},`http://47.94.221.172:80/visitorfillquestionnaire/`)" type="success">提交问卷</el-button>
 			  </div>
 
 	          <br />
 
+
+<!--            <div class="grid-content bg-purple-light">-->
+<!--              <h3>题号:</h3>-->
+<!--              <div class="tihao">-->
+<!--                &lt;!&ndash; <span class="ti active">{{index + 1}}</span> &ndash;&gt;-->
+<!--                <div v-for="(test,index) in tests" :key="index">-->
+<!--                  <span v-if="test.useranswer.length == '0' && test.mustdo == 1" class="ti">-->
+<!--            {{index + 1}}-->
+<!--                  </span>-->
+<!--          <span v-else-if="test.useranswer.length == '0' && test.mustdo == 0" class="ti unkey">-->
+<!--            {{index + 1}}-->
+<!--          </span>-->
+
+<!--          <span v-else-if="test.useranswer.length == '0' && test.mustdo == 0" class="ti unkey">-->
+<!--            {{index + 1}}-->
+<!--          </span>-->
+<!--                  <span v-else class="ti active">-->
+<!--            {{index + 1}}-->
+<!--          </span>-->
+
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
+
           </el-card>
 
+<!--	        <el-col :span="8">-->
+<!--	          <div class="grid-content bg-purple-light">-->
+<!--	            <h3>题号:</h3>-->
+<!--	            <div class="tihao">-->
+<!--	              &lt;!&ndash; <span class="ti active">{{index + 1}}</span> &ndash;&gt;-->
+<!--	              <div v-for="(test,index) in tests" :key="index">-->
+<!--	                <span v-if="test.useranswer.length == '0' && test.mustdo == 1" class="ti">-->
+<!--						{{index + 1}}-->
+<!--	                </span>-->
+<!--					<span v-else-if="test.useranswer.length == '0' && test.mustdo == 0" class="ti unkey">-->
+<!--						{{index + 1}}-->
+<!--					</span>-->
+
+<!--					<span v-else-if="test.useranswer.length == '0' && test.mustdo == 0" class="ti unkey">-->
+<!--						{{index + 1}}-->
+<!--					</span>-->
+<!--	                <span v-else class="ti active">-->
+<!--						{{index + 1}}-->
+<!--					</span>-->
+
+<!--	              </div>-->
+<!--	            </div>-->
+<!--	          </div>-->
+<!--	        </el-col>-->
 	      </el-row>
 	    </el-main>
 	  </el-container>
 </template>
 
 <script>
-import {aes_decrypt, aes_encrypt} from "@/utils/encryptURL";
-
 export default {
 	data() {
 		return {
@@ -75,29 +139,35 @@ export default {
 		};
 	},
 	mounted() {
-		// this.testid = this.$route.query.testid
-		this.testid = aes_decrypt(this.$route.query.testid, 'cynic', false)
+		this.testid = this.$route.query.testid
 		if(window.sessionStorage.getItem('ip') !== null){
 			this.isVisitor = true
 			this.visitorip = JSON.parse(window.sessionStorage.getItem('ip' || '[]'))
+			this.loadmyquestionnaire({
+					visitorip: this.visitorip,
+					testid: this.testid,
+				},"http://47.94.221.172:80/Touristsgettest/")
 		}
-		this.loadmyquestionnaire()
+		else{
+			this.loadmyquestionnaire({
+					testid: this.testid,
+					username: this.username,
+				},"http://47.94.221.172:80/usergettest/")
+		}
 	},
 	updated() {
 		//console.log(tests);
 	},
 	methods: {
-		loadmyquestionnaire(){
+		loadmyquestionnaire(var1,var2){
+			var _this = this
 			this.$axios({
 				method:"post",
-				url:"http://47.94.221.172:80/usergettest/",
+				url: var2,
 				header:{
 					'Content-Type': 'application/x-www-form-urlencoded'
 				},
-				data:{
-					testid: this.testid,
-					username: this.username,
-				},
+				data: var1,
 				transformRequest:[function(data){
 					let ret = ''
 					for(let it in data){
@@ -129,23 +199,19 @@ export default {
 				}
 			})
 		},
-		save(){
+		save(var1,var2){
 			const usercard = []
 			for(let item of this.tests){
 				usercard.push({questionid:item.questionid, useranswer:item.useranswer})
 			}
+			this.$set(var1, 'usercard', usercard)
 			this.$axios({
 				method:"post",
-				url:"http://47.94.221.172:80/userfillquestionnaire/",
+				url: var2,
 				header:{
 					'Content-Type': 'application/x-www-form-urlencoded'
 				},
-				data:{
-					testid: this.testid,
-					userid: this.username,
-					usercard: usercard,
-					issubmit: this.isSubmit
-				},
+				data: var1,
 				traditinal: true,
 				paramsSerializer: data => {
 					return qs.stringify(data, { indices: false })
@@ -156,7 +222,7 @@ export default {
 				this.$message.success("保存成功")
 			})
 		},
-		submitCount() {
+		submitCount(var1, var2) {
 			// 是否答完
 			let isComplete = true;
 			this.tests.forEach((val,i) =>{
@@ -169,7 +235,7 @@ export default {
 			if(isComplete){
 				// 答题完整,可以提交,在这里进行提交数据操作
 				this.isSubmit = '1'
-				this.save()
+				this.save(var1, var2)
 				alert('提交成功!');
 				this.$router.push('/home')
 			}else{
