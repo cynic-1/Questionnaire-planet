@@ -129,7 +129,7 @@ export default {
         methods:{
             share(row){
                 let encTestId = aes_encrypt(row.testid, 'cynic', false)
-				this.link = `http://47.94.221.172/#/fill?testid=${encTestId}`
+				this.link = `http://localhost:8080/#/fill?testid=${encTestId}`
                 this.$axios({
 					method:"post",
 					url:"http://47.94.221.172/makeqrcode/",

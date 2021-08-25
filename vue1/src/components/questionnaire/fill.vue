@@ -125,6 +125,8 @@
 </template>
 
 <script>
+import {aes_decrypt} from "@/utils/encryptURL";
+
 export default {
 	data() {
 		return {
@@ -139,7 +141,8 @@ export default {
 		};
 	},
 	mounted() {
-		this.testid = this.$route.query.testid
+		// this.testid = this.$route.query.testid
+		this.testid = aes_decrypt(this.$route.query.testid, 'cynic', false)
 		if(window.sessionStorage.getItem('ip') !== null){
 			this.isVisitor = true
 			this.visitorip = JSON.parse(window.sessionStorage.getItem('ip' || '[]'))
@@ -160,7 +163,6 @@ export default {
 	},
 	methods: {
 		loadmyquestionnaire(var1,var2){
-			var _this = this
 			this.$axios({
 				method:"post",
 				url: var2,
