@@ -16,7 +16,6 @@
 							v-for="(option,index) in test.answers"
 							:label="option.value"
 							:key="index"
-							:value="index"
 							>{{option.value}}</el-checkbox>
 						</el-checkbox-group>
 
@@ -59,12 +58,12 @@
 			    <el-button v-if="!isVisitor" @click="submitCount({
 					testid: testid,
 					userid: username,
-					issubmit: '1'
+					issubmit: isSubmit
 				},`http://47.94.221.172:80/userfillquestionnaire/`)" type="success">提交问卷</el-button>
 				<el-button v-else @click="submitCount({
 					testid: testid,
 					visitorip: visitorip,
-					issubmit: '1'
+					issubmit: isSubmit
 				},`http://47.94.221.172:80/visitorfillquestionnaire/`)" type="success">提交问卷</el-button>
 			  </div>
 
@@ -237,6 +236,7 @@ export default {
 
 			if(isComplete){
 				// 答题完整,可以提交,在这里进行提交数据操作
+				this.isSubmit = '1'
 				this.save(var1, var2)
 				alert('提交成功!');
 				this.$router.push('/home')
