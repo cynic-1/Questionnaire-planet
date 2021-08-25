@@ -2,7 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0e372b6f-a806-4342-a93a-e202f699ceb5" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/vue1/src/components/questionnaire/fill.vue" beforeDir="false" afterPath="$PROJECT_DIR$/vue1/src/components/questionnaire/fill.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/vue1/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/public/favicon.ico" beforeDir="false" afterPath="$PROJECT_DIR$/vue1/public/favicon.ico" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/src/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/vue1/src/main.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/vue.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/vue1/vue.config.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
