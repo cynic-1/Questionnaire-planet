@@ -31,51 +31,6 @@ const routes = [
         component: () => import('../views/loginRegister.vue'),
         meta: { title: '注册登录'}
     },
-    // {
-    //     path: '/personalCenter/:username',
-    //     name: 'personalCenter',
-    //     component: () => import('../views/PersonalCenter1.vue'),
-    //     meta: { title: '个人中心', params: 'username'}
-    // },
-    // {
-    //     path: '/search/:type/:words',
-    //     name: 'search',
-    //     component: () => import('../views/Home.vue'),
-    //     meta: { title: '搜索', params: {type: 'type', words: 'words'}}
-    // },
-    // {
-    //     path: '/article/:id',
-    //     name: 'article',
-    //     component: () => import('../views/Articles.vue'),
-    //     meta: { title: '文章', params: 'id'}
-    // },
-    // {
-    //     path: '/discuss/:id',
-    //     name: 'discuss',
-    //     component: () => import('../views/Discuss.vue'),
-    //     meta: { title: '讨论', params: 'id'}
-    // },
-    // {
-    //     path: '/books/tag/:tag',
-    //     name: 'tag',
-    //     component: () => import('../views/book-sort'),
-    //     meta: { title: '书籍分类', params: 'tag'}
-    // },
-    // {
-    //     path:'/questionnairelist',
-    //     name: 'questionnairelist',
-    //     component: () => import('../views/questionnaire/questionnairelist.vue'),
-    //     meta: { title: 'fuck'}
-    // },
-    // {
-    //     path: '/personal_home',
-    //     name: 'personal_home',
-    //     component: () => import('@/components/questionnaire/leftBlockAtHome'),
-    //     children:[
-    //         {path:'/questionnairelist',component:() => import('@/components/questionnaire/questionnairelist')},
-    //         {path:'/recyclebin',component: () => import('@/components/questionnaire/RecycleBin')},
-    //     ]
-    //   },
     {
         path: '/recycleBin',
         name: 'recycleBin',
@@ -109,7 +64,7 @@ const routes = [
 ]
 
 const router = new VueRouter({
-    //mode: 'history',
+    mode: 'history',
     base: process.env.BASE_URL,
     routes
 })

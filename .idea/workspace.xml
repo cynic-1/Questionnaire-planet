@@ -3,8 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="0e372b6f-a806-4342-a93a-e202f699ceb5" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue1/public/favicon1.ico" beforeDir="false" afterPath="$PROJECT_DIR$/vue1/public/favicon.ico" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue1/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/vue1/public/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/src/router/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/vue1/src/router/index.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,7 +33,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="js.linters.configure.manually.selectedeslint" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/vue1/src/assets" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../TopSEcase" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.standard" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
@@ -65,6 +64,7 @@
       <workItem from="1629595807940" duration="19789000" />
       <workItem from="1629619974265" duration="7449000" />
       <workItem from="1629680973270" duration="5527000" />
+      <workItem from="1629853938022" duration="366000" />
     </task>
     <servers />
   </component>
