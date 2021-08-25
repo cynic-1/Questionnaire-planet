@@ -37,10 +37,11 @@
 				                    </el-dialog>
                                     <el-button type="text" class="el-icon-share" @click="share(props.row)">分享</el-button>
                                     <el-dialog title="问卷地址及二维码" :visible.sync="dialogFormVisible1" center :modal-append-to-body="false" style="margin-top: 30px;">
-					                          <div>{{link}}</div>
+					                          <div id="link" >{{link}}</div>
                                       <el-avatar shape="square" :size="100" :src="avator"></el-avatar>
 					                    <div slot="footer" class="dialog-footer">
 					                        <el-button @click="sharecancel">取 消</el-button>
+                                            <el-button class="btn" @click="copyLink" data-clipboard-action="copy" data-clipboard-target="#link">复制链接</el-button>
 					                        <el-button type="primary" @click="sharequestionnaire(props.row)">下载二维码</el-button>
 					                    </div>
 				                    </el-dialog>
@@ -106,6 +107,7 @@
 
 <script>
 import {aes_encrypt} from "@/utils/encryptURL";
+import Clipboard from 'clipboard'
 
 export default {
         data(){
@@ -127,6 +129,15 @@ export default {
 			this.loadquestionnaire()
 		},
         methods:{
+            copyLink () {
+                let clipboard = new Clipboard('.btn')
+                clipboard.on('success', e => {
+                clipboard.destroy() // 使用destroy可以清楚缓存
+                })
+                clipboard.on('error', e => {
+                clipboard.destroy()
+                })
+            },
             share(row){
                 let encTestId = aes_encrypt(row.testid, 'cynic', false)
 				this.link = `http://localhost:8080/#/fill?testid=${encTestId}`
@@ -138,7 +149,7 @@ export default {
 					},
 					data:{
 						testid:row.testid,
-            url:this.link,
+                        url:this.link,
 					},
 					transformRequest:[function(data){
 						let ret = ''
