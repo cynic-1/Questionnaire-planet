@@ -51,62 +51,16 @@
 
 	          <br />
 
-
-<!--            <div class="grid-content bg-purple-light">-->
-<!--              <h3>题号:</h3>-->
-<!--              <div class="tihao">-->
-<!--                &lt;!&ndash; <span class="ti active">{{index + 1}}</span> &ndash;&gt;-->
-<!--                <div v-for="(test,index) in tests" :key="index">-->
-<!--                  <span v-if="test.useranswer.length == '0' && test.mustdo == 1" class="ti">-->
-<!--            {{index + 1}}-->
-<!--                  </span>-->
-<!--          <span v-else-if="test.useranswer.length == '0' && test.mustdo == 0" class="ti unkey">-->
-<!--            {{index + 1}}-->
-<!--          </span>-->
-
-<!--          <span v-else-if="test.useranswer.length == '0' && test.mustdo == 0" class="ti unkey">-->
-<!--            {{index + 1}}-->
-<!--          </span>-->
-<!--                  <span v-else class="ti active">-->
-<!--            {{index + 1}}-->
-<!--          </span>-->
-
-<!--                </div>-->
-<!--              </div>-->
-<!--            </div>-->
-
           </el-card>
 
-<!--	        <el-col :span="8">-->
-<!--	          <div class="grid-content bg-purple-light">-->
-<!--	            <h3>题号:</h3>-->
-<!--	            <div class="tihao">-->
-<!--	              &lt;!&ndash; <span class="ti active">{{index + 1}}</span> &ndash;&gt;-->
-<!--	              <div v-for="(test,index) in tests" :key="index">-->
-<!--	                <span v-if="test.useranswer.length == '0' && test.mustdo == 1" class="ti">-->
-<!--						{{index + 1}}-->
-<!--	                </span>-->
-<!--					<span v-else-if="test.useranswer.length == '0' && test.mustdo == 0" class="ti unkey">-->
-<!--						{{index + 1}}-->
-<!--					</span>-->
-
-<!--					<span v-else-if="test.useranswer.length == '0' && test.mustdo == 0" class="ti unkey">-->
-<!--						{{index + 1}}-->
-<!--					</span>-->
-<!--	                <span v-else class="ti active">-->
-<!--						{{index + 1}}-->
-<!--					</span>-->
-
-<!--	              </div>-->
-<!--	            </div>-->
-<!--	          </div>-->
-<!--	        </el-col>-->
 	      </el-row>
 	    </el-main>
 	  </el-container>
 </template>
 
 <script>
+import {aes_decrypt, aes_encrypt} from "@/utils/encryptURL";
+
 export default {
 	data() {
 		return {
@@ -121,7 +75,8 @@ export default {
 		};
 	},
 	mounted() {
-		this.testid = this.$route.query.testid
+		// this.testid = this.$route.query.testid
+		this.testid = aes_decrypt(this.$route.query.testid, 'cynic', false)
 		if(window.sessionStorage.getItem('ip') !== null){
 			this.isVisitor = true
 			this.visitorip = JSON.parse(window.sessionStorage.getItem('ip' || '[]'))
@@ -133,7 +88,6 @@ export default {
 	},
 	methods: {
 		loadmyquestionnaire(){
-			var _this = this
 			this.$axios({
 				method:"post",
 				url:"http://47.94.221.172:80/usergettest/",

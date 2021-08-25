@@ -37,8 +37,8 @@
 				                    </el-dialog>
                                     <el-button type="text" class="el-icon-share" @click="share(props.row)">分享</el-button>
                                     <el-dialog title="问卷地址及二维码" :visible.sync="dialogFormVisible1" center :modal-append-to-body="false" style="margin-top: 30px;">
-					                    <div>{{link}}</div>
-                                        <el-avatar shape="square" :size="100" :src="avator"></el-avatar>
+					                          <div>{{link}}</div>
+                                      <el-avatar shape="square" :size="100" :src="avator"></el-avatar>
 					                    <div slot="footer" class="dialog-footer">
 					                        <el-button @click="sharecancel">取 消</el-button>
 					                        <el-button type="primary" @click="sharequestionnaire(props.row)">下载二维码</el-button>
@@ -105,7 +105,9 @@
 </template>
 
 <script>
-    export default {
+import {aes_encrypt} from "@/utils/encryptURL";
+
+export default {
         data(){
             return{
                 dialogFormVisible: false,
@@ -126,8 +128,8 @@
 		},
         methods:{
             share(row){
-                var _this=this
-				this.link = `http://47.94.221.172/#/fill?testid=${row.testid}`
+                let encTestId = aes_encrypt(row.testid, 'cynic', false)
+				this.link = `http://47.94.221.172/#/fill?testid=${encTestId}`
                 this.$axios({
 					method:"post",
 					url:"http://47.94.221.172/makeqrcode/",
@@ -136,7 +138,7 @@
 					},
 					data:{
 						testid:row.testid,
-                        url:this.link,
+            url:this.link,
 					},
 					transformRequest:[function(data){
 						let ret = ''
