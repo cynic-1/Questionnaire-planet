@@ -27,14 +27,7 @@
 							>{{option.value}}</el-radio>
 						</el-radio-group>
 
-						<el-select v-else-if="test.type == '3'" v-model="test.useranswer">
-							<el-option
-							    v-for="item in 10"
-							    :key="item"
-							    :label="item"
-							    :value="item">
-							</el-option>
-						</el-select>
+						<el-rate v-else-if="test.type == '3'" v-model="test.useranswer" :max="test.max"></el-rate>
 
 						<div v-else>
 							<el-input  placeholder="请输入内容" v-model="test.useranswer"></el-input>
@@ -197,6 +190,14 @@ export default {
 						if(item.useranswer[0] == ''){
 							item.useranswer.pop()
 						}
+					}
+					if(item.type == 3){
+						if(item.useranswer === '')
+							item.useranswer = 0
+						else
+							item.useranswer = parseInt(item.useranswer)
+						const max = parseInt(item.answers[0].value)
+						this.$set(item, 'max' , max)
 					}
 				}
 			})
