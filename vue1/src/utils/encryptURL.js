@@ -50,6 +50,9 @@ export const aes_decrypt = (word, userAuth, is_json = true) => {
     return decrypt_text
 }
 
-// let encData = aes_encrypt('123', 'cynic', false)
-// console.log(encData)
-// console.log(aes_decrypt(encData, 'cynic', false))
+for (let i = 0; i < 10; i++) {
+    let encData = aes_encrypt(i, 'cynic', false)
+    console.log(encData)
+    console.log(aes_decrypt(encData, 'cynic', false))
+}
+
