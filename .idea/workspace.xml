@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="0e372b6f-a806-4342-a93a-e202f699ceb5" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/vue1/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/vue1/src/utils/encryptURL.js" beforeDir="false" afterPath="$PROJECT_DIR$/vue1/src/utils/encryptURL.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -53,12 +54,23 @@
       <recent name="C:\Users\song\github\Questionnaire-planet\vue1\src\assets" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="npm.serve">
     <configuration name="encryptURL.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/vue1/src/utils/encryptURL.js" working-dir="$PROJECT_DIR$/vue1/src/utils">
+      <method v="2" />
+    </configuration>
+    <configuration name="serve" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/vue1/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="serve" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
       <method v="2" />
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="npm.serve" />
         <item itemvalue="Node.js.encryptURL.js" />
       </list>
     </recent_temporary>
@@ -76,7 +88,7 @@
       <workItem from="1629680973270" duration="5527000" />
       <workItem from="1629853938022" duration="5038000" />
       <workItem from="1629940723777" duration="15043000" />
-      <workItem from="1629959878830" duration="1037000" />
+      <workItem from="1629959878830" duration="2819000" />
     </task>
     <servers />
   </component>

@@ -141,6 +141,7 @@ export default {
             },
             share(row){
                 let encTestId = aes_encrypt(row.testid, 'cynic', false)
+              encTestId = encodeURIComponent(encTestId)
 				this.link = `http://localhost:8080/#/fill?testid=${encTestId}`
                 this.$axios({
 					method:"post",
