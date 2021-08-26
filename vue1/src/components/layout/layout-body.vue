@@ -97,7 +97,7 @@
 <!--          &lt;!&ndash; drawer content &ndash;&gt;-->
 <!--        </q-drawer>-->
 
-        <q-page-container>
+        <q-page-container style="padding: 0 0;">
           <router-view />
         </q-page-container>
 

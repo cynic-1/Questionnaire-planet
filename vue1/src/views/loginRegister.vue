@@ -116,7 +116,7 @@ export default{
                 this.$store.commit('SET_LOG_STATE', true)
                 this.$store.commit('SET_SITE_INFO', res.data)
                 this.$store.commit('SET_USERNAME', res.data.data.username)
-				console.log(JSON.stringify(res.data))         
+				console.log(JSON.stringify(res.data))
                 sessionStorage.setItem('siteInfo', JSON.stringify(res.data))
                 this.$router.push({
                    path:'/'}, onComplete => { }, onAbort => { })
@@ -189,7 +189,7 @@ export default{
                 break
               case 1:
                 this.$Notice.open({
-                  title: '密码格式错误，需要至少八位的数字和字母组合'
+                  title: '需要至少八位的数字和字母组合'
                 })
                 this.existed = false
                 this.passwordFormatError = true
@@ -216,6 +216,8 @@ export default{
   width: 100vw;
   height: 100vh;
   box-sizing: border-box;
+  background-image: url("../assets/bg1.png");
+  /*padding-top: 30px;*/
 }
 .contain{
   width: 60%;
@@ -224,10 +226,10 @@ export default{
   top: 50%;
   left: 50%;
   transform: translate(-50%,-50%);
-  background-color: #fff;
-  border-radius: 20px;
-  box-shadow: 0 0 3px #f0f0f0,
-  0 0 6px #f0f0f0;
+  /*background-color: #fff;*/
+  /*border-radius: 20px;*/
+  /*box-shadow: 0 0 3px #f0f0f0,*/
+  /*0 0 6px #f0f0f0;*/
 }
 .big-box{
   width: 70%;
@@ -250,7 +252,7 @@ export default{
   font-size: 2.0em;
   font-weight: bold;
   /*color: rgb(57,167,176);*/
-  color: #FFE116;
+  color: #1dffd1;
 }
 .bform{
   width: 100%;
@@ -265,7 +267,7 @@ export default{
   display: block;
   width: 50%;
   text-align: left;
-  color: red;
+  color: #ff0000;
   font-size: 0.7em;
   margin-left: 1em;
 }
@@ -284,8 +286,8 @@ export default{
   border-radius: 24px;
   border: none;
   outline: none;
-  /*background-color: rgb(57,167,176);*/
-  background-color: #FFE116;
+  background-color: rgb(57,167,176);
+  /*background-color: #FFE116;*/
   color: black;
   font-size: 0.9em;
   cursor: pointer;
@@ -296,7 +298,7 @@ export default{
 .small-box{
   width: 30%;
   height: 100%;
-  background: linear-gradient(135deg,#FFE116,#FFF10F);
+  /*background: linear-gradient(135deg, #2ffda4, #0fff5f);*/
   position: absolute;
   top: 0;
   left: 0;
@@ -316,7 +318,7 @@ export default{
 .stitle{
   font-size: 1.8em;
   font-weight: bold;
-  color: #EE7623;
+  color: white;
 }
 .scontent{
   font-size: 1.2em;
@@ -329,10 +331,10 @@ export default{
   width: 60%;
   height: 40px;
   border-radius: 24px;
-  border: 1px solid black;
+  border: 1px solid #1dffd1;
   outline: none;
   background-color: transparent;
-  color: black;
+  color: #1dffd1;
   font-size: 1.2em;
   cursor: pointer;
 }
