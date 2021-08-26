@@ -1,6 +1,6 @@
 <template>
   <div>
-  <q-drawer show-if-above v-model="left" side="left" bordered>
+  <q-drawer show-if-above side="left" bordered>
     <!-- drawer content -->
     <q-btn-dropdown color="pink" label="选择题" dropdown-icon="change_history">
       <q-list>
@@ -26,99 +26,131 @@
 <!--  <q-page-container>-->
     <q-page padding>
       <q-card class="my-card">
-      <h1 class="quetitle">{{modelForm.title}}</h1>
-      <vuedraggable v-model="modelForm.topic" class="wrapper" @end="end">
-        <q-card class="my-card" v-for="(item, index) in modelForm.topic" :key="index">
-          <div>
-            <div class="text-h6" style="display: inline-block">
-              第{{ index+1 }}题&emsp;{{modelForm.table[item.type]}}题,&emsp;&emsp;题目:&emsp;
-              <q-input
-                  v-model.trim="item.questionName"
-                  style="display: inline-block;"
-                  borderless
-                  class="text-h6"
-              />
-            </div>
-          </div>
+	  <q-form ref="modelForm" :rule="rules" :model="modelForm">
+		  <h1 class="quetitle">{{modelForm.title}}</h1>
+		  <vuedraggable v-model="modelForm.topic" class="wrapper" @end="end">
+			<q-card class="my-card" v-for="(item, index) in modelForm.topic" :key="index">
+			  <div>
+				<div class="text-h6" style="display: inline-block">
+				  第{{ index+1 }}题&emsp;{{modelForm.table[item.type]}}题,&emsp;&emsp;题目:&emsp;
+				  <q-input
+					  v-model.trim="item.questionName"
+					  style="display: inline-block;"
+					  borderless
+					  class="text-h6"
+				  />
+				</div>
+			  </div>
 
 
-<!--          <q-form-->
-<!--              :prop="`topic.${index}.questionName`"-->
-<!--              label="问题"-->
-<!--              :rules="{ required: true, message: '请填写问题', trigger: 'change' }"-->
-<!--          >-->
-<!--            <q-input-->
-<!--                v-model.trim="item.questionName"-->
-<!--                style="max-width: 300px"-->
-<!--                clearable-->
-<!--                label="请填写问题"-->
-<!--                :prefix="`topic.${index}.questionName`"-->
-<!--            />-->
-<!--          </q-form>-->
-            <br>
-            <div class="q-gutter-sm">
-              <q-radio keep-color v-model="item.key" val=true label="选填" color="cyan" />
-              <q-radio keep-color v-model="item.key" val=false label="必填" color="red" />
-            </div>
+	<!--          <q-form-->
+	<!--              :prop="`topic.${index}.questionName`"-->
+	<!--              label="问题"-->
+	<!--              :rules="{ required: true, message: '请填写问题', trigger: 'change' }"-->
+	<!--          >-->
+	<!--            <q-input-->
+	<!--                v-model.trim="item.questionName"-->
+	<!--                style="max-width: 300px"-->
+	<!--                clearable-->
+	<!--                label="请填写问题"-->
+	<!--                :prefix="`topic.${index}.questionName`"-->
+	<!--            />-->
+	<!--          </q-form>-->
+				<br>
+				<div class="q-gutter-sm">
+				  <q-radio keep-color v-model="item.key" val=true label="选填" color="cyan" />
+				  <q-radio keep-color v-model="item.key" val=false label="必填" color="red" />
+				</div>
 
 
-          <q-form>
-            <q-input
-                v-model.trim="item.describe"
-                clearable
-                placeholder="请填写问题描述"
-            />
-          </q-form>
+			  <q-form>
+				<q-input
+					v-model.trim="item.describe"
+					clearable
+					placeholder="请填写问题描述"
+				/>
+			  </q-form>
 
-          <!-- 答案 -->
-          <q-form style="display: inline-block"
-              v-for="(opt, idx) in item.answers"
-              v-if="item.type!=2 && item.type !=3"
-              :key="idx"
-              :label="`选项${idx + 1}`"
-              :prop="`topic.${index}.answers.${idx}.value`"
-              :rules="[
-										{ required: true, message: '请输入答案', trigger: 'blur' },
-									]">
-            <q-input v-model.trim="opt.value" style="width:258px;display: inline-block" clearable placeholder="请输入答案" />
-            <q-btn style="margin-left: 20px;display: inline-block" @click.prevent="removeDomain(index,idx)" round color="red" label="删除"/>
-          </q-form>
+			  <!-- 答案 -->
+			  <q-form style="display: inline-block"
+				  v-for="(opt, idx) in item.answers"
+				  v-if="item.type!=2 && item.type !=3"
+				  :key="idx"
+				  :label="`选项${idx + 1}`"
+				  :prop="`topic.${index}.answers.${idx}.value`"
+				  :rules="[
+											{ required: true, message: '请输入答案', trigger: 'blur' },
+										]">
+				<q-input v-model.trim="opt.value" style="width:258px;display: inline-block" clearable placeholder="请输入答案" />
+				<q-btn style="margin-left: 20px;display: inline-block" @click.prevent="removeDomain(index,idx)" round color="red" label="删除"/>
+			  </q-form>
 
-          <q-form
-              v-else-if="item.type===3"
-              style="display: inline-block"
-              :prop="`topic.${index}.answers.value`"
-              :rules="[
-										{ required: true, message: '请输入范围', trigger: 'blur' },
-									]">
-            <q-select v-model="item.answers.value" placeholder="请选择范围">
-              <q-option-group
-                  v-for="item in options"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value">
-              </q-option-group>
-            </q-select>
-          </q-form>
+			  <q-form
+				  v-else-if="item.type==3"
+				  style="display: inline-block; width: 200px;"
+				  :prop="`topic.${index}.answers.value`"
+				  :rules="[
+					{ required: true, message: '请输入范围', trigger: 'blur' },
+			  ]">
+				<q-select v-model="item.answers.value" :options="options" label="请选择最大星数" />
+			  </q-form>
 
-          <q-form>
-            <q-btn v-show="item.type!=2 && item.type !=3" @click="addDomain(index)">新增选项</q-btn>
-            <q-btn @click="removeQuestion(index)">删除题目</q-btn>
-            <q-btn style="margin-left: 20px" @click="copy(item)">复制题目</q-btn>
-            <br /><br />
-            <q-btn size=small @click="moveup(item)" v-if="index!==0">上移</q-btn>
-            <q-btn size=small @click="movedown(item)" v-if="index!==modelForm.topic.length-1">下移</q-btn>
-          </q-form>
+			  <q-form>
+				<q-btn v-show="item.type!=2 && item.type !=3" @click="addDomain(index)">新增选项</q-btn>
+				<q-btn @click="removeQuestion(index)">删除题目</q-btn>
+				<q-btn style="margin-left: 20px" @click="copy(item)">复制题目</q-btn>
+				<br /><br />
+				<q-btn size=small @click="moveup(item)" v-if="index!==0">上移</q-btn>
+				<q-btn size=small @click="movedown(item)" v-if="index!==modelForm.topic.length-1">下移</q-btn>
+			  </q-form>
 
-        </q-card>
-      </vuedraggable>
-      </q-card>
+			</q-card>
+		  </vuedraggable>
+		</q-form>
+	  </q-card>
+	 
     </q-page>
 <!--  </q-page-container>-->
 
-  <q-drawer show-if-above v-model="right" side="right" bordered>
+  <q-drawer show-if-above side="right" bordered>
     <!-- drawer content -->
-
+	  <!--
+	  <el-form-item label="截止时间">
+	  	<el-date-picker
+	  		label="有效时间"
+	  		v-model="modelForm.time"
+	  		value-format="yyyy-MM-dd HH:mm:ss"
+	  		type="datetime">
+	  	</el-date-picker>
+	  </el-form-item>
+	  -->
+	  <div class="q-pa-md" style="max-width: 300px">
+	      <q-input filled v-model="modelForm.time" placeholder="截至时间">
+	        <template v-slot:prepend>
+	          <q-icon name="event" class="cursor-pointer">
+	            <q-popup-proxy transition-show="scale" transition-hide="scale">
+	              <q-date v-model="modelForm.time" mask="YYYY-MM-DD HH:mm:ss">
+	                <div class="row items-center justify-end">
+	                  <q-btn v-close-popup label="Close" color="primary" flat />
+	                </div>
+	              </q-date>
+	            </q-popup-proxy>
+	          </q-icon>
+	        </template>
+	  
+	        <template v-slot:append>
+	          <q-icon name="access_time" class="cursor-pointer">
+	            <q-popup-proxy transition-show="scale" transition-hide="scale">
+	              <q-time v-model="modelForm.time" mask="YYYY-MM-DD HH:mm:ss" format24h>
+	                <div class="row items-center justify-end">
+	                  <q-btn v-close-popup label="Close" color="primary" flat />
+	                </div>
+	              </q-time>
+	            </q-popup-proxy>
+	          </q-icon>
+	        </template>
+	      </q-input>
+	    </div>
       <q-btn @click="addSubmit()">编辑完成</q-btn>
       <q-btn @click="resetForm('modelForm')">重置</q-btn>
   </q-drawer>
@@ -145,17 +177,7 @@ export default {
         time: '',
         table: ['单选','多选','填空','评分']
       },
-      options: [{
-        value: 1,
-        label: '1~10分'
-      }, {
-        value: 2,
-        label: '1~100分'
-      }, {
-        value: 3,
-        label: '一星到五星制'
-      },
-      ],
+      options:[2,3,4,5,6,7,8,9,10]
     }
   },
   created(){
@@ -245,6 +267,7 @@ export default {
         console.log(res.data.dic)
         //if (res.data.code !== '200') return this.$router.push('/404');
         this.modelForm.title = dic.title
+		this.modelForm.time = dic.endtime
         for(let item of dic.topic){
           const question = { type: '', questionName: '',key: '', answers: '',describe: '' }
           question.type = String(item.type)
@@ -282,11 +305,12 @@ export default {
       this.moveup(this.modelForm.topic[index+1])
     },
     addSubmit() {
-      //console.log(this.modelForm.topic[0].answers[1].value)
+      console.log(this.modelForm.topic)
       if(this.modelForm.topic.length === 0)
         return this.$message.info("问卷至少包含一个题目！")
-      this.$refs.modelForm.validate(valid => {
-        if (valid) {
+      //this.$refs.myForm.validate().then(success => {
+		//console.log(this.modelForm.topic)
+        //if (success) {
           this.$axios({
             method:"post",
             url: this.url,
@@ -297,6 +321,7 @@ export default {
               title: this.modelForm.title,
               topic: this.modelForm.topic,
               userid: this.modelForm.userid,
+			  time: this.modelForm.time,
               testid: this.testid
             },
             traditional: true,
@@ -310,8 +335,8 @@ export default {
             this.$router.push('/home')
           })
 
-        }
-      })
+        //}
+      //})
     },
     addSingle(){
       this.modelForm.topic.push({ type: '0', questionName: '',key: 'false', answers: [{ value: '' }] ,describe: ''})
