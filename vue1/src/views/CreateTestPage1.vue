@@ -25,77 +25,102 @@
 
 <!--  <q-page-container>-->
     <q-page padding>
+      <q-card class="my-card">
       <h1 class="quetitle">{{modelForm.title}}</h1>
       <vuedraggable v-model="modelForm.topic" class="wrapper" @end="end">
-        <q-card class="my-card">
-          <q-card-section v-for="(item, index) in modelForm.topic" :key="index">
-            <div class="text-h6" style="text-align: center">
-              第{{ index+1 }}题&emsp;{{modelForm.table[item.type]}}题,&emsp;&emsp;题目:{{ item.questionName }}
+        <q-card class="my-card" v-for="(item, index) in modelForm.topic" :key="index">
+          <div>
+            <div class="text-h6" style="display: inline-block">
+              第{{ index+1 }}题&emsp;{{modelForm.table[item.type]}}题,&emsp;&emsp;题目:&emsp;
+              <q-input
+                  v-model.trim="item.questionName"
+                  style="display: inline-block;"
+                  borderless
+                  class="text-h6"
+              />
             </div>
-<!--            <div class="text-subtitle2">by John Doe</div>-->
-          </q-card-section>
+          </div>
 
-          <q-markup-table>
-            <thead>
-            <tr>
-              <th class="text-left">Dessert (100g serving)</th>
-              <th class="text-right">Calories</th>
-              <th class="text-right">Fat (g)</th>
-              <th class="text-right">Carbs (g)</th>
-              <th class="text-right">Protein (g)</th>
-              <th class="text-right">Sodium (mg)</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-              <td class="text-left">Frozen Yogurt</td>
-              <td class="text-right">159</td>
-              <td class="text-right">6</td>
-              <td class="text-right">24</td>
-              <td class="text-right">4</td>
-              <td class="text-right">87</td>
-            </tr>
-            <tr>
-              <td class="text-left">Ice cream sandwich</td>
-              <td class="text-right">237</td>
-              <td class="text-right">9</td>
-              <td class="text-right">37</td>
-              <td class="text-right">4.3</td>
-              <td class="text-right">129</td>
-            </tr>
-            <tr>
-              <td class="text-left">Eclair</td>
-              <td class="text-right">262</td>
-              <td class="text-right">16</td>
-              <td class="text-right">23</td>
-              <td class="text-right">6</td>
-              <td class="text-right">337</td>
-            </tr>
-            <tr>
-              <td class="text-left">Cupcake</td>
-              <td class="text-right">305</td>
-              <td class="text-right">3.7</td>
-              <td class="text-right">67</td>
-              <td class="text-right">4.3</td>
-              <td class="text-right">413</td>
-            </tr>
-            <tr>
-              <td class="text-left">Gingerbread</td>
-              <td class="text-right">356</td>
-              <td class="text-right">16</td>
-              <td class="text-right">49</td>
-              <td class="text-right">3.9</td>
-              <td class="text-right">327</td>
-            </tr>
-            </tbody>
-          </q-markup-table>
+
+<!--          <q-form-->
+<!--              :prop="`topic.${index}.questionName`"-->
+<!--              label="问题"-->
+<!--              :rules="{ required: true, message: '请填写问题', trigger: 'change' }"-->
+<!--          >-->
+<!--            <q-input-->
+<!--                v-model.trim="item.questionName"-->
+<!--                style="max-width: 300px"-->
+<!--                clearable-->
+<!--                label="请填写问题"-->
+<!--                :prefix="`topic.${index}.questionName`"-->
+<!--            />-->
+<!--          </q-form>-->
+            <br>
+            <div class="q-gutter-sm">
+              <q-radio keep-color v-model="item.key" val=true label="选填" color="cyan" />
+              <q-radio keep-color v-model="item.key" val=false label="必填" color="red" />
+            </div>
+
+
+          <q-form>
+            <q-input
+                v-model.trim="item.describe"
+                clearable
+                placeholder="请填写问题描述"
+            />
+          </q-form>
+
+          <!-- 答案 -->
+          <q-form style="display: inline-block"
+              v-for="(opt, idx) in item.answers"
+              v-if="item.type!=2 && item.type !=3"
+              :key="idx"
+              :label="`选项${idx + 1}`"
+              :prop="`topic.${index}.answers.${idx}.value`"
+              :rules="[
+										{ required: true, message: '请输入答案', trigger: 'blur' },
+									]">
+            <q-input v-model.trim="opt.value" style="width:258px;display: inline-block" clearable placeholder="请输入答案" />
+            <q-btn style="margin-left: 20px;display: inline-block" @click.prevent="removeDomain(index,idx)" round color="red" label="删除"/>
+          </q-form>
+
+          <q-form
+              v-else-if="item.type===3"
+              style="display: inline-block"
+              :prop="`topic.${index}.answers.value`"
+              :rules="[
+										{ required: true, message: '请输入范围', trigger: 'blur' },
+									]">
+            <q-select v-model="item.answers.value" placeholder="请选择范围">
+              <q-option-group
+                  v-for="item in options"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value">
+              </q-option-group>
+            </q-select>
+          </q-form>
+
+          <q-form>
+            <q-btn v-show="item.type!=2 && item.type !=3" @click="addDomain(index)">新增选项</q-btn>
+            <q-btn @click="removeQuestion(index)">删除题目</q-btn>
+            <q-btn style="margin-left: 20px" @click="copy(item)">复制题目</q-btn>
+            <br /><br />
+            <q-btn size=small @click="moveup(item)" v-if="index!==0">上移</q-btn>
+            <q-btn size=small @click="movedown(item)" v-if="index!==modelForm.topic.length-1">下移</q-btn>
+          </q-form>
+
         </q-card>
       </vuedraggable>
+      </q-card>
     </q-page>
 <!--  </q-page-container>-->
 
   <q-drawer show-if-above v-model="right" side="right" bordered>
     <!-- drawer content -->
+
+      <q-btn @click="addSubmit()">编辑完成</q-btn>
+      <q-btn @click="resetForm('modelForm')">重置</q-btn>
   </q-drawer>
   </div>
 </template>
@@ -313,4 +338,10 @@ export default {
 </script>
 
 <style scoped>
+.quetitle{
+  /*position: relative;*/
+  /*left: 45%;*/
+  /*width: 200px;*/
+  text-align: center;
+}
 </style>
