@@ -2,25 +2,26 @@
   <div>
   <q-drawer show-if-above v-model="left" side="left" bordered>
     <!-- drawer content -->
-    <q-btn-dropdown color="pink" label="选择题" dropdown-icon="change_history">
-      <q-list>
-        <q-item clickable v-close-popup @click="addSingle">
-          <q-item-section>
-            <q-item-label>单选</q-item-label>
-          </q-item-section>
-        </q-item>
+    <div class="left-main">
+      <q-btn-dropdown color="pink" label="选择题" dropdown-icon="change_history" size="30px">
+        <q-list>
+          <q-item clickable v-close-popup @click="addSingle">
+            <q-item-section>
+              <q-item-label>单选</q-item-label>
+            </q-item-section>
+          </q-item>
 
-        <q-item clickable v-close-popup @click="addMulti">
-          <q-item-section>
-            <q-item-label>多选</q-item-label>
-          </q-item-section>
-        </q-item>
-      </q-list>
-    </q-btn-dropdown>
+          <q-item clickable v-close-popup @click="addMulti">
+            <q-item-section>
+              <q-item-label>多选</q-item-label>
+            </q-item-section>
+          </q-item>
+        </q-list>
+      </q-btn-dropdown>
 
-    <q-btn color="white" text-color="black" label="填空题" @click="addBlank"/>
-    <q-btn color="white" text-color="black" label="评分题" @click="addRank"/>
-
+      <q-btn color="cyan" text-color="white" label="填空题" @click="addBlank" size="30px" icon-right="circle" class="left-button"/>
+      <q-btn color="orange" text-color="white" label="评分题" @click="addRank" size="30px" icon-right="star" class="left-button"/>
+    </div>
   </q-drawer>
 
 <!--  <q-page-container>-->
@@ -54,7 +55,8 @@
             <q-input
                 v-model.trim="item.describe"
                 clearable
-                placeholder="请填写问题描述"
+                label="请填写问题描述"
+
             />
           </q-form>
 
@@ -69,7 +71,8 @@
 										{ required: true, message: '请输入答案', trigger: 'blur' },
 									]">
             <q-input v-model.trim="opt.value" style="width:258px;display: inline-block" clearable placeholder="请输入答案" />
-            <q-btn style="margin-left: 20px;display: inline-block" @click.prevent="removeDomain(index,idx)" round color="red" label="删除"/>
+            <q-btn style="margin-left: 20px;display: inline-block" @click.prevent="removeDomain(index,idx)" round color="red" icon="remove"/>
+
           </q-form>
 
           <q-form
@@ -90,12 +93,14 @@
           </q-form>
 
           <q-form>
-            <q-btn v-show="item.type!=2 && item.type !=3" @click="addDomain(index)">新增选项</q-btn>
-            <q-btn @click="removeQuestion(index)">删除题目</q-btn>
-            <q-btn style="margin-left: 20px" @click="copy(item)">复制题目</q-btn>
-            <br /><br />
-            <q-btn size=small @click="moveup(item)" v-if="index!==0">上移</q-btn>
-            <q-btn size=small @click="movedown(item)" v-if="index!==modelForm.topic.length-1">下移</q-btn>
+            <q-btn v-show="item.type!=2 && item.type !=3" @click="addDomain(index)" round color="blue" icon="add"></q-btn>
+            <div class="question-bottom">
+              <q-btn @click="removeQuestion(index)">删除题目</q-btn>
+              <q-btn style="margin-left: 20px" @click="copy(item)">复制题目</q-btn>
+              <q-btn size=small @click="moveup(item)" v-if="index!==0">上移</q-btn>
+              <q-btn size=small @click="movedown(item)" v-if="index!==modelForm.topic.length-1">下移</q-btn>
+            </div>
+
           </q-form>
 
         </q-card>
@@ -107,8 +112,13 @@
   <q-drawer show-if-above v-model="right" side="right" bordered>
     <!-- drawer content -->
 
-      <q-btn @click="addSubmit()">编辑完成</q-btn>
-      <q-btn @click="resetForm('modelForm')">重置</q-btn>
+    <div>
+      <q-btn label="提交" type="submit" color="primary" @click="addSubmit()"/>
+      <q-btn label="重置" type="reset" color="primary" flat class="q-ml-sm" @click="resetForm('modelForm')"/>
+    </div>
+
+<!--      <q-btn @click="addSubmit()">编辑完成</q-btn>-->
+<!--      <q-btn @click="resetForm('modelForm')">重置</q-btn>-->
     <q-toggle
         v-model="showNum"
         label="显示题号"
@@ -336,5 +346,16 @@ export default {
   /*left: 45%;*/
   /*width: 200px;*/
   text-align: center;
+}
+.left-button {
+  margin-top: 40px;
+}
+.left-main {
+  margin-top: 30%;
+  margin-left: 40px;
+}
+.question-bottom {
+  display: inline-block;
+  margin-bottom: 20px;
 }
 </style>
