@@ -128,7 +128,7 @@
 <script>
 	import vuedraggable from 'vuedraggable'
 	import qs from 'qs'
-	export default { 
+	export default {
 		components:{
 			vuedraggable
 		},
