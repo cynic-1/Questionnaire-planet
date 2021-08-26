@@ -132,6 +132,7 @@ export default {
             copyLink () {
                 let clipboard = new Clipboard('.btn')
                 clipboard.on('success', e => {
+                this.$message.success('复制链接成功')
                 clipboard.destroy() // 使用destroy可以清楚缓存
                 })
                 clipboard.on('error', e => {
