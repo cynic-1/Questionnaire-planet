@@ -8,7 +8,7 @@ function add_secret_key (userAuth) {
     } else if (key.length > 32) {
         key = key.slice(0, 32)
     }
-    console.log(key)
+    // console.log(key)
     return key
 
 }
@@ -50,6 +50,9 @@ export const aes_decrypt = (word, userAuth, is_json = true) => {
     return decrypt_text
 }
 
-// let encData = aes_encrypt('123', 'cynic', false)
-// console.log(encData)
-// console.log(aes_decrypt(encData, 'cynic', false))
+// for (let i = 0; i < 100; i++) {
+//     let encData = aes_encrypt(123+i, 'cynic', false)
+//     console.log(encData)
+//     console.log(aes_decrypt(encData, 'cynic', false))
+// }
+
