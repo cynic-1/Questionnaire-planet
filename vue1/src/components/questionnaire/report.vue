@@ -2,6 +2,14 @@
 	<el-container>
 	    <el-main>
 	      <el-row>
+			  	<q-tabs
+        		v-model="tab"
+        		indicator-color="yellow"
+        		class="bg-primary text-white shadow-2"
+      			>
+        		<q-tab name="list" icon="today" label="列表视图" />
+        		<q-tab name="picture" icon="photo" label="图形视图" />
+      			</q-tabs>
               <div class="testtitle">
 			    <h2>{{title}}</h2>
               </div>
@@ -26,6 +34,11 @@
   								</el-collapse-item>
 							</el-collapse>
                         </el-card>
+						<el-card v-if="tab=='picture'">
+							<div v-if="test.type!=2">
+								<div :id="index" style="width: 500px; height: 400px;"></div>
+							</div>
+						</el-card>
                         <br/>
 	            </div>
 	          </div>
@@ -57,6 +70,7 @@
 export default {
 	data() {
 		return {
+			tab: 'list',
 			title: '',
 			tests: [],
 			testid:'',
@@ -215,8 +229,8 @@ h2 {
 }
 .testtitle{
 		position: relative;
-		left: 30%;
-		width: 200px;
+		left: 42%;
+		width: 300px;
 	}
 .back_home{
 		position: relative;
