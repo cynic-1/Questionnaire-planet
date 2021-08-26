@@ -16,7 +16,7 @@
 	        <el-col :span="16">
 				<div>
 					<div v-for="(test, index) in tests" :key="index">
-                        <el-card>
+                        <el-card v-if="tab=='list'">
 							<p>{{index + 1}}.{{test.stem}}</p>
                         	<p >{{test.answer}}</p>
 							<div v-if="test.type!=='3'">
@@ -34,10 +34,14 @@
   								</el-collapse-item>
 							</el-collapse>
                         </el-card>
-						<el-card v-if="tab=='picture'">
-							<div v-if="test.type!=2">
-								<div :id="index" style="width: 500px; height: 400px;"></div>
-							</div>
+						<el-card v-if="tab=='picture' && test.type!=2">
+							<el-collapse >
+								<div @click="loadchart(index)">
+  								<el-collapse-item :title="(index + 1)+`.`+test.stem">
+									<div :id="index" style="width: 500px; height: 400px;"></div>
+  								</el-collapse-item>
+								</div>
+							</el-collapse>
 						</el-card>
                         <br/>
 	            </div>
@@ -84,6 +88,30 @@ export default {
 		this.loadreport()
 	},
 	methods: {
+		loadchart(index){
+			var a = index.toString()
+			var column1 = this.$echarts.init(document.getElementById(a));
+			this.$axios({
+				method:"post",
+				url:"http://47.94.221.172/histogram/",
+				header:{
+					'Content-Type': 'application/x-www-form-urlencoded'
+				},
+				data:{
+					testid: this.testid,
+					ord:a,
+				},
+				transformRequest:[function(data){
+					let ret = ''
+					for(let it in data){
+						ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
+					}
+					return ret
+				}],
+			}).then((res)=>{
+				column1.setOption(res.data.option);
+			})
+		},
         backhome(){
             var _this=this
             this.$router.push({path: "/home"})
