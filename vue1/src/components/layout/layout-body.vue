@@ -14,7 +14,10 @@
               <q-avatar size="60px">
                 <img src="../../assets/pentacle_PNG51.png">
               </q-avatar>
-              天问  Tech Win
+              <router-link to="/" class="link">
+                天问  Tech Win
+              </router-link>
+
             </q-toolbar-title>
 
 <!--            <q-btn rounded color="" label="登录" />-->
@@ -97,7 +100,7 @@
 <!--          &lt;!&ndash; drawer content &ndash;&gt;-->
 <!--        </q-drawer>-->
 
-        <q-page-container style="padding: 0 0;">
+        <q-page-container>
           <router-view />
         </q-page-container>
 
@@ -165,5 +168,8 @@
     min-height: -moz-calc(100vh - 80px);
     min-height: -webkit-calc(100vh - 80px);
     min-height: calc(100vh - 80px);
+}
+.link:hover {
+  color: #1dffd1;
 }
 </style>

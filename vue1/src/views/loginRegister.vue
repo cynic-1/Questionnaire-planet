@@ -1,5 +1,8 @@
 <template>
   <div class="login-register">
+    <div style="float: right">
+    <q-btn label="以游客身份登录" color="amber" glossy size="20px" @click="travelerLogin"/>
+    </div>
     <div class="contain">
       <div class="big-box" :class="{active:isLogin}">
         <div class="big-contain" v-if="isLogin">
@@ -67,6 +70,37 @@ export default{
     this.loggingState()
   },
   methods: {
+    travelerLogin(){
+      let self = this
+      self.$axios({
+        method: 'post',
+        url: 'http://47.94.221.172:80/Tourists/',
+        header:{
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      }).then(res => {
+        sessionStorage.setItem('Authorization', /* "Bearer " + */ 'Authorization')
+        this.$store.commit('SET_LOG_STATE', true)
+        this.$store.commit('SET_SITE_INFO', res.data)
+        this.$store.commit('SET_USERNAME', '游客')
+        sessionStorage.setItem('siteInfo', JSON.stringify(res.data.ip))
+        window.sessionStorage.setItem('ip', JSON.stringify(res.data.ip))
+        return;//这个可能有用可能没用
+      }).then(()=>{
+        self.$router.push({
+              path:'/'
+            },
+            //没有这两句会Uncaught (in promise) undefined
+            onComplete => {},
+            onAbort => {}
+        )
+      }).catch(err => {
+        console.log(err)
+      })
+      this.$Notice.open({
+        title: '登陆成功'
+      })
+    },
     loggingState(){
       this.$store.commit('SET_LOGGING_STATE')
     },
@@ -214,7 +248,7 @@ export default{
 <style scoped="scoped">
 .login-register{
   width: 100vw;
-  height: 100vh;
+  height: 80vh;
   box-sizing: border-box;
   background-image: url("../assets/bg1.png");
   /*padding-top: 30px;*/

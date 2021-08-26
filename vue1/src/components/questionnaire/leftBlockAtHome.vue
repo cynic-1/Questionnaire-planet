@@ -89,7 +89,7 @@
 	.homemenu{
 		padding-top: 60px;
 	}
-    .router-link-active {
+    .router-link-exact-active {
       color: #ffd04b !important;
       i {
         color: #ffd04b;

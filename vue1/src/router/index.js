@@ -37,15 +37,15 @@ const routes = [
         component: () => import('@/views/Recycle'),
         meta: {title: '回收站'}
     },
-      {
+      // {
+      //   path:'/createtest',
+      //   name:'createtest',
+      //   component: () => import('@/views/CreateTestPage'),
+      //   meta: { title: '创建问卷' }
+      // },
+    {
         path:'/createtest',
         name:'createtest',
-        component: () => import('@/views/CreateTestPage'),
-        meta: { title: '创建问卷' }
-      },
-    {
-        path:'/createtest1',
-        name:'createtest1',
         component: () => import('@/views/CreateTestPage1'),
         meta: { title: '创建问卷' }
     },
