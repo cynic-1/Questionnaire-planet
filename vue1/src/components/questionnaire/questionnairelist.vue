@@ -13,7 +13,7 @@
                 </el-col>
             </el-row>
             </div>
-            <el-table :data="tableData" height="500" stripe  style="width: 100%;opacity: 90%" class="table-questionnaire" @selection-change="memberSelectionChange" :default-sort = "{prop: 'date', order: 'descending'}">
+            <el-table :data="tableData" height="500" stripe  style="width: 100%;opacity: 90%" class="table-questionnaire" @selection-change="memberSelectionChange" :default-sort = "{prop: 'createtime', order: 'descending'}">
                 <el-table-column label="问卷列表">
                     <el-table-column
                         type="selection"
@@ -132,6 +132,7 @@ export default {
             copyLink () {
                 let clipboard = new Clipboard('.btn')
                 clipboard.on('success', e => {
+                this.$message.success('复制链接成功')
                 clipboard.destroy() // 使用destroy可以清楚缓存
                 })
                 clipboard.on('error', e => {
