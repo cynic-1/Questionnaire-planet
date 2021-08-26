@@ -267,7 +267,7 @@ export default {
         console.log(res.data.dic)
         //if (res.data.code !== '200') return this.$router.push('/404');
         this.modelForm.title = dic.title
-		this.modelForm.time = dic.endtime
+		this.modelForm.time = dic.endtime=="None"?'':dic.endtime
         for(let item of dic.topic){
           const question = { type: '', questionName: '',key: '', answers: '',describe: '' }
           question.type = String(item.type)
