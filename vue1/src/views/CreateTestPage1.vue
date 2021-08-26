@@ -2,24 +2,26 @@
   <div>
   <q-drawer show-if-above side="left" bordered>
     <!-- drawer content -->
-    <q-btn-dropdown color="pink" label="选择题" dropdown-icon="change_history">
-      <q-list>
-        <q-item clickable v-close-popup @click="addSingle">
-          <q-item-section>
-            <q-item-label>单选</q-item-label>
-          </q-item-section>
-        </q-item>
-
-        <q-item clickable v-close-popup @click="addMulti">
-          <q-item-section>
-            <q-item-label>多选</q-item-label>
-          </q-item-section>
-        </q-item>
-      </q-list>
-    </q-btn-dropdown>
-
-    <q-btn color="white" text-color="black" label="填空题" @click="addBlank"/>
-    <q-btn color="white" text-color="black" label="评分题" @click="addRank"/>
+   <div class="left-main">
+     <q-btn-dropdown color="pink" label="选择题" dropdown-icon="change_history" size="30px">
+       <q-list>
+         <q-item clickable v-close-popup @click="addSingle">
+           <q-item-section>
+             <q-item-label>单选</q-item-label>
+           </q-item-section>
+         </q-item>
+   
+         <q-item clickable v-close-popup @click="addMulti">
+           <q-item-section>
+             <q-item-label>多选</q-item-label>
+           </q-item-section>
+         </q-item>
+       </q-list>
+     </q-btn-dropdown>
+   
+     <q-btn color="cyan" text-color="white" label="填空题" @click="addBlank" size="30px" icon-right="circle" class="left-button"/>
+     <q-btn color="orange" text-color="white" label="评分题" @click="addRank" size="30px" icon-right="star" class="left-button"/>
+   </div>
 
   </q-drawer>
 
@@ -382,5 +384,16 @@ export default {
   /*left: 45%;*/
   /*width: 200px;*/
   text-align: center;
+}
+.left-button {
+  margin-top: 40px;
+}
+.left-main {
+  margin-top: 30%;
+  margin-left: 40px;
+}
+.question-bottom {
+  display: inline-block;
+  margin-bottom: 20px;
 }
 </style>
