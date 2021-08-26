@@ -30,17 +30,19 @@
 		  <h1 class="quetitle">{{modelForm.title}}</h1>
 		  <vuedraggable v-model="modelForm.topic" class="wrapper" @end="end">
 			<q-card class="my-card" v-for="(item, index) in modelForm.topic" :key="index">
-			  <div>
-				<div class="text-h6" style="display: inline-block">
-				  第{{ index+1 }}题&emsp;{{modelForm.table[item.type]}}题,&emsp;&emsp;题目:&emsp;
-				  <q-input
-					  v-model.trim="item.questionName"
-					  style="display: inline-block;"
-					  borderless
-					  class="text-h6"
-				  />
+				<div>
+				  <div class="text-h6" style="display: inline-block">
+					<div style="display: inline-block" v-show="showNum">第{{ index+1 }}题</div>
+					<div style="display: inline-block; color: red" v-show="item.key === 'true'"><sup>*</sup></div>
+					{{modelForm.table[item.type]}}题,&emsp;&emsp;题目:&emsp;
+					<q-input
+						v-model.trim="item.questionName"
+						style="display: inline-block;"
+				
+						class="text-h6"
+					/>
+				  </div>
 				</div>
-			  </div>
 
 
 	<!--          <q-form-->
@@ -58,8 +60,8 @@
 	<!--          </q-form>-->
 				<br>
 				<div class="q-gutter-sm">
-				  <q-radio keep-color v-model="item.key" val=true label="选填" color="cyan" />
-				  <q-radio keep-color v-model="item.key" val=false label="必填" color="red" />
+				  <q-radio keep-color v-model="item.key" val="false" label="选填" color="cyan" />
+				  <q-radio keep-color v-model="item.key" val="true" label="必填" color="red" />
 				</div>
 
 
@@ -151,8 +153,19 @@
 	        </template>
 	      </q-input>
 	    </div>
-      <q-btn @click="addSubmit()">编辑完成</q-btn>
-      <q-btn @click="resetForm('modelForm')">重置</q-btn>
+ <!-- drawer content -->
+
+    <div>
+      <q-btn label="提交" type="submit" color="primary" @click="addSubmit()"/>
+      <q-btn label="重置" type="reset" color="primary" flat class="q-ml-sm" @click="resetForm('modelForm')"/>
+    </div>
+
+<!--      <q-btn @click="addSubmit()">编辑完成</q-btn>-->
+<!--      <q-btn @click="resetForm('modelForm')">重置</q-btn>-->
+    <q-toggle
+        v-model="showNum"
+        label="显示题号"
+    />
   </q-drawer>
   </div>
 </template>
@@ -169,6 +182,7 @@ export default {
     return {
       url: "http://47.94.221.172:80/modifyquestionnaire/",
       testid: '',
+	  showNum: false,
       rules: {},
       modelForm: {
         userid: this.$store.state.username,
