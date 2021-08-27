@@ -52,16 +52,16 @@
     <q-page padding>
       <q-card class="my-card" style="min-height: 700px">
 	  <q-form ref="modelForm" :rule="rules" :model="modelForm">
-		  <div class="text-h1 quetitle">{{modelForm.title}}</div>
+		  <div class="text-h3 quetitle">{{modelForm.title}}</div>
 		  <vuedraggable v-model="modelForm.topic" class="wrapper" @end="end">
 			<q-card class="my-card ques-card" v-for="(item, index) in modelForm.topic" :key="index" @click.native="changeFocus(item)">
 				<div style="padding-bottom: 20px">
-				  <div class="text-h4" style="display: inline-block">
+				  <div class="text-h5" style="display: inline-block">
             <div style="display: inline-block" v-show="showNum">第{{ index+1 }}题</div>
             <div style="display: inline-block; color: red" v-show="item.key === 'true'"><sup>*</sup></div>
             {{modelForm.table[item.type]}}题,&emsp;&emsp;题目:&emsp;{{item.questionName}}
 				  </div>
-          <div class="text-h5 ques-description">
+          <div class="text-h6 ques-description">
             {{item.describe}}
           </div>
 <!--          单选 和 多选-->
@@ -74,27 +74,24 @@
 <!--                  :rules="[-->
 <!--											{ required: true, message: '请输入答案', trigger: 'blur' },-->
 <!--										]"-->
-            <q-radio :label="opt.value" :val="opt.value" v-model="opt.value" style="padding-right: 20px"/>
+
+            <q-radio :label="opt.value || `选项${idx + 1}`" :val="opt.value" v-model="opt.value" style="padding-right: 20px"/>
           </q-form>
 
           <q-form
-              v-else-if="+focusedItem.type===3"
+              v-else-if="+item.type===3"
               >
             <q-rating
                 size="2em"
-                :max="focusedItem.answers.value"
+                :max="item.answers.value"
                 color="yellow"
                 icon="star_border"
                 icon-selected="star"
                 no-dimming
             />
           </q-form>
-          <q-form
-            v-else
-
-          >
-            <q-input placeholder="请输入答案" outlined style="width: 900px"/>
-
+          <q-form v-else>
+            <q-input placeholder="请输入答案" outlined readonly style="width: 900px"/>
           </q-form>
 
 				</div>
@@ -190,7 +187,8 @@
       </q-form>
 
       <q-form>
-        <q-btn v-show="+focusedItem.type!==2 && +focusedItem.type !==3" @click="addDomain(focusedItem)">新增选项</q-btn>
+        <q-btn style="margin-top: 10px" v-show="+focusedItem.type!==2 && +focusedItem.type !==3" @click="addDomain(focusedItem)">新增选项</q-btn>
+        <br/>
         <q-btn @click="removeQuestion(focusedItem)" color="cyan" label="删除题目" icon-right="remove"/>
         <q-btn style="margin-left: 20px" @click="copy(focusedItem)" color="cyan" label="复制题目" icon-right="add"/>
         <br /><br />
@@ -342,8 +340,9 @@ export default {
       item.answers.splice(idx, 1)
     },
     removeQuestion(item) {//删除题目
-      let index = this.modelForm.topic.indexOf(item)
+      let index = this.modelForm.topic.indexOf(item);
       this.modelForm.topic.splice(index, 1);
+      this.focusedItem = '';
     },
     addDomain(item) { // 新增选项
       item.answers.push({ value: '' })
@@ -396,19 +395,27 @@ export default {
       //})
     },
     addSingle(){
-      this.modelForm.topic.push({ type: '0', questionName: '',key: 'false', answers: [{ value: '' }] ,describe: ''})
+      let newItem = { type: '0', questionName: '',key: 'false', answers: [{ value: '' }] ,describe: ''};
+      this.modelForm.topic.push(newItem);
+      this.focusedItem = newItem;
     },
     addMulti(){
-      this.modelForm.topic.push({ type: '1', questionName: '',key: 'false', answers: [{ value: '' }] , describe: ''})
+      let newItem = { type: '1', questionName: '',key: 'false', answers: [{ value: '' }] ,describe: ''};
+      this.modelForm.topic.push(newItem);
+      this.focusedItem = newItem;
     },
     addBlank(){
-      this.modelForm.topic.push({ type: '2', questionName: '',key: 'false', answers: [{ value: '' }] , describe: ''})
+      let newItem = { type: '2', questionName: '',key: 'false', answers: [{ value: '' }] ,describe: ''};
+      this.modelForm.topic.push(newItem);
+      this.focusedItem = newItem;
     },
     addRank(){
-      this.modelForm.topic.push({ type: '3', questionName: '',key: 'false', answers: { value: ''} , describe: ''})
+      let newItem = { type: '3', questionName: '',key: 'false', answers: [{ value: '' }] ,describe: ''};
+      this.modelForm.topic.push(newItem);
+      this.focusedItem = newItem;
     },
     copy(item){
-      var newitem = JSON.parse(JSON.stringify(item))
+      let newitem = JSON.parse(JSON.stringify(item))
       this.modelForm.topic.push(newitem)
     }
   },
