@@ -1,65 +1,68 @@
 <template>
   <div>
-  <q-drawer show-if-above side="left" bordered>
+    <!-- 左边栏 -->
+  <q-drawer show-if-above side="left" bordered :breakpoint="500">
     <!-- drawer content -->
-   <div class="left-main">
-     <q-btn-dropdown color="pink" label="选择题" dropdown-icon="change_history" size="30px">
-       <q-list>
-         <q-item clickable v-close-popup @click="addSingle">
-           <q-item-section>
-             <q-item-label>单选</q-item-label>
-           </q-item-section>
-         </q-item>
-   
-         <q-item clickable v-close-popup @click="addMulti">
-           <q-item-section>
-             <q-item-label>多选</q-item-label>
-           </q-item-section>
-         </q-item>
-       </q-list>
-     </q-btn-dropdown>
-   
-     <q-btn color="cyan" text-color="white" label="填空题" @click="addBlank" size="30px" icon-right="circle" class="left-button"/>
-     <q-btn color="orange" text-color="white" label="评分题" @click="addRank" size="30px" icon-right="star" class="left-button"/>
-   </div>
+    <q-tabs
+        v-model="tab"
+        class="text-grey"
+        active-color="black"
+        indicator-color="primary"
+        align="justify"
+        narrow-indicator
+    >
+      <q-tab name="questions" label="问题" />
+      <q-tab name="outline" label="大纲" />
+    </q-tabs>
+
+    <q-separator />
+
+    <q-tab-panels v-model="tab" animated style="margin-top: 40px">
+      <q-tab-panel name="questions">
+        <q-btn-dropdown color="pink" rounded label="选择题" dropdown-icon="change_history" size="30px">
+          <q-list>
+            <q-item clickable v-close-popup @click="addSingle">
+              <q-item-section>
+                <q-item-label>单选</q-item-label>
+              </q-item-section>
+            </q-item>
+
+            <q-item clickable v-close-popup @click="addMulti">
+              <q-item-section>
+                <q-item-label>多选</q-item-label>
+              </q-item-section>
+            </q-item>
+          </q-list>
+        </q-btn-dropdown>
+
+        <q-btn color="cyan" rounded text-color="white" label="填空题" @click="addBlank" size="30px" icon-right="circle" class="left-button"/>
+        <q-btn color="orange" rounded text-color="white" label="评分题" @click="addRank" size="30px" icon-right="star" class="left-button"/>
+      </q-tab-panel>
+
+      <q-tab-panel name="outline">
+        <div class="text-h6">这里是问题大纲</div>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+      </q-tab-panel>
+
+    </q-tab-panels>
 
   </q-drawer>
 
 <!--  <q-page-container>-->
     <q-page padding>
-      <q-card class="my-card">
+      <q-card class="my-card" style="min-height: 700px">
 	  <q-form ref="modelForm" :rule="rules" :model="modelForm">
 		  <h1 class="quetitle">{{modelForm.title}}</h1>
 		  <vuedraggable v-model="modelForm.topic" class="wrapper" @end="end">
-			<q-card class="my-card" v-for="(item, index) in modelForm.topic" :key="index">
+			<q-card class="my-card" v-for="(item, index) in modelForm.topic" :key="index" @clicked="changeFocus(item)">
 				<div>
 				  <div class="text-h6" style="display: inline-block">
 					<div style="display: inline-block" v-show="showNum">第{{ index+1 }}题</div>
 					<div style="display: inline-block; color: red" v-show="item.key === 'true'"><sup>*</sup></div>
-					{{modelForm.table[item.type]}}题,&emsp;&emsp;题目:&emsp;
-					<q-input
-						v-model.trim="item.questionName"
-						style="display: inline-block;"
-				
-						class="text-h6"
-					/>
+					{{modelForm.table[item.type]}}题,&emsp;&emsp;题目:&emsp{{item.questionName}};
 				  </div>
 				</div>
 
-
-	<!--          <q-form-->
-	<!--              :prop="`topic.${index}.questionName`"-->
-	<!--              label="问题"-->
-	<!--              :rules="{ required: true, message: '请填写问题', trigger: 'change' }"-->
-	<!--          >-->
-	<!--            <q-input-->
-	<!--                v-model.trim="item.questionName"-->
-	<!--                style="max-width: 300px"-->
-	<!--                clearable-->
-	<!--                label="请填写问题"-->
-	<!--                :prefix="`topic.${index}.questionName`"-->
-	<!--            />-->
-	<!--          </q-form>-->
 				<br>
 				<div class="q-gutter-sm">
 				  <q-radio keep-color v-model="item.key" val="false" label="选填" color="cyan" />
@@ -112,24 +115,13 @@
 		  </vuedraggable>
 		</q-form>
 	  </q-card>
-	 
+
     </q-page>
 <!--  </q-page-container>-->
 
   <q-drawer show-if-above side="right" bordered>
-    <!-- drawer content -->
-	  <!--
-	  <el-form-item label="截止时间">
-	  	<el-date-picker
-	  		label="有效时间"
-	  		v-model="modelForm.time"
-	  		value-format="yyyy-MM-dd HH:mm:ss"
-	  		type="datetime">
-	  	</el-date-picker>
-	  </el-form-item>
-	  -->
 	  <div class="q-pa-md" style="max-width: 300px">
-	      <q-input filled v-model="modelForm.time" placeholder="截至时间">
+	      <q-input filled v-model="modelForm.time" placeholder="截止时间">
 	        <template v-slot:prepend>
 	          <q-icon name="event" class="cursor-pointer">
 	            <q-popup-proxy transition-show="scale" transition-hide="scale">
@@ -141,7 +133,7 @@
 	            </q-popup-proxy>
 	          </q-icon>
 	        </template>
-	  
+
 	        <template v-slot:append>
 	          <q-icon name="access_time" class="cursor-pointer">
 	            <q-popup-proxy transition-show="scale" transition-hide="scale">
@@ -162,12 +154,21 @@
       <q-btn label="重置" type="reset" color="primary" flat class="q-ml-sm" @click="resetForm('modelForm')"/>
     </div>
 
-<!--      <q-btn @click="addSubmit()">编辑完成</q-btn>-->
-<!--      <q-btn @click="resetForm('modelForm')">重置</q-btn>-->
     <q-toggle
         v-model="showNum"
         label="显示题号"
     />
+
+    <q-card v-model="focusedItem">
+      <q-form ref="modelForm" :rule="rules">
+        <q-input
+            v-model.trim="focusedItem.questionName"
+            style="display: inline-block;"
+            class="text-h6"
+        />
+      </q-form>
+    </q-card>
+
   </q-drawer>
   </div>
 </template>
@@ -193,7 +194,10 @@ export default {
         time: '',
         table: ['单选','多选','填空','评分']
       },
-      options:[2,3,4,5,6,7,8,9,10]
+      options:[2,3,4,5,6,7,8,9,10],
+      tab: 'questions',
+      // type: modelform.topic
+      focusedItem: '',
     }
   },
   created(){
@@ -221,6 +225,10 @@ export default {
   //   }
   // },
   methods: {
+    // 根据中间预览的点击改变右侧题目表单
+    changeFocus(v) {
+      this.focusedItem = v
+    },
     updateRecord() {
       if(this.modelForm.topic.length === 0)
         return
@@ -388,10 +396,10 @@ export default {
 .left-button {
   margin-top: 40px;
 }
-.left-main {
-  margin-top: 30%;
-  margin-left: 40px;
-}
+/*.left-main {*/
+/*  margin-top: 30%;*/
+/*  margin-left: 40px;*/
+/*}*/
 .question-bottom {
   display: inline-block;
   margin-bottom: 20px;
