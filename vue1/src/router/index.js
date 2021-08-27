@@ -47,7 +47,7 @@ const routes = [
         path:'/createtest',
         name:'createtest',
         component: () => import('@/views/CreateTestPage1'),
-        meta: { title: '创建问卷' }
+        meta: { title: '创建普通问卷' }
     },
       {
         path:'/report',
@@ -66,7 +66,19 @@ const routes = [
         name: 'preview',
         component: () => import('@/views/PreviewPage'),
         meta: { title: '预览问卷' }
-      }
+      },
+	  {
+	      path:'/createtest2',
+	      name:'createtest2',
+	      component: () => import('@/views/CreateTestPage2'),
+	      meta: { title: '创建投票问卷' }
+	  },
+	  {
+	    path:'/fill2',
+	    name: 'fill2',
+	    component: () => import('@/views/FillTest2'),
+	    meta: { title: '填写投票问卷' }
+	  },
 ]
 
 const router = new VueRouter({
