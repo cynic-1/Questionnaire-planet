@@ -188,10 +188,10 @@
       </q-form>
 
       <q-form>
-        <q-btn v-show="+focusedItem.type===4 || +focusedItem.type ===5" @click="addDomain(focusedItem)">新增选项</q-btn>
+        <q-btn style="margin-top: 10px"v-show="+focusedItem.type===4 || +focusedItem.type ===5" @click="addDomain(focusedItem)">新增选项</q-btn>
+        <br/>
         <q-btn @click="removeQuestion(focusedItem)" color="cyan" label="删除题目" icon-right="remove"/>
         <q-btn style="margin-left: 20px" @click="copy(focusedItem)" color="cyan" label="复制题目" icon-right="add"/>
-        <br /><br />
         <q-btn size=small @click="moveup(focusedItem)" v-show="focusedItem !== modelForm.topic[0]" label="上移" color="amber"/>
         <q-btn size=small @click="movedown(focusedItem)" v-show="focusedItem!==modelForm.topic[modelForm.topic.length-1]" label="下移" color="amber"/>
       </q-form>
