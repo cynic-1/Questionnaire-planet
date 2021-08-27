@@ -94,7 +94,7 @@
 <!--                  :rules="[-->
 <!--											{ required: true, message: '请输入答案', trigger: 'blur' },-->
 <!--										]"-->
-            <q-radio :label="opt.value" :val="opt.value" style="padding-right: 20px"/>
+            <q-radio :label="opt.value" :val="opt.value" v-model="opt.value" style="padding-right: 20px"/>
           </q-form>
 
           <q-form
@@ -150,10 +150,14 @@
       <q-btn label="重置" type="reset" color="primary" flat class="q-ml-sm" @click="resetForm('modelForm')"/>
     </div>
 
-    <q-toggle
-        v-model="showNum"
-        label="显示题号"
-    />
+   <q-toggle
+       v-model="showNum"
+       label="显示题号"
+   />
+   <q-toggle
+       v-model="order"
+       label="乱序填写"
+   />
 
     <q-card v-show="focusedItem">
       <q-form ref="modelForm" :rule="rules">
@@ -215,6 +219,7 @@ export default {
       url: "http://47.94.221.172:80/modifyquestionnaire/",
       testid: '',
 	  showNum: false,
+	  order: false,
       rules: {},
       modelForm: {
         userid: this.$store.state.username,
@@ -364,6 +369,8 @@ export default {
               topic: this.modelForm.topic,
               userid: this.modelForm.userid,
 			  time: this.modelForm.time,
+			  showNum: this.showNum,
+			  order: this.order,
 			  type: '2',
               testid: this.testid
             },
