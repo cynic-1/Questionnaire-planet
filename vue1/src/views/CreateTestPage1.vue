@@ -52,19 +52,55 @@
     <q-page padding>
       <q-card class="my-card" style="min-height: 700px">
 	  <q-form ref="modelForm" :rule="rules" :model="modelForm">
-		  <h1 class="quetitle">{{modelForm.title}}</h1>
-<!--		  <vuedraggable v-model="modelForm.topic" class="wrapper" @end="end">-->
+		  <div class="text-h1 quetitle">{{modelForm.title}}</div>
+		  <vuedraggable v-model="modelForm.topic" class="wrapper" @end="end">
 			<q-card class="my-card ques-card" v-for="(item, index) in modelForm.topic" :key="index" @click.native="changeFocus(item)">
-				<div>
-				  <div class="text-h6" style="display: inline-block">
+				<div style="padding-bottom: 20px">
+				  <div class="text-h4" style="display: inline-block">
             <div style="display: inline-block" v-show="showNum">第{{ index+1 }}题</div>
             <div style="display: inline-block; color: red" v-show="item.key === 'true'"><sup>*</sup></div>
             {{modelForm.table[item.type]}}题,&emsp;&emsp;题目:&emsp;{{item.questionName}}
 				  </div>
+          <div class="text-h5 ques-description">
+            {{item.describe}}
+          </div>
+<!--          单选 和 多选-->
+          <q-form style="display: inline-block"
+                  v-for="(opt, idx) in item.answers"
+                  v-if="item.type < 2"
+                  :key="idx"
+                  :label="`选项${idx + 1}`"
+                  :prop="`focusedItem.answers.${idx}.value`">
+<!--                  :rules="[-->
+<!--											{ required: true, message: '请输入答案', trigger: 'blur' },-->
+<!--										]"-->
+            <q-radio :label="opt.value" :val="opt.value" style="padding-right: 20px"/>
+          </q-form>
+
+          <q-form
+              v-else-if="+focusedItem.type===3"
+              >
+            <q-rating
+                size="2em"
+                :max="focusedItem.answers.value"
+                color="yellow"
+                icon="star_border"
+                icon-selected="star"
+                no-dimming
+            />
+          </q-form>
+          <q-form
+            v-else
+
+          >
+            <q-input placeholder="请输入答案" outlined style="width: 900px"/>
+
+          </q-form>
+
 				</div>
 
 			</q-card>
-<!--		  </vuedraggable>-->
+		  </vuedraggable>
 		</q-form>
 	  </q-card>
 
@@ -117,6 +153,7 @@
             v-model="focusedItem.questionName"
             style="display: inline-block;"
             class="text-h6"
+            label="请输入标题"
         />
         <div class="q-gutter-sm">
           <q-radio keep-color v-model="focusedItem.key" val="false" label="选填" color="cyan" />
@@ -131,19 +168,19 @@
       <!-- 答案 -->
       <q-form style="display: inline-block"
               v-for="(opt, idx) in focusedItem.answers"
-              v-if="focusedItem.type!=2 && focusedItem.type !=3"
+              v-if="+focusedItem.type!==2 && +focusedItem.type !==3"
               :key="idx"
-              :label="`选项${idx + 1}`"
+
               :prop="`focusedItem.answers.${idx}.value`"
               :rules="[
 											{ required: true, message: '请输入答案', trigger: 'blur' },
 										]">
-        <q-input v-model.trim="opt.value" style="width:258px;display: inline-block" clearable placeholder="请输入答案" />
+        <q-input v-model.trim="opt.value" style="min-width:150px;display: inline-block" :label="`选项${idx + 1}`" clearable placeholder="请输入答案" />
         <q-btn style="margin-left: 20px;display: inline-block" @click.prevent="removeDomain(focusedItem,idx)" round color="red" label="删除"/>
       </q-form>
 
       <q-form
-          v-else-if="focusedItem.type==3"
+          v-else-if="+focusedItem.type===3"
           style="display: inline-block; width: 200px;"
           :prop="`focusedItem.answers.value`"
           :rules="[
@@ -153,12 +190,12 @@
       </q-form>
 
       <q-form>
-        <q-btn v-show="focusedItem.type!=2 && focusedItem.type !=3" @click="addDomain(focusedItem)">新增选项</q-btn>
-        <q-btn @click="removeQuestion(focusedItem)">删除题目</q-btn>
-        <q-btn style="margin-left: 20px" @click="copy(focusedItem)">复制题目</q-btn>
+        <q-btn v-show="+focusedItem.type!==2 && +focusedItem.type !==3" @click="addDomain(focusedItem)">新增选项</q-btn>
+        <q-btn @click="removeQuestion(focusedItem)" color="cyan" label="删除题目" icon-right="remove"/>
+        <q-btn style="margin-left: 20px" @click="copy(focusedItem)" color="cyan" label="复制题目" icon-right="add"/>
         <br /><br />
-        <q-btn size=small @click="moveup(focusedItem)" v-if="focusedItem !== modelForm.topic[0]">上移</q-btn>
-        <q-btn size=small @click="movedown(focusedItem)" v-if="focusedItem!==modelForm.topic[-1]">下移</q-btn>
+        <q-btn size=small @click="moveup(focusedItem)" v-if="focusedItem !== modelForm.topic[0]" label="上移" color="amber"/>
+        <q-btn size=small @click="movedown(focusedItem)" v-if="focusedItem!==modelForm.topic[-1]" label="下移" color="amber"/>
       </q-form>
     </q-card>
 
@@ -197,7 +234,7 @@ export default {
     window.addEventListener('beforeunload', this.leaveConfirm)
     window.addEventListener('unload', this.updateRecord)
     let type = this.$route.query.type
-    if(type == 0){
+    if(+type === 0){
       this.modelForm.title = this.$route.query.title
       this.url = "http://47.94.221.172:80/publishquestionnaire/"
     }
@@ -248,9 +285,9 @@ export default {
 
     state_Change()
     {
-      if (xmlhttp.readyState==4)
+      if (+xmlhttp.readyState===4)
       {// 4 = "loaded"
-        if (xmlhttp.status==200)
+        if (+xmlhttp.status===200)
         {// 200 = OK
           console.log('200_OK')
         }
@@ -290,7 +327,7 @@ export default {
           const question = { type: '', questionName: '',key: '', answers: '',describe: '' }
           question.type = String(item.type)
           question.questionName = item.stem
-          question.key = item.mustdo == 1?'true':'false'
+          question.key = +item.mustdo === 1?'true':'false'
           question.answers = item.answers
           question.describe = item.describe
           //console.log(question)
@@ -401,5 +438,8 @@ export default {
 }
 .ques-card {
   min-height: 100px;
+}
+.ques-description {
+  padding: 20px;
 }
 </style>
