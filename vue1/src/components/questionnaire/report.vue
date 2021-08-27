@@ -123,7 +123,6 @@
 								</el-card>
 								<div v-if="test.type!=2"><br/></div>
 							</div>
-						
 	            		</div>
 	            </div>
 			  
@@ -137,6 +136,7 @@
 export default {
 	data() {
 		return {
+			tableData:[],
 			tab: 'list',
 			tab1: 'bar',
 			title: '',
