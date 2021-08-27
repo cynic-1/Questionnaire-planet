@@ -35,15 +35,14 @@
 				<div>
 					<div v-if="tab=='list'">
 					<q-table
-      				class="my-sticky-virtscroll-table"
+      				style="height: 600px"
+      				title="提交情况"
+      				:data="data"
+      				:columns="columns"
+      				row-key="index"
       				virtual-scroll
       				:pagination.sync="pagination"
       				:rows-per-page-options="[0]"
-      				:virtual-scroll-sticky-size-start="48"
-     				row-key="index"
-      				title="Treats"
-      				:data="data"
-      				:columns="columns"
     				/>
 					</div>
 						<div v-if="tab=='picture'">
@@ -96,13 +95,24 @@ export default {
 			pagination: {
         		rowsPerPage: 0
       		},
-      		columns: [],
-			tab: 'list',
-			tab1: 'bar',
-			title: '',
-			tests: [],
-			testid:'',
-			dialogFormVisible3:false,
+      		columns: [{
+         		name: 'index',
+          		label: '#',
+          		field: 'index'
+        		},
+        		{
+          		name: 'user',
+          		label: 'user',
+          		align: 'center',
+          		field:'user',
+        		},
+        		{ name: 'submit_time', align: 'center', label: 'submit_time', field: 'submit_time' }],
+				tab: 'list',
+				tab1: 'bar',
+				title: '',
+				tests: [],
+				testid:'',
+				dialogFormVisible3:false,
 		};
 	},
 	created(){
@@ -110,6 +120,7 @@ export default {
 	},
 	mounted() {
 		this.loadreport()
+		// this.loadline()
 		this.loadtable()
 	},
 	methods: {
@@ -140,7 +151,9 @@ export default {
 				// })
 				// Object.freeze(this.data)
 				this.data=res.data.all.data
-				this.columns=res.data.all.columns
+				for(let key in res.data.all.columns){
+					this.columns.push(res.data.all.columns[key])
+				}
 			})
 		},
 		loadline(){
@@ -368,8 +381,5 @@ h2 {
 	position:relative;
 	left: 50%;
 	transform: translate(-50%,0);
-}
-.listdata{
-	/* background-color: rgb(79, 244, 250); */
 }
 </style>
