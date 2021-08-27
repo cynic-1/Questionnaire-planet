@@ -17,26 +17,46 @@
 
     <q-separator />
 
-    <q-tab-panels v-model="tab" animated style="margin-top: 40px">
+    <q-tab-panels v-model="tab" animated style="margin-top: 30px">
       <q-tab-panel name="questions">
-        <q-btn-dropdown color="pink" rounded label="选择题" dropdown-icon="change_history" size="30px">
+		<q-btn-dropdown color="blue" rounded label="个人信息" dropdown-icon="change_history" size="30px">
+		  <q-list>
+		    <q-item clickable v-close-popup @click="addName">
+		      <q-item-section>
+		        <q-item-label>姓名</q-item-label>
+		      </q-item-section>
+		    </q-item>
+
+		    <q-item clickable v-close-popup @click="addID">
+		      <q-item-section>
+		        <q-item-label>ID</q-item-label>
+		      </q-item-section>
+		    </q-item>
+
+			<q-item clickable v-close-popup @click="addBlank">
+			  <q-item-section>
+			    <q-item-label>其他信息</q-item-label>
+			  </q-item-section>
+			</q-item>
+		  </q-list>
+		</q-btn-dropdown>
+
+        <q-btn-dropdown color="pink" rounded label="选择题" dropdown-icon="change_history" size="30px" style="margin-top: 50px;">
           <q-list>
             <q-item clickable v-close-popup @click="addSingle">
               <q-item-section>
-                <q-item-label>单选</q-item-label>
+                <q-item-label>单选投票</q-item-label>
               </q-item-section>
             </q-item>
 
             <q-item clickable v-close-popup @click="addMulti">
               <q-item-section>
-                <q-item-label>多选</q-item-label>
+                <q-item-label>多选投票</q-item-label>
               </q-item-section>
             </q-item>
           </q-list>
         </q-btn-dropdown>
 
-        <q-btn color="cyan" rounded text-color="white" label="填空题" @click="addBlank" size="30px" icon-right="circle" class="left-button"/>
-        <q-btn color="orange" rounded text-color="white" label="评分题" @click="addRank" size="30px" icon-right="star" class="left-button"/>
       </q-tab-panel>
 
       <q-tab-panel name="outline">
@@ -52,45 +72,37 @@
     <q-page padding>
       <q-card class="my-card" style="min-height: 700px">
 	  <q-form ref="modelForm" :rule="rules" :model="modelForm">
-		  <div class="text-h3 quetitle">{{modelForm.title}}</div>
+		  <div class="text-h1 quetitle">{{modelForm.title}}</div>
 		  <vuedraggable v-model="modelForm.topic" class="wrapper" @end="end">
 			<q-card class="my-card ques-card" v-for="(item, index) in modelForm.topic" :key="index" @click.native="changeFocus(item)">
 				<div style="padding-bottom: 20px">
-				  <div class="text-h5" style="display: inline-block">
+				  <div class="text-h4" style="display: inline-block">
             <div style="display: inline-block" v-show="showNum">第{{ index+1 }}题</div>
             <div style="display: inline-block; color: red" v-show="item.key === 'true'"><sup>*</sup></div>
-            {{modelForm.table[item.type]}}题,&emsp;&emsp;题目:&emsp;{{item.questionName}}
+            {{modelForm.table[item.type]}}&emsp;&emsp;题目:&emsp;{{item.questionName}}
 				  </div>
-          <div class="text-h6 ques-description">
+          <div class="text-h5 ques-description">
             {{item.describe}}
           </div>
 <!--          单选 和 多选-->
           <q-form style="display: inline-block"
                   v-for="(opt, idx) in item.answers"
-                  v-if="item.type < 2"
+                  v-if="item.type == 4 || item.type == 5"
                   :key="idx"
                   :label="`选项${idx + 1}`"
                   :prop="`focusedItem.answers.${idx}.value`">
 <!--                  :rules="[-->
 <!--											{ required: true, message: '请输入答案', trigger: 'blur' },-->
 <!--										]"-->
-            <q-radio :label="opt.value || `选项${idx + 1}`" :val="opt.value" style="padding-right: 20px"/>
+            <q-radio :label="opt.value" :val="opt.value" style="padding-right: 20px"/>
           </q-form>
 
           <q-form
-              v-else-if="+item.type===3"
-              >
-            <q-rating
-                size="2em"
-                :max="item.answers.value"
-                color="yellow"
-                icon="star_border"
-                icon-selected="star"
-                no-dimming
-            />
-          </q-form>
-          <q-form v-else>
-            <q-input placeholder="请输入答案" outlined readonly style="width: 900px"/>
+            v-else
+
+          >
+            <q-input placeholder="请输入答案" outlined style="width: 900px"/>
+
           </q-form>
 
 				</div>
@@ -164,7 +176,7 @@
       <!-- 答案 -->
       <q-form style="display: inline-block"
               v-for="(opt, idx) in focusedItem.answers"
-              v-if="+focusedItem.type!==2 && +focusedItem.type !==3"
+              v-if="+focusedItem.type===4 || +focusedItem.type ===5"
               :key="idx"
 
               :prop="`focusedItem.answers.${idx}.value`"
@@ -175,24 +187,13 @@
         <q-btn style="margin-left: 20px;display: inline-block" @click.prevent="removeDomain(focusedItem,idx)" round color="red" label="删除"/>
       </q-form>
 
-      <q-form
-          v-else-if="+focusedItem.type===3"
-          style="display: inline-block; width: 200px;"
-          :prop="`focusedItem.answers.value`"
-          :rules="[
-					{ required: true, message: '请输入范围', trigger: 'blur' },
-			  ]">
-        <q-select v-model="focusedItem.answers.value" :options="options" label="请选择最大星数" />
-      </q-form>
-
       <q-form>
-        <q-btn style="margin-top: 10px" v-show="+focusedItem.type!==2 && +focusedItem.type !==3" @click="addDomain(focusedItem)">新增选项</q-btn>
+        <q-btn style="margin-top: 10px"v-show="+focusedItem.type===4 || +focusedItem.type ===5" @click="addDomain(focusedItem)">新增选项</q-btn>
         <br/>
         <q-btn @click="removeQuestion(focusedItem)" color="cyan" label="删除题目" icon-right="remove"/>
         <q-btn style="margin-left: 20px" @click="copy(focusedItem)" color="cyan" label="复制题目" icon-right="add"/>
-        <br /><br />
-        <q-btn size=small @click="moveup(focusedItem)" v-show="focusedItem !== modelForm.topic[0]" label="上移" icon-right="keyboard_arrow_up" color="amber"/>
-        <q-btn size=small @click="movedown(focusedItem)" v-show="focusedItem!==modelForm.topic[modelForm.topic.length-1]" label="下移" icon-right="keyboard_arrow_down" color="amber"/>
+        <q-btn size=small @click="moveup(focusedItem)" v-show="focusedItem !== modelForm.topic[0]" label="上移" color="amber"/>
+        <q-btn size=small @click="movedown(focusedItem)" v-show="focusedItem!==modelForm.topic[modelForm.topic.length-1]" label="下移" color="amber"/>
       </q-form>
     </q-card>
 
@@ -203,8 +204,9 @@
 <script>
 import vuedraggable from 'vuedraggable'
 import qs from 'qs'
+
 export default {
-  name: "CreateTestPage1",
+  name: "CreateTestPage2",
   components:{
     vuedraggable
   },
@@ -216,22 +218,21 @@ export default {
       rules: {},
       modelForm: {
         userid: this.$store.state.username,
-        topic: [],
+        topic: [{ type: '4', questionName: '您喜欢的网站：',key: 'true', answers: [{ value: '腾讯' },{ value: 'google' },{ value: '淘宝' },{ value: '网易云' },{ value: '其他' }] ,describe: ''}],
         title: '',
         time: '',
-        table: ['单选','多选','填空','评分']
+        table: ['单选投票','多选投票','填空'],
       },
-      options:[2,3,4,5,6,7,8,9,10],
-      tab: 'questions',
-      // type: modelform.topic
-      focusedItem: '',
+	  tab: 'questions',
+	  // type: modelform.topic
+	  focusedItem: '',
     }
   },
   created(){
     window.addEventListener('beforeunload', this.leaveConfirm)
     window.addEventListener('unload', this.updateRecord)
     let type = this.$route.query.type
-    if(+type === 0){
+    if(type == 0){
       this.modelForm.title = this.$route.query.title
       this.url = "http://47.94.221.172:80/publishquestionnaire/"
     }
@@ -240,23 +241,11 @@ export default {
       this.loadtest()
     }
   },
-  // mounted() {
-  //   let type = this.$route.query.type
-  //   if(type == 0){
-  //     this.modelForm.title = this.$route.query.title
-  //     this.url = "http://47.94.221.172:80/publishquestionnaire/"
-  //   }
-  //   else{
-  //     this.testid = this.$route.query.testid
-  //     this.loadtest()
-  //   }
-  // },
   methods: {
-    // 根据中间预览的点击改变右侧题目表单
-    changeFocus(v) {
-      console.log(this.modelForm.topic.indexOf(v))
-      this.focusedItem = v
-    },
+	changeFocus(v) {
+	  console.log(this.modelForm.topic.indexOf(v))
+	  this.focusedItem = v
+	},
     updateRecord() {
       if(this.modelForm.topic.length === 0)
         return
@@ -282,9 +271,9 @@ export default {
 
     state_Change()
     {
-      if (+xmlhttp.readyState===4)
+      if (xmlhttp.readyState==4)
       {// 4 = "loaded"
-        if (+xmlhttp.status===200)
+        if (xmlhttp.status==200)
         {// 200 = OK
           console.log('200_OK')
         }
@@ -324,7 +313,7 @@ export default {
           const question = { type: '', questionName: '',key: '', answers: '',describe: '' }
           question.type = String(item.type)
           question.questionName = item.stem
-          question.key = +item.mustdo === 1?'true':'false'
+          question.key = item.mustdo == 1?'true':'false'
           question.answers = item.answers
           question.describe = item.describe
           //console.log(question)
@@ -339,9 +328,8 @@ export default {
       item.answers.splice(idx, 1)
     },
     removeQuestion(item) {//删除题目
-      let index = this.modelForm.topic.indexOf(item);
+      let index = this.modelForm.topic.indexOf(item)
       this.modelForm.topic.splice(index, 1);
-      this.focusedItem = '';
     },
     addDomain(item) { // 新增选项
       item.answers.push({ value: '' })
@@ -375,10 +363,9 @@ export default {
               title: this.modelForm.title,
               topic: this.modelForm.topic,
               userid: this.modelForm.userid,
-			        time: this.modelForm.time,
-              testid: this.testid,
-              showNum: this.showNum,
-              type: '0'
+			  time: this.modelForm.time,
+			  type: '2',
+              testid: this.testid
             },
             traditional: true,
             paramsSerializer: data => {
@@ -395,27 +382,22 @@ export default {
       //})
     },
     addSingle(){
-      let newItem = { type: '0', questionName: '',key: 'false', answers: [{ value: '' }] ,describe: ''};
-      this.modelForm.topic.push(newItem);
-      this.focusedItem = newItem;
+      this.modelForm.topic.push({ type: '4', questionName: '',key: 'false', answers: [{ value: '' }] ,describe: ''})
     },
     addMulti(){
-      let newItem = { type: '1', questionName: '',key: 'false', answers: [{ value: '' }] ,describe: ''};
-      this.modelForm.topic.push(newItem);
-      this.focusedItem = newItem;
+      this.modelForm.topic.push({ type: '5', questionName: '',key: 'false', answers: [{ value: '' }] , describe: ''})
     },
     addBlank(){
-      let newItem = { type: '2', questionName: '',key: 'false', answers: [{ value: '' }] ,describe: ''};
-      this.modelForm.topic.push(newItem);
-      this.focusedItem = newItem;
+      this.modelForm.topic.push({ type: '2', questionName: '',key: 'false', answers: [{ value: '' }] , describe: ''})
     },
-    addRank(){
-      let newItem = { type: '3', questionName: '',key: 'false', answers: [{ value: '' }] ,describe: ''};
-      this.modelForm.topic.push(newItem);
-      this.focusedItem = newItem;
-    },
+	addName(){
+	  this.modelForm.topic.push({ type: '2', questionName: '您的姓名',key: 'false', answers: [{ value: '' }] , describe: ''})
+	},
+	addID(){
+	  this.modelForm.topic.push({ type: '2', questionName: '您的ID',key: 'false', answers: [{ value: '' }] , describe: ''})
+	},
     copy(item){
-      let newitem = JSON.parse(JSON.stringify(item))
+      var newitem = JSON.parse(JSON.stringify(item))
       this.modelForm.topic.push(newitem)
     }
   },
@@ -451,3 +433,4 @@ export default {
   padding: 20px;
 }
 </style>
+
