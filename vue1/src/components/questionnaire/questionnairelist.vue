@@ -13,7 +13,7 @@
                 </el-col>
             </el-row>
             </div>
-            <el-table :data="tableData" height="500" stripe  style="width: 100%;opacity: 90%" class="table-questionnaire" @selection-change="memberSelectionChange" :default-sort = "{prop: 'createtime', order: 'descending'}">
+            <el-table :data="tableData" height="540" stripe  style="width: 100%;opacity: 90%" class="table-questionnaire" @selection-change="memberSelectionChange" :default-sort = "{prop: 'createtime', order: 'descending'}">
                 <el-table-column label="问卷列表">
                     <el-table-column
                         type="selection"
@@ -482,7 +482,7 @@ export default {
 <style>
     .box-card-questionnaire {
 	    width: 984px;
-        height: 600px;
+        height: 640px;
 		/*margin-top: 30px;*/
 	}
     .demo-table-expand {
