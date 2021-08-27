@@ -26,13 +26,13 @@
 		        <q-item-label>姓名</q-item-label>
 		      </q-item-section>
 		    </q-item>
-		
+
 		    <q-item clickable v-close-popup @click="addID">
 		      <q-item-section>
 		        <q-item-label>ID</q-item-label>
 		      </q-item-section>
 		    </q-item>
-			
+
 			<q-item clickable v-close-popup @click="addBlank">
 			  <q-item-section>
 			    <q-item-label>其他信息</q-item-label>
@@ -40,7 +40,7 @@
 			</q-item>
 		  </q-list>
 		</q-btn-dropdown>
-		
+
         <q-btn-dropdown color="pink" rounded label="选择题" dropdown-icon="change_history" size="30px" style="margin-top: 50px;">
           <q-list>
             <q-item clickable v-close-popup @click="addSingle">
@@ -56,7 +56,7 @@
             </q-item>
           </q-list>
         </q-btn-dropdown>
-		
+
       </q-tab-panel>
 
       <q-tab-panel name="outline">
@@ -94,7 +94,7 @@
 <!--                  :rules="[-->
 <!--											{ required: true, message: '请输入答案', trigger: 'blur' },-->
 <!--										]"-->
-            <q-radio :label="opt.value" :val="opt.value" v-model="opt.value" style="padding-right: 20px"/>
+            <q-radio :label="opt.value" :val="opt.value" style="padding-right: 20px"/>
           </q-form>
 
           <q-form
