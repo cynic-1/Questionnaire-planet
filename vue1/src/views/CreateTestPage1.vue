@@ -191,8 +191,8 @@
         <q-btn @click="removeQuestion(focusedItem)" color="cyan" label="删除题目" icon-right="remove"/>
         <q-btn style="margin-left: 20px" @click="copy(focusedItem)" color="cyan" label="复制题目" icon-right="add"/>
         <br /><br />
-        <q-btn size=small @click="moveup(focusedItem)" v-show="focusedItem !== modelForm.topic[0]" label="上移" color="amber"/>
-        <q-btn size=small @click="movedown(focusedItem)" v-show="focusedItem!==modelForm.topic[modelForm.topic.length-1]" label="下移" color="amber"/>
+        <q-btn size=small @click="moveup(focusedItem)" v-show="focusedItem !== modelForm.topic[0]" label="上移" icon-right="keyboard_arrow_up" color="amber"/>
+        <q-btn size=small @click="movedown(focusedItem)" v-show="focusedItem!==modelForm.topic[modelForm.topic.length-1]" label="下移" icon-right="keyboard_arrow_down" color="amber"/>
       </q-form>
     </q-card>
 
@@ -375,8 +375,9 @@ export default {
               title: this.modelForm.title,
               topic: this.modelForm.topic,
               userid: this.modelForm.userid,
-			  time: this.modelForm.time,
-              testid: this.testid
+			        time: this.modelForm.time,
+              testid: this.testid,
+              showNum: this.showNum
             },
             traditional: true,
             paramsSerializer: data => {

@@ -83,7 +83,7 @@ router.beforeResolve(async (to, from, next) => {
     }
     document.title = title
     let token = sessionStorage.getItem('Authorization')
-    if(to.path === '/login' || to.path === '/' || to.path === '/book-ground')
+    if(to.path === '/login' || to.path === '/')
         // alert(token),
         next();
 	if(to.path === '/fill' && window.sessionStorage.getItem('username') == null && window.sessionStorage.getItem('ip') == null){
@@ -97,6 +97,7 @@ router.beforeResolve(async (to, from, next) => {
             // alert(token)
             next();
     }
+
     if (to.path !== from.path) {
         store.dispatch('setLoading', true);
     }
