@@ -377,7 +377,8 @@ export default {
               userid: this.modelForm.userid,
 			        time: this.modelForm.time,
               testid: this.testid,
-              showNum: this.showNum
+              showNum: this.showNum,
+              type: '0'
             },
             traditional: true,
             paramsSerializer: data => {
