@@ -194,8 +194,8 @@
         <q-btn @click="removeQuestion(focusedItem)" color="cyan" label="删除题目" icon-right="remove"/>
         <q-btn style="margin-left: 20px" @click="copy(focusedItem)" color="cyan" label="复制题目" icon-right="add"/>
         <br /><br />
-        <q-btn size=small @click="moveup(focusedItem)" v-if="focusedItem !== modelForm.topic[0]" label="上移" color="amber"/>
-        <q-btn size=small @click="movedown(focusedItem)" v-if="focusedItem!==modelForm.topic[-1]" label="下移" color="amber"/>
+        <q-btn size=small @click="moveup(focusedItem)" v-show="focusedItem !== modelForm.topic[0]" label="上移" color="amber"/>
+        <q-btn size=small @click="movedown(focusedItem)" v-show="focusedItem!==modelForm.topic[modelForm.topic.length-1]" label="下移" color="amber"/>
       </q-form>
     </q-card>
 
