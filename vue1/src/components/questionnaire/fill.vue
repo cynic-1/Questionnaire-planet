@@ -237,7 +237,7 @@ export default {
 
 			if(isComplete){
 				// 答题完整,可以提交,在这里进行提交数据操作
-				this.isSubmit = '1'
+				var1.issubmit = '1'
 				this.save(var1, var2)
 				alert('提交成功!');
 				this.$router.push('/home')

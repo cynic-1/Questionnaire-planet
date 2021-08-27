@@ -2,13 +2,21 @@
 	<el-container>
 	    <el-main>
 	      <el-row>
+			  	<q-tabs
+        		v-model="tab"
+        		indicator-color="yellow"
+        		class="bg-primary text-white shadow-2"
+      			>
+        		<q-tab name="list" icon="today" label="列表视图" />
+        		<q-tab name="picture" icon="photo" label="图形视图" />
+      			</q-tabs>
               <div class="testtitle">
 			    <h2>{{title}}</h2>
               </div>
 	        <el-col :span="16">
 				<div>
 					<div v-for="(test, index) in tests" :key="index">
-                        <el-card>
+                        <el-card v-if="tab=='list'">
 							<p>{{index + 1}}.{{test.stem}}</p>
                         	<p >{{test.answer}}</p>
 							<div v-if="test.type!=='3'">
@@ -26,6 +34,15 @@
   								</el-collapse-item>
 							</el-collapse>
                         </el-card>
+						<el-card v-if="tab=='picture' && test.type!=2">
+							<el-collapse >
+								<div @click="loadchart(index)">
+  								<el-collapse-item :title="(index + 1)+`.`+test.stem">
+									<div :id="index" style="width: 500px; height: 400px;"></div>
+  								</el-collapse-item>
+								</div>
+							</el-collapse>
+						</el-card>
                         <br/>
 	            </div>
 	          </div>
@@ -57,6 +74,7 @@
 export default {
 	data() {
 		return {
+			tab: 'list',
 			title: '',
 			tests: [],
 			testid:'',
@@ -70,6 +88,30 @@ export default {
 		this.loadreport()
 	},
 	methods: {
+		loadchart(index){
+			var a = index.toString()
+			var column1 = this.$echarts.init(document.getElementById(a));
+			this.$axios({
+				method:"post",
+				url:"http://47.94.221.172/histogram/",
+				header:{
+					'Content-Type': 'application/x-www-form-urlencoded'
+				},
+				data:{
+					testid: this.testid,
+					ord:a,
+				},
+				transformRequest:[function(data){
+					let ret = ''
+					for(let it in data){
+						ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
+					}
+					return ret
+				}],
+			}).then((res)=>{
+				column1.setOption(res.data.option);
+			})
+		},
         backhome(){
             var _this=this
             this.$router.push({path: "/home"})
@@ -215,8 +257,8 @@ h2 {
 }
 .testtitle{
 		position: relative;
-		left: 30%;
-		width: 200px;
+		left: 42%;
+		width: 300px;
 	}
 .back_home{
 		position: relative;
