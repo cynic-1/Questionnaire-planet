@@ -53,66 +53,18 @@
       <q-card class="my-card" style="min-height: 700px">
 	  <q-form ref="modelForm" :rule="rules" :model="modelForm">
 		  <h1 class="quetitle">{{modelForm.title}}</h1>
-		  <vuedraggable v-model="modelForm.topic" class="wrapper" @end="end">
-			<q-card class="my-card" v-for="(item, index) in modelForm.topic" :key="index" @clicked="changeFocus(item)">
+<!--		  <vuedraggable v-model="modelForm.topic" class="wrapper" @end="end">-->
+			<q-card class="my-card ques-card" v-for="(item, index) in modelForm.topic" :key="index" @click.native="changeFocus(item)">
 				<div>
 				  <div class="text-h6" style="display: inline-block">
-					<div style="display: inline-block" v-show="showNum">第{{ index+1 }}题</div>
-					<div style="display: inline-block; color: red" v-show="item.key === 'true'"><sup>*</sup></div>
-					{{modelForm.table[item.type]}}题,&emsp;&emsp;题目:&emsp{{item.questionName}};
+            <div style="display: inline-block" v-show="showNum">第{{ index+1 }}题</div>
+            <div style="display: inline-block; color: red" v-show="item.key === 'true'"><sup>*</sup></div>
+            {{modelForm.table[item.type]}}题,&emsp;&emsp;题目:&emsp;{{item.questionName}}
 				  </div>
 				</div>
 
-				<br>
-				<div class="q-gutter-sm">
-				  <q-radio keep-color v-model="item.key" val="false" label="选填" color="cyan" />
-				  <q-radio keep-color v-model="item.key" val="true" label="必填" color="red" />
-				</div>
-
-
-			  <q-form>
-				<q-input
-					v-model.trim="item.describe"
-					clearable
-					placeholder="请填写问题描述"
-				/>
-			  </q-form>
-
-			  <!-- 答案 -->
-			  <q-form style="display: inline-block"
-				  v-for="(opt, idx) in item.answers"
-				  v-if="item.type!=2 && item.type !=3"
-				  :key="idx"
-				  :label="`选项${idx + 1}`"
-				  :prop="`topic.${index}.answers.${idx}.value`"
-				  :rules="[
-											{ required: true, message: '请输入答案', trigger: 'blur' },
-										]">
-				<q-input v-model.trim="opt.value" style="width:258px;display: inline-block" clearable placeholder="请输入答案" />
-				<q-btn style="margin-left: 20px;display: inline-block" @click.prevent="removeDomain(index,idx)" round color="red" label="删除"/>
-			  </q-form>
-
-			  <q-form
-				  v-else-if="item.type==3"
-				  style="display: inline-block; width: 200px;"
-				  :prop="`topic.${index}.answers.value`"
-				  :rules="[
-					{ required: true, message: '请输入范围', trigger: 'blur' },
-			  ]">
-				<q-select v-model="item.answers.value" :options="options" label="请选择最大星数" />
-			  </q-form>
-
-			  <q-form>
-				<q-btn v-show="item.type!=2 && item.type !=3" @click="addDomain(index)">新增选项</q-btn>
-				<q-btn @click="removeQuestion(index)">删除题目</q-btn>
-				<q-btn style="margin-left: 20px" @click="copy(item)">复制题目</q-btn>
-				<br /><br />
-				<q-btn size=small @click="moveup(item)" v-if="index!==0">上移</q-btn>
-				<q-btn size=small @click="movedown(item)" v-if="index!==modelForm.topic.length-1">下移</q-btn>
-			  </q-form>
-
 			</q-card>
-		  </vuedraggable>
+<!--		  </vuedraggable>-->
 		</q-form>
 	  </q-card>
 
@@ -159,13 +111,54 @@
         label="显示题号"
     />
 
-    <q-card v-model="focusedItem">
+    <q-card v-show="focusedItem">
       <q-form ref="modelForm" :rule="rules">
         <q-input
-            v-model.trim="focusedItem.questionName"
+            v-model="focusedItem.questionName"
             style="display: inline-block;"
             class="text-h6"
         />
+        <div class="q-gutter-sm">
+          <q-radio keep-color v-model="focusedItem.key" val="false" label="选填" color="cyan" />
+          <q-radio keep-color v-model="focusedItem.key" val="true" label="必填" color="red" />
+        </div>
+        <q-input
+            v-model.trim="focusedItem.describe"
+            clearable
+            label="请填写问题描述"
+        />
+      </q-form>
+      <!-- 答案 -->
+      <q-form style="display: inline-block"
+              v-for="(opt, idx) in focusedItem.answers"
+              v-if="focusedItem.type!=2 && focusedItem.type !=3"
+              :key="idx"
+              :label="`选项${idx + 1}`"
+              :prop="`focusedItem.answers.${idx}.value`"
+              :rules="[
+											{ required: true, message: '请输入答案', trigger: 'blur' },
+										]">
+        <q-input v-model.trim="opt.value" style="width:258px;display: inline-block" clearable placeholder="请输入答案" />
+        <q-btn style="margin-left: 20px;display: inline-block" @click.prevent="removeDomain(focusedItem,idx)" round color="red" label="删除"/>
+      </q-form>
+
+      <q-form
+          v-else-if="focusedItem.type==3"
+          style="display: inline-block; width: 200px;"
+          :prop="`focusedItem.answers.value`"
+          :rules="[
+					{ required: true, message: '请输入范围', trigger: 'blur' },
+			  ]">
+        <q-select v-model="focusedItem.answers.value" :options="options" label="请选择最大星数" />
+      </q-form>
+
+      <q-form>
+        <q-btn v-show="focusedItem.type!=2 && focusedItem.type !=3" @click="addDomain(focusedItem)">新增选项</q-btn>
+        <q-btn @click="removeQuestion(focusedItem)">删除题目</q-btn>
+        <q-btn style="margin-left: 20px" @click="copy(focusedItem)">复制题目</q-btn>
+        <br /><br />
+        <q-btn size=small @click="moveup(focusedItem)" v-if="focusedItem !== modelForm.topic[0]">上移</q-btn>
+        <q-btn size=small @click="movedown(focusedItem)" v-if="focusedItem!==modelForm.topic[-1]">下移</q-btn>
       </q-form>
     </q-card>
 
@@ -227,6 +220,7 @@ export default {
   methods: {
     // 根据中间预览的点击改变右侧题目表单
     changeFocus(v) {
+      console.log(this.modelForm.topic.indexOf(v))
       this.focusedItem = v
     },
     updateRecord() {
@@ -307,14 +301,15 @@ export default {
     end(evt) {
       this.$refs.modelForm.clearValidate()
     },
-    removeDomain(index, idx) { // 删除选项
-      this.modelForm.topic[index].answers.splice(idx, 1)
+    removeDomain(item, idx) { // 删除选项
+      item.answers.splice(idx, 1)
     },
-    removeQuestion(index) {//删除题目
-      this.modelForm.topic.splice(index, 1)
+    removeQuestion(item) {//删除题目
+      let index = this.modelForm.topic.indexOf(item)
+      this.modelForm.topic.splice(index, 1);
     },
-    addDomain(index) { // 新增选项
-      this.modelForm.topic[index].answers.push({ value: '' })
+    addDomain(item) { // 新增选项
+      item.answers.push({ value: '' })
     },
     resetForm(formName) { // 重置
       this.$refs[formName].resetFields()
@@ -403,5 +398,8 @@ export default {
 .question-bottom {
   display: inline-block;
   margin-bottom: 20px;
+}
+.ques-card {
+  min-height: 100px;
 }
 </style>
