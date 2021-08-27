@@ -34,74 +34,30 @@
 			  <br/>
 				<div>
 					<div v-if="tab=='list'">
-					<el-table :data="tableData" height="500" stripe  style="width: 100%;opacity: 90%" class="table-questionnaire" @selection-change="memberSelectionChange">
-              			<el-table-column
-                  		type="selection"
-                  		width="55">
-              			</el-table-column>
-              			<el-table-column label="问卷列表">
-							<el-table-column
-      							type="index"
-								label="序号"
-      							width="50">
-   							</el-table-column>
-                        	<el-table-column
-                        	    prop="title"
-                        	    label="问卷名称"
-                        	    width="180">
-                        	</el-table-column>
-                        	<el-table-column
-                        	    prop="createtime"
-                        	    label="创建日期"
-                        	    width="180">
-                        	</el-table-column>
-                       		<el-table-column
-                        	    prop="sequenced"
-                        	    label="回收量"
-                        	    width="125">
-                        	 </el-table-column>
-                        	<el-table-column
-                        	    fixed="right"
-                    		    label="恢复"
-                    	        width="125">
-                        	<template slot-scope="scope">
-                                <el-button size="small" type="success" class=" el-icon-video-play" @click="recover(scope.$index, scope.row)"></el-button>
-                        	</template>
-                        	</el-table-column>
-                        	<el-table-column
-                         	fixed="right"
-                            label="彻底删除"
-                            width="132">
-                            <template slot-scope="scope">
-                                <el-button size="small" type="danger" class="el-icon-circle-close" @click="DeleteForever(scope.$index, scope.row)"></el-button>
-                            </template>
-                        	</el-table-column>
-                		</el-table-column>
-            		</el-table>
+					<q-table
+      				class="my-sticky-virtscroll-table"
+      				virtual-scroll
+      				:pagination.sync="pagination"
+      				:rows-per-page-options="[0]"
+      				:virtual-scroll-sticky-size-start="48"
+     				row-key="index"
+      				title="Treats"
+      				:data="data"
+      				:columns="columns"
+    				/>
 					</div>
-  						<!-- <el-col :span="8">
-						<div v-if="tab=='list'">
-                        	<el-card class="listdata">
-								<p>{{index + 1}}.{{test.stem}}</p>
-                        		<p >{{test.answer}}</p>
-								<div v-if="test.type!=='3'">
-									<div v-for="(value,key,index) in test.answer_rate"
-										:key="index">
-                            			{{key}} : {{value}}
-                        			</div>
-								</div>
-								<el-collapse>
-  									<el-collapse-item title="查看所有用户个人答案">
-    									<div v-for="(value,key,index) in test.all_answer"
-											:key="index">
-                            				{{key}} : {{value}}
-                        				</div>
-  									</el-collapse-item>
-								</el-collapse>
-                        	</el-card>
-						</div>
-						</el-col> -->
 						<div v-if="tab=='picture'">
+							<!-- <div id="linechart" style="width: 800px; height: 400px;"></div> -->
+							<el-card>
+								<el-collapse >
+										<div @click="loadline">
+  										<el-collapse-item title="查看提交情况">
+											<div id="linechart" style="width: 100%; height: 400px;"></div>
+  										</el-collapse-item>
+										</div>
+									</el-collapse>
+							</el-card>
+							<br/>
 							<div v-for="(test, index) in tests" :key="index">
 								<el-card v-if="test.type!=2" class="picturedata">
 									<el-collapse >
@@ -136,7 +92,11 @@
 export default {
 	data() {
 		return {
-			tableData:[],
+			data:[],
+			pagination: {
+        		rowsPerPage: 0
+      		},
+      		columns: [],
 			tab: 'list',
 			tab1: 'bar',
 			title: '',
@@ -150,8 +110,61 @@ export default {
 	},
 	mounted() {
 		this.loadreport()
+		this.loadtable()
 	},
 	methods: {
+		loadtable(){
+			this.$axios({
+				method:"post",
+				url:"http://47.94.221.172/outcomeinlist/",
+				header:{
+					'Content-Type': 'application/x-www-form-urlencoded'
+				},
+				data:{
+					testid: this.testid,
+				},
+				transformRequest:[function(data){
+					let ret = ''
+					for(let it in data){
+						ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
+					}
+					return ret
+				}],
+			}).then((res)=>{
+				console.log(res.data)
+				// for (let i = 0; i < 1000; i++) {
+  				// 	this.data = this.data.concat(res.data.all.data.slice(0).map(r => ({ ...r })))
+				// }
+				// this.data.forEach((row, index) => {
+  				// row.index = index
+				// })
+				// Object.freeze(this.data)
+				this.data=res.data.all.data
+				this.columns=res.data.all.columns
+			})
+		},
+		loadline(){
+			var column2 = this.$echarts.init(document.getElementById('linechart'));
+			this.$axios({
+				method:"post",
+				url:"http://47.94.221.172/line_chart/",
+				header:{
+					'Content-Type': 'application/x-www-form-urlencoded'
+				},
+				data:{
+					testid: this.testid,
+				},
+				transformRequest:[function(data){
+					let ret = ''
+					for(let it in data){
+						ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
+					}
+					return ret
+				}],
+			}).then((res)=>{
+				column2.setOption(res.data.option);
+			})
+		},
 		loadchart(index,tab1){
 			if(tab1=='bar'){
 				var a = index.toString()
