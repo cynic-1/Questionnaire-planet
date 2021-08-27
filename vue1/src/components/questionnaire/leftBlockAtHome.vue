@@ -3,7 +3,16 @@
 
 		<el-aside width="200px">
 			<div class="create_qustionnaire">
-				<el-button style="width:100%;" @click="create" type="primary" icon="el-icon-circle-plus">创建问卷</el-button>
+				<el-dropdown split-button type="primary">
+				  新建问卷
+				  <el-dropdown-menu slot="dropdown">
+				    <el-dropdown-item @click.native="create('1')">普通问卷</el-dropdown-item>
+				    <el-dropdown-item @click.native="create('2')">投票问卷</el-dropdown-item>
+				    <el-dropdown-item>报名问卷</el-dropdown-item>
+				    <el-dropdown-item>考试问卷</el-dropdown-item>
+				    <el-dropdown-item>疫情填报问卷</el-dropdown-item>
+				  </el-dropdown-menu>
+				</el-dropdown>
 				<el-dialog title="问卷标题" :visible.sync="dialogFormVisible" center>
 					<el-input v-model="title"  placeholder="请输入问卷标题"></el-input>
 					<div slot="footer" class="dialog-footer">
@@ -50,19 +59,25 @@
 		data(){
 			return {
 				dialogFormVisible: false,
-				title: ''
+				title: '',
+				newtype: '1'
 			}
 		},
         methods:{
-			create(){
+			create(type){
 				this.dialogFormVisible = true
+				this.newtype = type
+				console.log(this.newtype)
 			},
             createquestionnaire(){
             	if(this.title === ''){
             		this.$message.warning("请输入标题")
             	}
             	else{
-            		this.$router.push({path: "/createtest", query: {title:this.title,type:0}});
+					if(this.newtype === '1')
+						this.$router.push({path: "/createtest", query: {title:this.title,type:0}});
+					if(this.newtype === '2')
+						this.$router.push({path: "/createtest2", query: {title:this.title,type:0}});
             	}
             },
 			cancel(){

@@ -10,24 +10,26 @@
 						<p style="font-size: 24px; margin-top: 10px">{{index + 1}}.{{test.stem}}</p>
 						<p style="font-size: 10px; margin-top: 10px">{{test.describe}}</p>
             </div>
-						<el-checkbox-group v-if="test.type == '1'" v-model="test.useranswer">
+						<el-checkbox-group v-if="test.type == '5'" v-model="test.useranswer">
 							<!-- label绑定答案的值,可以绑定索引index,也可以绑定答案内容city -->
 							<el-checkbox
 							v-for="(option,index) in test.answers"
 							:label="option.value"
 							:key="index"
-							>{{option.value}}</el-checkbox>
+							style="display:block;"
+							:disabled = "disable"
+							>{{option.value}}<span v-if="disable">({{option.num}}人)</span></el-checkbox>
 						</el-checkbox-group>
 
-						<el-radio-group v-else-if="test.type == '0'" v-model="test.useranswer">
+						<el-radio-group v-else-if="test.type == '4'" v-model="test.useranswer">
 							<el-radio
 								v-for="(option,index) in test.answers"
 								:label="option.value"
 								:key="index"
-							>{{option.value}}</el-radio>
+								style="display:block;"
+								:disabled = "disable"
+							>{{option.value}}<span v-if="disable">({{option.num}}人)</span></el-radio>
 						</el-radio-group>
-
-						<el-rate v-else-if="test.type == '3'" v-model="test.useranswer" :max="test.max"></el-rate>
 
 						<div v-else>
 							<el-input  placeholder="请输入内容" v-model="test.useranswer"></el-input>
@@ -42,76 +44,29 @@
 					testid: testid,
 					userid: username,
 					issubmit: isSubmit
-				},`http://47.94.221.172:80/userfillquestionnaire/`)" type="primary">保存</el-button>
+				},`http://47.94.221.172:80/userfillquestionnaire/`)" type="primary" :disabled = "disable">保存</el-button>
 				<el-button  v-else @click="save({
 					testid: testid,
 					visitorip: visitorip,
 					issubmit: isSubmit
-				},`http://47.94.221.172:80/visitorfillquestionnaire/`)" type="primary">保存</el-button>
+				},`http://47.94.221.172:80/visitorfillquestionnaire/`)" type="primary" :disabled = "disable">保存</el-button>
 			    <el-button v-if="!isVisitor" @click="submitCount({
 					testid: testid,
 					userid: username,
 					issubmit: isSubmit
-				},`http://47.94.221.172:80/userfillquestionnaire/`)" type="success">提交问卷</el-button>
+				},`http://47.94.221.172:80/userfillquestionnaire/`)" type="success" :disabled = "disable">提交问卷</el-button>
 				<el-button v-else @click="submitCount({
 					testid: testid,
 					visitorip: visitorip,
 					issubmit: isSubmit
-				},`http://47.94.221.172:80/visitorfillquestionnaire/`)" type="success">提交问卷</el-button>
+				},`http://47.94.221.172:80/visitorfillquestionnaire/`)" type="success" :disabled = "disable">提交问卷</el-button>
+				<el-button @click="back" v-if="disable">返回</el-button>
 			  </div>
 
 	          <br />
-
-
-<!--            <div class="grid-content bg-purple-light">-->
-<!--              <h3>题号:</h3>-->
-<!--              <div class="tihao">-->
-<!--                &lt;!&ndash; <span class="ti active">{{index + 1}}</span> &ndash;&gt;-->
-<!--                <div v-for="(test,index) in tests" :key="index">-->
-<!--                  <span v-if="test.useranswer.length == '0' && test.mustdo == 1" class="ti">-->
-<!--            {{index + 1}}-->
-<!--                  </span>-->
-<!--          <span v-else-if="test.useranswer.length == '0' && test.mustdo == 0" class="ti unkey">-->
-<!--            {{index + 1}}-->
-<!--          </span>-->
-
-<!--          <span v-else-if="test.useranswer.length == '0' && test.mustdo == 0" class="ti unkey">-->
-<!--            {{index + 1}}-->
-<!--          </span>-->
-<!--                  <span v-else class="ti active">-->
-<!--            {{index + 1}}-->
-<!--          </span>-->
-
-<!--                </div>-->
-<!--              </div>-->
-<!--            </div>-->
-
+			  
           </el-card>
 
-<!--	        <el-col :span="8">-->
-<!--	          <div class="grid-content bg-purple-light">-->
-<!--	            <h3>题号:</h3>-->
-<!--	            <div class="tihao">-->
-<!--	              &lt;!&ndash; <span class="ti active">{{index + 1}}</span> &ndash;&gt;-->
-<!--	              <div v-for="(test,index) in tests" :key="index">-->
-<!--	                <span v-if="test.useranswer.length == '0' && test.mustdo == 1" class="ti">-->
-<!--						{{index + 1}}-->
-<!--	                </span>-->
-<!--					<span v-else-if="test.useranswer.length == '0' && test.mustdo == 0" class="ti unkey">-->
-<!--						{{index + 1}}-->
-<!--					</span>-->
-
-<!--					<span v-else-if="test.useranswer.length == '0' && test.mustdo == 0" class="ti unkey">-->
-<!--						{{index + 1}}-->
-<!--					</span>-->
-<!--	                <span v-else class="ti active">-->
-<!--						{{index + 1}}-->
-<!--					</span>-->
-
-<!--	              </div>-->
-<!--	            </div>-->
-<!--	          </div>-->
-<!--	        </el-col>-->
 	      </el-row>
 	    </el-main>
 	  </el-container>
@@ -130,7 +85,9 @@ export default {
 			username:this.$store.state.username,
 			isSubmit: '0',
 			visitorip: '',
-			isVisitor: false
+			isVisitor: false,
+			results: [],
+			disable: false
 		};
 	},
 	mounted() {
@@ -186,24 +143,21 @@ export default {
 				this.publisher = dic.userid
 				this.tests = dic.topic
 				for(let item of this.tests){
-					if(item.type == 1){
+					if(item.type == 5){
 						if(item.useranswer[0] == ''){
 							item.useranswer.pop()
 						}
 					}
-					if(item.type == 3){
-						if(item.useranswer === '')
-							item.useranswer = 0
-						else
-							item.useranswer = parseInt(item.useranswer)
-						const max = parseInt(item.answers[0].value)
-						this.$set(item, 'max' , max)
+					if(item.type == 4 || item.type == 5){
+						for(let item2 of item.answers)
+							this.$set(item2, 'num', 0)
 					}
 				}
 			})
 		},
 		save(var1,var2){
 			const usercard = []
+			//console.log(var1)
 			for(let item of this.tests){
 				usercard.push({questionid:item.questionid, useranswer:item.useranswer})
 			}
@@ -219,8 +173,7 @@ export default {
 				paramsSerializer: data => {
 					return qs.stringify(data, { indices: false })
 				}
-			}).then((res)=>{
-				console.log(res.data)
+			}).then((res)=>{				
 				if (res.data.code !== '200') return this.$message.error(res.data.message);
 				this.$message.success("保存成功")
 			})
@@ -238,12 +191,46 @@ export default {
 			if(isComplete){
 				// 答题完整,可以提交,在这里进行提交数据操作
 				var1.issubmit = '1'
-				this.save(var1, var2)
-				alert('提交成功!');
-				this.$router.push('/home')
+				const usercard = []
+				//console.log(var1)
+				for(let item of this.tests){
+					usercard.push({questionid:item.questionid, useranswer:item.useranswer})
+				}
+				this.$set(var1, 'usercard', usercard)
+				this.$axios({
+					method:"post",
+					url: var2,
+					header:{
+						'Content-Type': 'application/x-www-form-urlencoded'
+					},
+					data: var1,
+					traditinal: true,
+					paramsSerializer: data => {
+						return qs.stringify(data, { indices: false })
+					}
+				}).then((res)=>{				
+					if (res.data.code !== '200') return this.$message.error(res.data.message);
+					if (res.data.dic !== null || res.data.dic !== null==='' || res.data.dic !== []){
+						this.results = res.data.dic
+						//console.log(this.results)
+					}
+					alert('提交成功!');
+					//console.log(this.results)
+					for(let item1 of this.results){
+						for(let item2 of this.tests){
+							if(item1.questionid === item2.questionid)
+								this.$set(item2, 'answers', item1.answers)
+						}
+					}
+					//console.log(this.tests)
+					this.disable = true
+				})	
 			}else{
 				alert('未答完,请完成问卷再提交!');
 			}
+		},
+		back(){
+			this.$router.push('/home')
 		}
 	}
 };
