@@ -386,7 +386,7 @@ export default {
               testid: this.testid,
               showNum: this.showNum,
 			        order: this.order,
-              type: this.repeatable === false? '0':'1'
+              type: this.repeatable === false? '4':'14'
             },
             traditional: true,
             paramsSerializer: data => {
