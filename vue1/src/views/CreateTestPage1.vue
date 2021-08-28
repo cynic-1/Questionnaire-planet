@@ -64,17 +64,30 @@
           <div class="text-h6 ques-description">
             {{item.describe}}
           </div>
-<!--          单选 和 多选-->
+<!--   单选 -->
           <q-form style="display: inline-block"
                   v-for="(opt, idx) in item.answers"
-                  v-if="item.type < 2"
+                  v-if="+item.type === 0"
                   :key="idx"
                   :label="`选项${idx + 1}`"
                   :prop="`focusedItem.answers.${idx}.value`">
+<<<<<<< HEAD
+            <q-radio :label="opt.value || `选项${idx + 1}`" :val="opt.value" style="padding-right: 20px"/>
+=======
 <!--                  :rules="[-->
 <!--											{ required: true, message: '请输入答案', trigger: 'blur' },-->
 <!--										]"-->
-            <q-radio :label="opt.value || `选项${idx + 1}`" :val="opt.value" style="padding-right: 20px"/>
+            <q-radio :label="opt.value || `选项${idx + 1}`" :val="opt.value" v-model="opt.value" style="padding-right: 20px"/>
+>>>>>>> e0985cd391685c04df1e8f10b7a655c19fb2063c
+          </q-form>
+<!--多选-->
+          <q-form style="display: inline-block"
+                  v-for="(opt, idx) in item.answers"
+                  v-if="+item.type === 1"
+                  :key="idx"
+                  :label="`选项${idx + 1}`"
+                  :prop="`focusedItem.answers.${idx}.value`">
+            <q-checkbox v-model="useless" keep-color :label="opt.value || `选项${idx + 1}`" :val="opt.value" style="padding-right: 20px"/>
           </q-form>
 
           <q-form
@@ -87,6 +100,7 @@
                 icon="star_border"
                 icon-selected="star"
                 no-dimming
+				v-model="item.answers.value"
             />
           </q-form>
           <q-form v-else>
@@ -142,6 +156,14 @@
         v-model="showNum"
         label="显示题号"
     />
+	<q-toggle
+	    v-model="repeatable"
+	    label="可重复填写"
+	/>
+	<q-toggle
+	    v-model="order"
+	    label="乱序填写"
+	/>
 
     <q-card v-show="focusedItem">
       <q-form ref="modelForm" :rule="rules">
@@ -213,18 +235,22 @@ export default {
       url: "http://47.94.221.172:80/modifyquestionnaire/",
       testid: '',
 	  showNum: false,
+	  repeatable: false,
+	  order: false,
       rules: {},
       modelForm: {
         userid: this.$store.state.username,
         topic: [],
         title: '',
         time: '',
-        table: ['单选','多选','填空','评分']
+        table: ['单选','多选','填空','评分'],
+
       },
       options:[2,3,4,5,6,7,8,9,10],
       tab: 'questions',
       // type: modelform.topic
       focusedItem: '',
+      useless: false,
     }
   },
   created(){
@@ -375,10 +401,11 @@ export default {
               title: this.modelForm.title,
               topic: this.modelForm.topic,
               userid: this.modelForm.userid,
-			        time: this.modelForm.time,
+			  time: this.modelForm.time,
               testid: this.testid,
               showNum: this.showNum,
-              type: '0'
+			  order: this.order,
+              type: this.repeatable === false? '0':'1'
             },
             traditional: true,
             paramsSerializer: data => {
@@ -410,7 +437,7 @@ export default {
       this.focusedItem = newItem;
     },
     addRank(){
-      let newItem = { type: '3', questionName: '',key: 'false', answers: [{ value: '' }] ,describe: ''};
+      let newItem = { type: '3', questionName: '',key: 'false', answers: { value: 5 } ,describe: ''};
       this.modelForm.topic.push(newItem);
       this.focusedItem = newItem;
     },
