@@ -48,7 +48,7 @@
                   v-else
                   v-model="test.useranswer"
                   size="2em"
-                  :max="item.answers.value"
+                  :max="test.answers.value"
                   color="yellow"
                   icon="star_border"
                   icon-selected="star"
