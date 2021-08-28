@@ -150,10 +150,6 @@
 	    v-model="repeatable"
 	    label="可重复填写"
 	/>
-	<q-toggle
-	    v-model="order"
-	    label="乱序填写"
-	/>
 
     <q-card v-show="focusedItem">
       <q-form ref="modelForm" :rule="rules">
