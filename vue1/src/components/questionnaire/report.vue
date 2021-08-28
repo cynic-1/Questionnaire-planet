@@ -58,7 +58,7 @@
 							</el-card>
 							<br/>
 							<div v-for="(test, index) in tests" :key="index">
-								<el-card v-if="test.type!=2" class="picturedata">
+								<el-card v-if="test.type!=2 && test.type!=8" class="picturedata">
 									<el-collapse >
 										<div @click="loadchart(index,tab1)">
   										<el-collapse-item :title="(index + 1)+`.`+test.stem">
@@ -76,7 +76,7 @@
 										</div>
 									</el-collapse>
 								</el-card>
-								<div v-if="test.type!=2"><br/></div>
+								<div v-if="test.type!=2 && test.type!=8"><br/></div>
 							</div>
 	            		</div>
 	            </div>
