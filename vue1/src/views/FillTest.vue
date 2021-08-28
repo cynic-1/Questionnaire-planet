@@ -27,7 +27,7 @@
               <!-- 多选 -->
 
               <q-checkbox
-                  v-else-if="+test.type === 1"
+                  v-if="+test.type === 1"
                   v-for="(option,index) in test.answers"
                   :key="index"
                   v-model="test.useranswer"
@@ -38,17 +38,17 @@
 
 
               <q-input
-                  v-else-if="+test.type === 2"
+                  v-if="+test.type === 2"
                   placeholder="请输入答案"
                   outlined
                   v-model="test.useranswer"
                   style="width: 900px"/>
 
               <q-rating
-                  v-else
+                  v-if="+test.type === 3"
                   v-model="test.useranswer"
                   size="2em"
-                  :max="item.answers.value"
+                  :max="test.answers.value"
                   color="yellow"
                   icon="star_border"
                   icon-selected="star"
@@ -206,7 +206,7 @@ export default {
 
       if(isComplete){
         // 答题完整,可以提交,在这里进行提交数据操作
-        this.isSubmit = '1'
+        var1.issubmit = '1'
         this.save(var1, var2)
         alert('提交成功!');
         this.$router.push('/home')
