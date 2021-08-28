@@ -73,6 +73,12 @@ const routes = [
 	      component: () => import('@/views/CreateTestPage2'),
 	      meta: { title: '创建投票问卷' }
 	  },
+	  {
+	      path:'/createtest3',
+	      name:'createtest3',
+	      component: () => import('@/views/CreateTestPage3'),
+	      meta: { title: '创建报名问卷' }
+	  },
       {
         path:'/createtest4',
         name:'createtest4',

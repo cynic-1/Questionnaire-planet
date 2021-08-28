@@ -8,7 +8,7 @@
 				  <el-dropdown-menu slot="dropdown">
 				    <el-dropdown-item @click.native="create('1')">普通问卷</el-dropdown-item>
 				    <el-dropdown-item @click.native="create('2')">投票问卷</el-dropdown-item>
-				    <el-dropdown-item>报名问卷</el-dropdown-item>
+				    <el-dropdown-item @click.native="create('3')">报名问卷</el-dropdown-item>
 				    <el-dropdown-item>考试问卷</el-dropdown-item>
 				    <el-dropdown-item @click.native="create('4')">疫情填报问卷</el-dropdown-item>
 				  </el-dropdown-menu>
@@ -78,6 +78,8 @@
 						this.$router.push({path: "/createtest", query: {title:this.title,type:0}});
 					if(this.newtype === '2')
 						this.$router.push({path: "/createtest2", query: {title:this.title,type:0}});
+					if(this.newtype === '3')
+						this.$router.push({path: "/createtest3", query: {title:this.title,type:0}});
 					if(this.newtype === '4')
 						this.$router.push({path: "/createtest4", query: {title:this.title,type:0}});
             	}

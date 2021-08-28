@@ -100,25 +100,50 @@
           <div class="text-h5 ques-description">
             {{item.describe}}
           </div>
-<!--          单选 多选和投票-->
+<!--   单选 -->
           <q-form style="display: inline-block"
                   v-for="(opt, idx) in item.answers"
-                  v-if="item.type == 6 || item.type == 7 || item.type < 2"
+                  v-if="+item.type === 0"
                   :key="idx"
                   :label="`选项${idx + 1}`"
                   :prop="`focusedItem.answers.${idx}.value`">
-<!--                  :rules="[-->
-<!--											{ required: true, message: '请输入答案', trigger: 'blur' },-->
-<!--										]"-->
-            <q-radio :label="opt.value" :val="opt.value" v-model="opt.value" style="padding-right: 20px"/>
+
+            <q-radio v-model="useless" :label="opt.value || `选项${idx + 1}`" :val="opt.value" style="padding-right: 20px"/>
           </q-form>
+		  
+<!--   多选 -->
+          <q-form style="display: inline-block"
+                  v-if="+item.type === 1"
+                  v-for="(opt, idx) in item.answers"
+                  :key="idx"
+                  :label="`选项${idx + 1}`"
+                  :prop="`focusedItem.answers.${idx}.value`">
+            <q-checkbox v-model="useless" keep-color :label="opt.value || `选项${idx + 1}`" :val="opt.value" style="padding-right: 20px"/>
+          </q-form>
+		  
+<!--   单选投票 -->
+          <q-form style="display: inline-block"
+                  v-for="(opt, idx) in item.answers"
+                  v-if="+item.type === 6"
+                  :key="idx"
+                  :label="`选项${idx + 1}`"
+                  :prop="`focusedItem.answers.${idx}.value`">
 
-          <q-form
-            v-else
-
-          >
+            <q-radio v-model="useless" :label="`${opt.value}  剩余${opt.limit}` || `选项${idx + 1}`" :val="opt.value" style="padding-right: 20px"/>
+          </q-form>
+		  
+<!--   多选投票 -->
+          <q-form style="display: inline-block"
+                  v-if="+item.type === 7"
+                  v-for="(opt, idx) in item.answers"
+                  :key="idx"
+                  :label="`选项${idx + 1}`"
+                  :prop="`focusedItem.answers.${idx}.value`">
+            <q-checkbox v-model="useless" keep-color :label="`${opt.value}  剩余${opt.limit}` || `选项${idx + 1}`" :val="opt.value" style="padding-right: 20px"/>
+          </q-form>
+		  
+          <q-form v-if="+item.type === 2">
             <q-input placeholder="请输入答案" outlined style="width: 900px"/>
-
           </q-form>
 
 				</div>
@@ -160,7 +185,15 @@
 	      </q-input>
 	    </div>
  <!-- drawer content -->
-
+ 
+	<div>
+		<q-input
+		    v-model.trim="modelForm.testlimit"
+		    clearable
+		    label="问卷限额"
+		/>
+	</div>
+	
     <div>
       <q-btn label="提交" type="submit" color="primary" @click="addSubmit()"/>
       <q-btn label="重置" type="reset" color="primary" flat class="q-ml-sm" @click="resetForm('modelForm')"/>
@@ -217,12 +250,13 @@
 	  											{ required: true, message: '请输入答案', trigger: 'blur' },
 	  										]">
 	    <q-input v-model.trim="opt.value" style="min-width:150px;display: inline-block" :label="`选项${idx + 1}`" clearable placeholder="请输入答案" />
-		<q-input v-model.trim="opt.value" style="min-width:150px;display: inline-block" :label="`选项${idx + 1}`" clearable placeholder="请输入答案" />
+		<q-input v-model.trim="opt.limit" style="min-width:150px;display: inline-block" :label="`选项${idx + 1}限额`" clearable placeholder="答案限额" />
 	    <q-btn style="margin-left: 20px;display: inline-block" @click.prevent="removeDomain(focusedItem,idx)" round color="red" label="删除"/>
 	  </q-form>
 
       <q-form>
-        <q-btn style="margin-top: 10px" v-show="+focusedItem.type===6 || +focusedItem.type ===7 || +focusedItem.type <2" @click="addDomain(focusedItem)">新增选项</q-btn>
+        <q-btn style="margin-top: 10px" v-show="+focusedItem.type <2" @click="addDomain(focusedItem)">新增选项</q-btn>
+		<q-btn style="margin-top: 10px" v-show="+focusedItem.type===6 || +focusedItem.type ===7 " @click="addEnrollDomain(focusedItem)">新增选项</q-btn>
         <br/>
         <q-btn @click="removeQuestion(focusedItem)" color="cyan" label="删除题目" icon-right="remove"/>
         <q-btn style="margin-left: 20px" @click="copy(focusedItem)" color="cyan" label="复制题目" icon-right="add"/>
@@ -255,16 +289,19 @@ export default {
         userid: this.$store.state.username,
         topic: [
 			{ type: '2', questionName: '您的姓名',key: 'false', answers: [{ value: '' }] , describe: ''},
-			{ type: '2', questionName: '您的手机号',key: 'false', answers: [{ value: '' }] , describe: ''}
-			{ type: '6', questionName: '志愿参与时间',key: 'true', answers: [{ value: '2022年2月2日',limit: 10 },{ value: '2022年2月3日',limit: 10 },{ value: '2022年2月4日',limit: 10},{ value: '2022年2月5日',limit: 10}] ,describe: ''}
+			{ type: '2', questionName: '您的手机号',key: 'false', answers: [{ value: '' }] , describe: ''},
+			{ type: '6', questionName: '志愿参与时间',key: 'true', answers: [{ value: '2022年2月2日',limit: 10 },
+			{ value: '2022年2月3日',limit: 10 },{ value: '2022年2月4日',limit: 10},{ value: '2022年2月5日',limit: 10}] ,describe: ''}
 		],
         title: '',
         time: '',
         table: ['单选投票','多选投票','填空'],
+		testlimit: ''
       },
 	  tab: 'questions',
 	  // type: modelform.topic
 	  focusedItem: '',
+	  useless:false
     }
   },
   created(){
@@ -373,6 +410,9 @@ export default {
     addDomain(item) { // 新增选项
       item.answers.push({ value: '' })
     },
+	addEnrollDomain(item){ //报名题新增选项
+	  item.amswers.push({ value:'', limit: ''})
+	},
     resetForm(formName) { // 重置
       this.$refs[formName].resetFields()
     },
@@ -387,8 +427,24 @@ export default {
     },
     addSubmit() {
       console.log(this.modelForm.topic)
+	  var numReg = /^[0-9]*$/
+	  var numRe = new RegExp(numReg)
       if(this.modelForm.topic.length === 0)
         return this.$message.info("问卷至少包含一个题目！")
+	  if(!numRe.test(this.modelForm.testlimit) && this.modelForm.testlimit !== '')
+	    return this.$message.info("问卷限额只能为空或数字")
+	  if(this.modelForm.testlimit !== '')
+	    this.modelForm.testlimit = parseInt(this.modelForm.testlimit);
+	  for(let test of this.modelForm.topic){
+		  if(+test.type === 6 || +test.type === 7){
+			  for(let item of test.answers){
+				  if(!numRe.test(item.limit) || item.limit === '')
+					return this.$message.info("选项限额不能为非数字")
+				  item.limit = parseInt(item.limit)
+			  }
+		  }
+	  }
+	  //return this.$message.info("到底了")
       //this.$refs.myForm.validate().then(success => {
 		//console.log(this.modelForm.topic)
         //if (success) {
@@ -405,8 +461,9 @@ export default {
 			  time: this.modelForm.time,
 			  showNum: this.showNum,
 			  order: this.order,
-			  type: '2',
-              testid: this.testid
+			  type: '3',
+              testid: this.testid,
+			  testlimit: this.modelForm.testlimit
             },
             traditional: true,
             paramsSerializer: data => {
@@ -423,11 +480,17 @@ export default {
       //})
     },
     addSingle(){
-      this.modelForm.topic.push({ type: '6', questionName: '',key: 'false', answers: [{ value: '' }] ,describe: ''})
+      this.modelForm.topic.push({ type: '0', questionName: '',key: 'false', answers: [{ value: '' }] ,describe: ''})
     },
     addMulti(){
-      this.modelForm.topic.push({ type: '7', questionName: '',key: 'false', answers: [{ value: '' }] , describe: ''})
+      this.modelForm.topic.push({ type: '1', questionName: '',key: 'false', answers: [{ value: '' }] , describe: ''})
     },
+	addEnrollSingle(){
+	  this.modelForm.topic.push({ type: '6', questionName: '',key: 'false', answers: [{ value: '' ,limit: ''}] ,describe: ''})
+	},
+	addEnrollMulti(){
+	  this.modelForm.topic.push({ type: '7', questionName: '',key: 'false', answers: [{ value: '' ,limit: ''}] ,describe: ''})
+	},
     addBlank(){
       this.modelForm.topic.push({ type: '2', questionName: '',key: 'false', answers: [{ value: '' }] , describe: ''})
     },
