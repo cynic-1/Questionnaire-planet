@@ -84,25 +84,29 @@
           <div class="text-h5 ques-description">
             {{item.describe}}
           </div>
-<!--          单选 和 多选-->
+<!--   单选 -->
           <q-form style="display: inline-block"
                   v-for="(opt, idx) in item.answers"
-                  v-if="item.type == 4 || item.type == 5"
+                  v-if="+item.type === 4"
                   :key="idx"
                   :label="`选项${idx + 1}`"
                   :prop="`focusedItem.answers.${idx}.value`">
-<!--                  :rules="[-->
-<!--											{ required: true, message: '请输入答案', trigger: 'blur' },-->
-<!--										]"-->
-            <q-radio :label="opt.value" :val="opt.value" v-model="opt.value" style="padding-right: 20px"/>
+
+            <q-radio v-model="useless" :label="opt.value || `选项${idx + 1}`" :val="opt.value" style="padding-right: 20px"/>
           </q-form>
 
-          <q-form
-            v-else
-
-          >
+<!--多选-->
+          <q-form style="display: inline-block"
+                  v-if="+item.type === 5"
+                  v-for="(opt, idx) in item.answers"
+                  :key="idx"
+                  :label="`选项${idx + 1}`"
+                  :prop="`focusedItem.answers.${idx}.value`">
+            <q-checkbox v-model="useless" keep-color :label="opt.value || `选项${idx + 1}`" :val="opt.value" style="padding-right: 20px"/>
+          </q-form>
+		  
+          <q-form v-if="+item.type === 2">
             <q-input placeholder="请输入答案" outlined style="width: 900px"/>
-
           </q-form>
 
 				</div>
@@ -231,6 +235,7 @@ export default {
 	  tab: 'questions',
 	  // type: modelform.topic
 	  focusedItem: '',
+	  useless:false
     }
   },
   created(){
