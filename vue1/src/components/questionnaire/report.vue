@@ -1,39 +1,59 @@
 <template>
-	<el-container>
-	    <el-main>
-			  	<q-tabs
-        		v-model="tab"
-        		indicator-color="yellow"
-        		class="bg-primary text-white shadow-2"
-      			>
-        		<q-tab name="list" icon="today" label="列表视图" />
-        		<q-tab name="picture" icon="photo" label="图形视图" />
-      			</q-tabs>
-			<el-row>
-			<el-col :span="20">
-              <div class="testtitle">
-			    <h2>{{title}}</h2>
-              </div>
-			</el-col>
-			<el-col :span="2">
-			  <div class="downloaddate">
-			    <el-button @click="downloaddate" type="text">导出数据信息</el-button>
-				<el-dialog title="请选择导出类型" :visible.sync="dialogFormVisible3" center :modal-append-to-body="false" style="margin-top: 30px;">
-					<div slot="footer" class="dialog-footer">
-					    <el-button @click="downloaddatecancel">取 消</el-button>
-					    <el-button type="primary" @click="downloaddate_doc">导出为word</el-button>
-                        <el-button type="primary" @click="downloaddate_excel">导出为excel</el-button>
-					</div>
-				</el-dialog>
-			  </div>
-			</el-col>
-			<el-col :span="2">
-				<el-button @click="backhome" type="text">返回</el-button>
-			</el-col>
-			</el-row>  
-			  <br/>
+  <div>
+
+    <q-drawer show-if-above side="left" bordered>
+      <q-tabs
+          v-model="tab"
+          indicator-color="blue"
+          class="text-teal"
+          vertical
+          shrink
+          style="height: 200px"
+      >
+        <q-tab name="list" icon="today" label="列表视图" />
+        <q-tab name="picture" icon="photo" label="图形视图" />
+      </q-tabs>
+      <div style="text-align: center">
+        <q-btn color="cyan" label="导出数据" @click="downloaddate" icon-right="download"></q-btn>
+        <br/>
+        <q-btn color="blue" label="返回主页" @click="backhome" icon-right="home"></q-btn>
+      </div>
+
+
+    </q-drawer>
+<!--			<el-row>-->
+<!--			<el-col :span="20">-->
+<!--              <div class="testtitle">-->
+<!--			    <h2>{{title}}</h2>-->
+<!--              </div>-->
+<!--			</el-col>-->
+<!--			<el-col :span="2">-->
+<!--			  <div class="downloaddate">-->
+<!--			    <el-button @click="downloaddate" type="text">导出数据信息</el-button>-->
+<!--				<el-dialog title="请选择导出类型" :visible.sync="dialogFormVisible3" center :modal-append-to-body="false" style="margin-top: 30px;">-->
+<!--					<div slot="footer" class="dialog-footer">-->
+<!--					    <el-button @click="downloaddatecancel">取 消</el-button>-->
+<!--					    <el-button type="primary" @click="downloaddate_doc">导出为word</el-button>-->
+<!--                        <el-button type="primary" @click="downloaddate_excel">导出为excel</el-button>-->
+<!--					</div>-->
+<!--				</el-dialog>-->
+<!--			  </div>-->
+<!--			</el-col>-->
+<!--			<el-col :span="2">-->
+<!--				<el-button @click="backhome" type="text">返回</el-button>-->
+<!--			</el-col>-->
+<!--			</el-row>-->
+    <el-dialog title="请选择导出类型" :visible.sync="dialogFormVisible3" center :modal-append-to-body="false" style="margin-top: 30px;">
+      <div slot="footer" class="dialog-footer">
+        <q-btn color="red" @click="downloaddatecancel">取 消</q-btn>
+        <q-btn color="blue" @click="downloaddate_doc">导出为word</q-btn>
+        <q-btn color="green" @click="downloaddate_excel">导出为excel</q-btn>
+      </div>
+    </el-dialog>
+
+    <br/>
 				<div>
-					<div v-if="tab=='list'">
+					<div v-show="tab==='list'">
 					<q-table
       				style="height: 600px"
       				title="提交情况"
@@ -45,23 +65,23 @@
       				:rows-per-page-options="[0]"
     				/>
 					</div>
-						<div v-if="tab=='picture'">
+						<div v-show="tab==='picture'">
 							<!-- <div id="linechart" style="width: 800px; height: 400px;"></div> -->
 							<el-card>
-								<el-collapse >
-										<div @click="loadline">
-  										<el-collapse-item title="查看提交情况">
+<!--								<el-collapse >-->
+<!--										<div @click="loadline">-->
+<!--  										<el-collapse-item title="查看提交情况">-->
 											<div id="linechart" style="width: 100%; height: 400px;"></div>
-  										</el-collapse-item>
-										</div>
-									</el-collapse>
+<!--  										</el-collapse-item>-->
+<!--										</div>-->
+<!--									</el-collapse>-->
 							</el-card>
 							<br/>
 							<div v-for="(test, index) in tests" :key="index">
-								<el-card v-if="test.type!=2 && test.type!=8" class="picturedata">
-									<el-collapse >
-										<div @click="loadchart(index,tab1)">
-  										<el-collapse-item :title="(index + 1)+`.`+test.stem">
+								<el-card v-show="+test.type!==2 && +test.type!==8" class="picturedata">
+<!--									<el-collapse >-->
+<!--										<div @click="loadchart(index,tab1)">-->
+<!--  										<el-collapse-item :title="(index + 1)+`.`+test.stem">-->
 											<q-tabs
         									v-model="tab1"
         									class="text-primary"
@@ -69,22 +89,18 @@
         										<q-tab name="bar"  label="柱状图" />
         										<q-tab name="pie"  label="饼状图" />
       										</q-tabs>
-											<div v-if="tab1=='bar'" :id="index" style="width: 500px; height: 400px;"></div>
-											<div v-if="tab1=='pie'" :id="index" style="width: 500px; height: 400px;"></div>
+											<div v-show="tab1==='bar'" id="bar" style="width: 500px; height: 400px;"></div>
+											<div v-show="tab1==='pie'" id="pie" style="width: 500px; height: 400px;"></div>
 
-  										</el-collapse-item>
-										</div>
-									</el-collapse>
+<!--  										</el-collapse-item>-->
+<!--										</div>-->
+<!--									</el-collapse>-->
 								</el-card>
-								<div v-if="test.type!=2 && test.type!=8"><br/></div>
+								<div v-show="+test.type!==2 && test.type!==8"><br/></div>
 							</div>
 	            		</div>
 	            </div>
-			  
-			  <br />
-
-	    </el-main>
-	  </el-container>
+  </div>
 </template>
 
 <script>
@@ -113,6 +129,7 @@ export default {
 				tests: [],
 				testid:'',
 				dialogFormVisible3:false,
+        splitterModel: 20
 		};
 	},
 	created(){
@@ -120,8 +137,9 @@ export default {
 	},
 	mounted() {
 		this.loadreport()
-		// this.loadline()
 		this.loadtable()
+    this.loadline()
+    this.loadchart(this.tab1)
 	},
 	methods: {
 		loadtable(){
@@ -157,7 +175,8 @@ export default {
 			})
 		},
 		loadline(){
-			var column2 = this.$echarts.init(document.getElementById('linechart'));
+			let column2 = this.$echarts.init(document.getElementById('linechart'));
+			// console.log('in loadline ' + column2)
 			this.$axios({
 				method:"post",
 				url:"http://47.94.221.172/line_chart/",
@@ -178,10 +197,12 @@ export default {
 				column2.setOption(res.data.option);
 			})
 		},
-		loadchart(index,tab1){
-			if(tab1=='bar'){
-				var a = index.toString()
-				var column1 = this.$echarts.init(document.getElementById(a));
+		loadchart(tab1){
+			if(tab1==='bar'){
+        let fuck = document.getElementById('bar')
+        console.log(fuck)
+				let column1 = this.$echarts.init(document.getElementById('bar'));
+				// console.log('in loadchart' + column1)
 				this.$axios({
 					method:"post",
 					url:"http://47.94.221.172/histogram/",
@@ -190,7 +211,7 @@ export default {
 					},
 					data:{
 						testid: this.testid,
-						ord:a,
+						ord: 1,
 					},
 					transformRequest:[function(data){
 						let ret = ''
@@ -202,31 +223,32 @@ export default {
 				}).then((res)=>{
 					column1.setOption(res.data.option);
 				})
-			}else{
-				var b = index.toString()
-				var column2 = this.$echarts.init(document.getElementById(b));
-				this.$axios({
-					method:"post",
-					url:"http://47.94.221.172/pie_chart/",
-					header:{
-						'Content-Type': 'application/x-www-form-urlencoded'
-					},
-					data:{
-						testid: this.testid,
-						ord:b,
-					},
-					transformRequest:[function(data){
-						let ret = ''
-						for(let it in data){
-							ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
-						}
-						return ret
-					}],
-				}).then((res)=>{
-					column2.setOption(res.data.option);
-				})
 			}
-			
+			// else{
+			// 	let b = index.toString()
+			// 	let column2 = this.$echarts.init(document.getElementById(b));
+			// 	this.$axios({
+			// 		method:"post",
+			// 		url:"http://47.94.221.172/pie_chart/",
+			// 		header:{
+			// 			'Content-Type': 'application/x-www-form-urlencoded'
+			// 		},
+			// 		data:{
+			// 			testid: this.testid,
+			// 			ord:b,
+			// 		},
+			// 		transformRequest:[function(data){
+			// 			let ret = ''
+			// 			for(let it in data){
+			// 				ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
+			// 			}
+			// 			return ret
+			// 		}],
+			// 	}).then((res)=>{
+			// 		column2.setOption(res.data.option);
+			// 	})
+			// }
+
 		},
         backhome(){
             var _this=this
@@ -325,7 +347,6 @@ export default {
 		    })
 		},
 		loadreport(){
-			var _this = this
 			this.$axios({
 				method:"post",
 				url:"http://47.94.221.172/getoutcome/",
@@ -352,9 +373,9 @@ export default {
 				//for(let item of this.tests){
 					//item.cover = 'http://47.94.221.172/' + item.cover
 				//}
-			})	
+			})
 		},
-		
+
     }
 }
 </script>
