@@ -100,7 +100,7 @@
                 icon="star_border"
                 icon-selected="star"
                 no-dimming
-                v-model="useless"
+                v-model="useless2"
             />
           </q-form>
 				</div>
@@ -247,6 +247,7 @@ export default {
       // type: modelform.topic
       focusedItem: '',
       useless: false,
+	  useless2: 0
     }
   },
   created(){

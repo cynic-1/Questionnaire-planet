@@ -217,6 +217,7 @@
 	  											{ required: true, message: '请输入答案', trigger: 'blur' },
 	  										]">
 	    <q-input v-model.trim="opt.value" style="min-width:150px;display: inline-block" :label="`选项${idx + 1}`" clearable placeholder="请输入答案" />
+		<q-input v-model.trim="opt.value" style="min-width:150px;display: inline-block" :label="`选项${idx + 1}`" clearable placeholder="请输入答案" />
 	    <q-btn style="margin-left: 20px;display: inline-block" @click.prevent="removeDomain(focusedItem,idx)" round color="red" label="删除"/>
 	  </q-form>
 
