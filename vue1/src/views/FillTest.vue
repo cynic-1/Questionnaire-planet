@@ -59,10 +59,10 @@
                   v-if="+test.type === 8"
                   placeholder="请获取位置"
                   outlined
-                  v-model="address"
+                  v-model="test.useranswer"
                    :dense="dense" disable 
                   style="width: 900px"/>
-              <q-btn v-if="+test.type === 8" label="获取定位" type="submit" color="primary" @click="getaddress"/>
+              <q-btn v-if="+test.type === 8" label="获取定位" type="submit" color="primary" @click="getaddress(index)"/>
             </div>
           </q-card>
 
@@ -133,7 +133,7 @@ export default {
     //console.log(tests);
   },
   methods: {
-    getaddress(){
+    getaddress(index){
       this.$confirm('此操作将获取您当前ip所在地址, 是否继续?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
@@ -153,7 +153,7 @@ export default {
 					    return ret
 				      }],
 			      }).then((res)=>{
-			    	  this.address=res.data.addr
+			    	  this.tests[index].useranswer=res.data.addr
 			      })
             this.$message({
             type: 'success',
