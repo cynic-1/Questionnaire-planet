@@ -91,6 +91,12 @@ const routes = [
 	    component: () => import('@/views/FillTest2'),
 	    meta: { title: '填写投票问卷' }
 	  },
+	  {
+	    path:'/fill3',
+	    name: 'fill3',
+	    component: () => import('@/views/FillTest3'),
+	    meta: { title: '填写报名问卷' }
+	  },
 ]
 
 const router = new VueRouter({

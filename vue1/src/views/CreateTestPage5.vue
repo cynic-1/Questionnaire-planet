@@ -19,43 +19,24 @@
 
     <q-tab-panels v-model="tab" animated style="margin-top: 30px">
       <q-tab-panel name="questions">
-		<q-btn-dropdown color="blue" rounded label="个人信息" dropdown-icon="change_history" size="30px">
-		  <q-list>
-		    <q-item clickable v-close-popup @click="addName">
-		      <q-item-section>
-		        <q-item-label>姓名</q-item-label>
-		      </q-item-section>
-		    </q-item>
-
-		    <q-item clickable v-close-popup @click="addID">
-		      <q-item-section>
-		        <q-item-label>ID</q-item-label>
-		      </q-item-section>
-		    </q-item>
-
-			<q-item clickable v-close-popup @click="addBlank">
-			  <q-item-section>
-			    <q-item-label>其他信息</q-item-label>
-			  </q-item-section>
-			</q-item>
-		  </q-list>
-		</q-btn-dropdown>
-
         <q-btn-dropdown color="pink" rounded label="选择题" dropdown-icon="change_history" size="30px" style="margin-top: 50px;">
           <q-list>
             <q-item clickable v-close-popup @click="addSingle">
               <q-item-section>
-                <q-item-label>单选投票</q-item-label>
+                <q-item-label>单选题</q-item-label>
               </q-item-section>
             </q-item>
 
             <q-item clickable v-close-popup @click="addMulti">
               <q-item-section>
-                <q-item-label>多选投票</q-item-label>
+                <q-item-label>多选题</q-item-label>
               </q-item-section>
             </q-item>
           </q-list>
         </q-btn-dropdown>
+		
+		<q-btn color="cyan" rounded text-color="white" label="填空题" @click="addBlank" size="30px" icon-right="circle" class="left-button"/>
+
 
       </q-tab-panel>
 
@@ -79,7 +60,7 @@
 				  <div class="text-h4" style="display: inline-block">
             <div style="display: inline-block" v-show="showNum">第{{ index+1 }}题</div>
             <div style="display: inline-block; color: red" v-show="item.key === 'true'"><sup>*</sup></div>
-            {{modelForm.table[item.type]}}题,&emsp;&emsp;题目:&emsp;{{item.questionName}}
+            {{modelForm.table[item.type]}}&emsp;&emsp;题目:&emsp;{{item.questionName}}
 				  </div>
           <div class="text-h5 ques-description">
             {{item.describe}}
@@ -87,17 +68,17 @@
 <!--   单选 -->
           <q-form style="display: inline-block"
                   v-for="(opt, idx) in item.answers"
-                  v-if="+item.type === 4"
+                  v-if="+item.type === 0"
                   :key="idx"
                   :label="`选项${idx + 1}`"
                   :prop="`focusedItem.answers.${idx}.value`">
 
             <q-radio v-model="useless" :label="opt.value || `选项${idx + 1}`" :val="opt.value" style="padding-right: 20px"/>
           </q-form>
-
-<!--多选-->
+		  
+<!--   多选 -->
           <q-form style="display: inline-block"
-                  v-if="+item.type === 5"
+                  v-if="+item.type === 1"
                   v-for="(opt, idx) in item.answers"
                   :key="idx"
                   :label="`选项${idx + 1}`"
@@ -148,7 +129,15 @@
 	      </q-input>
 	    </div>
  <!-- drawer content -->
-
+ 
+	<div>
+		<q-input
+		    v-model.trim="modelForm.testlimit"
+		    clearable
+		    label="问卷限额"
+		/>
+	</div>
+	
     <div>
       <q-btn label="提交" type="submit" color="primary" @click="addSubmit()"/>
       <q-btn label="重置" type="reset" color="primary" flat class="q-ml-sm" @click="resetForm('modelForm')"/>
@@ -190,7 +179,7 @@
       <!-- 答案 -->
       <q-form style="display: inline-block"
               v-for="(opt, idx) in focusedItem.answers"
-              v-if="+focusedItem.type===4 || +focusedItem.type ===5"
+              v-if="+focusedItem.type <2"
               :key="idx"
 
               :prop="`focusedItem.answers.${idx}.value`"
@@ -200,9 +189,9 @@
         <q-input v-model.trim="opt.value" style="min-width:150px;display: inline-block" :label="`选项${idx + 1}`" clearable placeholder="请输入答案" />
         <q-btn style="margin-left: 20px;display: inline-block" @click.prevent="removeDomain(focusedItem,idx)" round color="red" label="删除"/>
       </q-form>
-
+	  
       <q-form>
-        <q-btn style="margin-top: 10px"v-show="+focusedItem.type===4 || +focusedItem.type ===5" @click="addDomain(focusedItem)">新增选项</q-btn>
+        <q-btn style="margin-top: 10px" v-show="+focusedItem.type <2" @click="addDomain(focusedItem)">新增选项</q-btn>
         <br/>
         <q-btn @click="removeQuestion(focusedItem)" color="cyan" label="删除题目" icon-right="remove"/>
         <q-btn style="margin-left: 20px" @click="copy(focusedItem)" color="cyan" label="复制题目" icon-right="add"/>
@@ -234,10 +223,11 @@ export default {
       rules: {},
       modelForm: {
         userid: this.$store.state.username,
-        topic: [{ type: '4', questionName: '您喜欢的网站：',key: 'true', answers: [{ value: '腾讯' },{ value: 'google' },{ value: '淘宝' },{ value: '网易云' },{ value: '其他' }] ,describe: ''}],
+        topic: [],
         title: '',
         time: '',
-        table: ['单选','多选','填空','评分','投票单选','投票多选','报名单选','报名多选','定位'],
+        table: ['单选','多选','填空'],
+		testlimit: ''
       },
 	  tab: 'questions',
 	  // type: modelform.topic
@@ -365,8 +355,24 @@ export default {
     },
     addSubmit() {
       console.log(this.modelForm.topic)
+	  var numReg = /^[0-9]*$/
+	  var numRe = new RegExp(numReg)
       if(this.modelForm.topic.length === 0)
         return this.$message.info("问卷至少包含一个题目！")
+	  if(!numRe.test(this.modelForm.testlimit) && this.modelForm.testlimit !== '')
+	    return this.$message.info("问卷限额只能为空或数字")
+	  if(this.modelForm.testlimit !== '')
+	    this.modelForm.testlimit = parseInt(this.modelForm.testlimit);
+	  for(let test of this.modelForm.topic){
+		  if(+test.type === 6 || +test.type === 7){
+			  for(let item of test.answers){
+				  if(!numRe.test(item.limit) || item.limit === '')
+					return this.$message.info("选项限额不能为非数字")
+				  item.limit = parseInt(item.limit)
+			  }
+		  }
+	  }
+	  //return this.$message.info("到底了")
       //this.$refs.myForm.validate().then(success => {
 		//console.log(this.modelForm.topic)
         //if (success) {
@@ -383,8 +389,9 @@ export default {
 			  time: this.modelForm.time,
 			  showNum: this.showNum,
 			  order: this.order,
-			  type: this.repeatable === false? '2':'12',
-              testid: this.testid
+			  type: this.repeatable === false? '5':'15',
+              testid: this.testid,
+			  testlimit: this.modelForm.testlimit
             },
             traditional: true,
             paramsSerializer: data => {
@@ -401,20 +408,14 @@ export default {
       //})
     },
     addSingle(){
-      this.modelForm.topic.push({ type: '4', questionName: '',key: 'false', answers: [{ value: '' }] ,describe: ''})
+      this.modelForm.topic.push({ type: '0', questionName: '',key: 'false', answers: [{ value: '' }] ,describe: ''}, answer:'')
     },
     addMulti(){
-      this.modelForm.topic.push({ type: '5', questionName: '',key: 'false', answers: [{ value: '' }] , describe: ''})
+      this.modelForm.topic.push({ type: '1', questionName: '',key: 'false', answers: [{ value: '' }] , describe: ''},answer: )
     },
     addBlank(){
       this.modelForm.topic.push({ type: '2', questionName: '',key: 'false', answers: [{ value: '' }] , describe: ''})
     },
-	addName(){
-	  this.modelForm.topic.push({ type: '2', questionName: '您的姓名',key: 'false', answers: [{ value: '' }] , describe: ''})
-	},
-	addID(){
-	  this.modelForm.topic.push({ type: '2', questionName: '您的ID',key: 'false', answers: [{ value: '' }] , describe: ''})
-	},
     copy(item){
       var newitem = JSON.parse(JSON.stringify(item))
       this.modelForm.topic.push(newitem)
@@ -452,4 +453,6 @@ export default {
   padding: 20px;
 }
 </style>
+
+
 
