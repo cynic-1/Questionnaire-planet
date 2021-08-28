@@ -79,7 +79,7 @@
 				  <div class="text-h4" style="display: inline-block">
             <div style="display: inline-block" v-show="showNum">第{{ index+1 }}题</div>
             <div style="display: inline-block; color: red" v-show="item.key === 'true'"><sup>*</sup></div>
-            {{modelForm.table[item.type]}}&emsp;&emsp;题目:&emsp;{{item.questionName}}
+            {{modelForm.table[item.type]}}题,&emsp;&emsp;题目:&emsp;{{item.questionName}}
 				  </div>
           <div class="text-h5 ques-description">
             {{item.describe}}
@@ -158,6 +158,12 @@
        v-model="showNum"
        label="显示题号"
    />
+   
+   <q-toggle
+       v-model="repeatable"
+       label="可重复填写"
+   />
+   
    <q-toggle
        v-model="order"
        label="乱序填写"
@@ -224,13 +230,14 @@ export default {
       testid: '',
 	  showNum: false,
 	  order: false,
+	  repeatable: false,
       rules: {},
       modelForm: {
         userid: this.$store.state.username,
         topic: [{ type: '4', questionName: '您喜欢的网站：',key: 'true', answers: [{ value: '腾讯' },{ value: 'google' },{ value: '淘宝' },{ value: '网易云' },{ value: '其他' }] ,describe: ''}],
         title: '',
         time: '',
-        table: ['单选投票','多选投票','填空'],
+        table: ['单选','多选','填空','评分','投票单选','投票多选','报名单选','报名多选','定位'],
       },
 	  tab: 'questions',
 	  // type: modelform.topic
@@ -376,7 +383,7 @@ export default {
 			  time: this.modelForm.time,
 			  showNum: this.showNum,
 			  order: this.order,
-			  type: '2',
+			  type: this.repeatable === false? '2':'12',
               testid: this.testid
             },
             traditional: true,

@@ -95,7 +95,7 @@
 				  <div class="text-h4" style="display: inline-block">
             <div style="display: inline-block" v-show="showNum">第{{ index+1 }}题</div>
             <div style="display: inline-block; color: red" v-show="item.key === 'true'"><sup>*</sup></div>
-            {{modelForm.table[item.type]}}&emsp;&emsp;题目:&emsp;{{item.questionName}}
+            {{modelForm.table[item.type]}}题,&emsp;&emsp;题目:&emsp;{{item.questionName}}
 				  </div>
           <div class="text-h5 ques-description">
             {{item.describe}}
@@ -121,7 +121,7 @@
             <q-checkbox v-model="useless" keep-color :label="opt.value || `选项${idx + 1}`" :val="opt.value" style="padding-right: 20px"/>
           </q-form>
 		  
-<!--   单选投票 -->
+<!--   单选报名 -->
           <q-form style="display: inline-block"
                   v-for="(opt, idx) in item.answers"
                   v-if="+item.type === 6"
@@ -132,7 +132,7 @@
             <q-radio v-model="useless" :label="`${opt.value}  剩余${opt.limit}` || `选项${idx + 1}`" :val="opt.value" style="padding-right: 20px"/>
           </q-form>
 		  
-<!--   多选投票 -->
+<!--   多选报名 -->
           <q-form style="display: inline-block"
                   v-if="+item.type === 7"
                   v-for="(opt, idx) in item.answers"
@@ -203,6 +203,12 @@
        v-model="showNum"
        label="显示题号"
    />
+   
+   <q-toggle
+       v-model="repeatable"
+       label="可重复填写"
+   />
+   
    <q-toggle
        v-model="order"
        label="乱序填写"
@@ -284,6 +290,7 @@ export default {
       testid: '',
 	  showNum: false,
 	  order: false,
+	  repeatable: false,
       rules: {},
       modelForm: {
         userid: this.$store.state.username,
@@ -295,7 +302,7 @@ export default {
 		],
         title: '',
         time: '',
-        table: ['单选投票','多选投票','填空'],
+        table: ['单选','多选','填空','评分','投票单选','投票多选','报名单选','报名多选','定位'],
 		testlimit: ''
       },
 	  tab: 'questions',
@@ -461,7 +468,7 @@ export default {
 			  time: this.modelForm.time,
 			  showNum: this.showNum,
 			  order: this.order,
-			  type: '3',
+			  type: this.repeatable === false? '3':'13',
               testid: this.testid,
 			  testlimit: this.modelForm.testlimit
             },

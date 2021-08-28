@@ -65,8 +65,8 @@
                         width="180">
                     </el-table-column>
                     <el-table-column
-                         prop="testid"
-                         label="ID"
+                         prop="type"
+                         label="问卷类型"
                          width="100">
                     </el-table-column>
                     <el-table-column
@@ -99,6 +99,12 @@
                         sortable
                         width="180">
                     </el-table-column>
+                    <el-table-column
+                        prop="endtime"
+                        label="截止时间"
+                        sortable
+                        width="180">
+                    </el-table-column>
                 </el-table-column>
             </el-table>
         </el-card>
@@ -123,6 +129,7 @@ export default {
                 link:'',
                 avator:'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png',
                 avatorpath:'',
+                judge1:false,
             }
         },
 		mounted: function () {
@@ -142,7 +149,21 @@ export default {
             share(row){
                 let encTestId = aes_encrypt(row.testid, 'cynic', false)
               encTestId = encodeURIComponent(encTestId)
-				this.link = `http://localhost:8080/#/fill?testid=${encTestId}`
+                if(row.type==='普通问卷'||row.type==='可重复普通问卷'){
+				    this.link = `http://localhost:8080/#/fill?testid=${encTestId}`
+                }
+                if(row.type==='报名问卷'||row.type==='可重复报名问卷'){
+			        this.link = `http://localhost:8080/#/fill3?testid=${encTestId}`
+                }
+                if(row.type==='投票问卷'||row.type==='可重复投票问卷'){
+                    this.link = `http://localhost:8080/#/fill2?testid=${encTestId}`
+                }
+                if(row.type==='打卡问卷'||row.type==='可重复打卡问卷'){
+			        this.link = `http://localhost:8080/#/fill?testid=${encTestId}`
+                }
+                if(row.type==='考试问卷'||row.type==='可重复考试问卷'){
+			        this.link = `http://localhost:8080/#/fill5?testid=${encTestId}`
+                }
                 this.$axios({
 					method:"post",
 					url:"http://47.94.221.172/makeqrcode/",
@@ -370,6 +391,53 @@ export default {
             useStateChange(row){
                 var self = this
                 self.$axios({
+                    method:"post",
+                    url:"http://47.94.221.172/outoftime/",
+                    header:{
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    data:{
+                        testid:row.testid,
+                    },
+                    transformRequest:[function(data){
+                      let ret = ''
+                      for(let it in data){
+                        ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
+                     }
+                      return ret
+                    }],
+                }).then((res)=>{
+                    console.log(res.data.outoftime)
+				    this.judge1=res.data.outoftime;
+                    if(this.judge1){
+                        this.$confirm('此问卷已过截止时间,开启将重置截止时间, 是否继续?', '提示', {
+                            confirmButtonText: '确定',
+                            cancelButtonText: '取消',
+                           type: 'warning'
+                        }).then(() => {
+                            console.log('hhhh')
+                            this.StateChange(row)
+                            this.$message({
+                                type: 'success',
+                                message: '操作成功!'
+                            });
+                            // this.loadquestionnaire()
+                        }).catch(() => {
+                         this.loadquestionnaire()
+                         this.$message({
+                            type: 'info',
+                            message: '已取消操作'
+                            });          
+                        });
+                    }else{
+                    this.StateChange(row)
+                    }
+                })
+            },
+            StateChange(row){
+                console.log('ss')
+                var self = this
+                self.$axios({
                   method:"post",
                   url:"http://47.94.221.172/changeopen/",
                   header:{
@@ -469,7 +537,18 @@ export default {
                         confirmButtonText: '确定',
                     });
                 }else{
-				    this.$router.push({path: "/createtest", query: {testid:row.testid,type:1}});
+                    if(row.type==='普通问卷'||row.type==='可重复普通问卷'){
+				        this.$router.push({path: "/createtest", query: {testid:row.testid,type:1}});
+                    }
+                    if(row.type==='报名问卷'||row.type==='可重复报名问卷'){
+				        this.$router.push({path: "/createtest3", query: {testid:row.testid,type:1}});
+                    }
+                    if(row.type==='投票问卷'||row.type==='可重复投票问卷'){
+				        this.$router.push({path: "/createtest2", query: {testid:row.testid,type:1}});
+                    }
+                    if(row.type==='打卡问卷'||row.type==='可重复打卡问卷'){
+				        this.$router.push({path: "/createtest4", query: {testid:row.testid,type:1}});
+                    }
                 }
 			},
             previewquestionnaire(row){
