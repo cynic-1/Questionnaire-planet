@@ -7,7 +7,8 @@
               <div class="text-h5" style="display: inline-block">
                 <div style="display: inline-block" v-show="showNum">第{{ index+1 }}题</div>
                 <div style="display: inline-block; color: red" v-show="+test.mustdo === 1"><sup>*</sup></div>
-                {{topicMap[+test.type]}}题,&emsp;&emsp;题目:&emsp;{{test.stem}}
+                <div v-if="+test.type !== 8">{{topicMap[+test.type]}}题,&emsp;&emsp;题目:&emsp;{{test.stem}}</div>
+                <div v-if="+test.type === 8">{{topicMap[4]}}题,&emsp;&emsp;题目:&emsp;{{test.stem}}</div>
               </div>
               <div class="text-h6 ques-description">
                 {{test.describe}}
@@ -54,6 +55,14 @@
                   icon-selected="star"
                   no-dimming
               />
+              <q-input
+                  v-if="+test.type === 8"
+                  placeholder="请获取位置"
+                  outlined
+                  v-model="address"
+                   :dense="dense" disable 
+                  style="width: 900px"/>
+              <q-btn v-if="+test.type === 8" label="获取定位" type="submit" color="primary" @click="getaddress"/>
             </div>
           </q-card>
 
@@ -89,6 +98,7 @@ import {aes_decrypt} from "@/utils/encryptURL";
 export default {
   data() {
     return {
+      address:'',
       testid: '',
       title: '',
       publisher:'',
@@ -98,7 +108,7 @@ export default {
       visitorip: '',
       isVisitor: false,
       showNum: true,
-      topicMap: ['单选', '多选', '填空', '评分']
+      topicMap: ['单选', '多选', '填空', '评分','定位']
     };
   },
   mounted() {
@@ -123,6 +133,39 @@ export default {
     //console.log(tests);
   },
   methods: {
+    getaddress(){
+      this.$confirm('此操作将获取您当前ip所在地址, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+            this.$axios({
+		  	  	method:"post",
+				    url:"http://47.94.221.172/get_plath/",
+			  	  header:{
+					    'Content-Type': 'application/x-www-form-urlencoded'
+				    },
+				    transformRequest:[function(data){
+					    let ret = ''
+					    for(let it in data){
+						    ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
+					    }
+					    return ret
+				      }],
+			      }).then((res)=>{
+			    	  this.address=res.data.addr
+			      })
+            this.$message({
+            type: 'success',
+            message: '获取定位成功!'
+          });
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消获取'
+          });          
+        });
+    },
     loadmyquestionnaire(var1,var2){
       this.$axios({
         method:"post",
