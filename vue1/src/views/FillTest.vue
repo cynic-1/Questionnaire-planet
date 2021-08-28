@@ -6,7 +6,7 @@
             <div style="padding-bottom: 20px">
               <div class="text-h5" style="display: inline-block">
                 <div style="display: inline-block" v-show="showNum">第{{ index+1 }}题</div>
-                <div style="display: inline-block; color: red" v-show="test.key === 'true'"><sup>*</sup></div>
+                <div style="display: inline-block; color: red" v-show="+test.mustdo === 1"><sup>*</sup></div>
                 {{topicMap[+test.type]}}题,&emsp;&emsp;题目:&emsp;{{test.stem}}
               </div>
               <div class="text-h6 ques-description">
@@ -27,7 +27,7 @@
               <!-- 多选 -->
 
               <q-checkbox
-                  v-else-if="+test.type === 1"
+                  v-if="+test.type === 1"
                   v-for="(option,index) in test.answers"
                   :key="index"
                   v-model="test.useranswer"
@@ -38,17 +38,17 @@
 
 
               <q-input
-                  v-else-if="+test.type === 2"
+                  v-if="+test.type === 2"
                   placeholder="请输入答案"
                   outlined
                   v-model="test.useranswer"
                   style="width: 900px"/>
 
               <q-rating
-                  v-else
+                  v-if="+test.type === 3"
                   v-model="test.useranswer"
                   size="2em"
-                  :max="item.answers.value"
+                  :max="test.answers.value"
                   color="yellow"
                   icon="star_border"
                   icon-selected="star"
@@ -153,19 +153,21 @@ export default {
         this.title = dic.title
         this.publisher = dic.userid
         this.tests = dic.topic
-        // this.showNum = dic.showNum
+        this.showNum = dic.showNum
         for(let item of this.tests){
+          // 多选
           if(+item.type === 1){
             if(item.useranswer[0] === ''){
               item.useranswer.pop()
             }
           }
+          // 评分
           if(+item.type === 3){
             if(item.useranswer === '')
               item.useranswer = 0
             else
-              item.useranswer = parseInt(item.useranswer)
-            const max = parseInt(item.answers[0].value)
+              item.useranswer = +item.useranswer
+            const max = +item.answers[0].value
             this.$set(item, 'max' , max)
           }
         }
