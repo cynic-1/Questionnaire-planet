@@ -64,17 +64,30 @@
           <div class="text-h6 ques-description">
             {{item.describe}}
           </div>
-<!--          单选 和 多选-->
+<!--   单选 -->
           <q-form style="display: inline-block"
                   v-for="(opt, idx) in item.answers"
-                  v-if="item.type < 2"
+                  v-if="+item.type === 0"
                   :key="idx"
                   :label="`选项${idx + 1}`"
                   :prop="`focusedItem.answers.${idx}.value`">
+            <q-radio v-model="useless" :label="opt.value || `选项${idx + 1}`" :val="opt.value" style="padding-right: 20px"/>
 <!--                  :rules="[-->
 <!--											{ required: true, message: '请输入答案', trigger: 'blur' },-->
 <!--										]"-->
-            <q-radio :label="opt.value || `选项${idx + 1}`" :val="opt.value" v-model="opt.value" style="padding-right: 20px"/>
+          </q-form>
+<!--多选-->
+          <q-form style="display: inline-block"
+                  v-if="+item.type === 1"
+                  v-for="(opt, idx) in item.answers"
+                  :key="idx"
+                  :label="`选项${idx + 1}`"
+                  :prop="`focusedItem.answers.${idx}.value`">
+            <q-checkbox v-model="useless" keep-color :label="opt.value || `选项${idx + 1}`" :val="opt.value" style="padding-right: 20px"/>
+          </q-form>
+
+          <q-form v-else-if="+item.type === 2">
+            <q-input placeholder="请输入答案" outlined readonly style="width: 900px"/>
           </q-form>
 
           <q-form
@@ -87,13 +100,9 @@
                 icon="star_border"
                 icon-selected="star"
                 no-dimming
-				v-model="item.answers.value"
+                v-model="useless"
             />
           </q-form>
-          <q-form v-else>
-            <q-input placeholder="请输入答案" outlined readonly style="width: 900px"/>
-          </q-form>
-
 				</div>
 
 			</q-card>
@@ -180,7 +189,7 @@
               :rules="[
 											{ required: true, message: '请输入答案', trigger: 'blur' },
 										]">
-        <q-input v-model.trim="opt.value" style="min-width:150px;display: inline-block" :label="`选项${idx + 1}`" clearable placeholder="请输入答案" />
+        <q-input v-model.trim="opt.value" style="min-width:150px;display: inline-block" :label="`选项${idx + 1}`" placeholder="请输入答案" />
         <q-btn style="margin-left: 20px;display: inline-block" @click.prevent="removeDomain(focusedItem,idx)" round color="red" label="删除"/>
       </q-form>
 
@@ -230,12 +239,14 @@ export default {
         topic: [],
         title: '',
         time: '',
-        table: ['单选','多选','填空','评分']
+        table: ['单选','多选','填空','评分'],
+
       },
       options:[2,3,4,5,6,7,8,9,10],
       tab: 'questions',
       // type: modelform.topic
       focusedItem: '',
+      useless: false,
     }
   },
   created(){
@@ -386,10 +397,10 @@ export default {
               title: this.modelForm.title,
               topic: this.modelForm.topic,
               userid: this.modelForm.userid,
-			  time: this.modelForm.time,
+			        time: this.modelForm.time,
               testid: this.testid,
               showNum: this.showNum,
-			  order: this.order,
+			        order: this.order,
               type: this.repeatable === false? '0':'1'
             },
             traditional: true,
