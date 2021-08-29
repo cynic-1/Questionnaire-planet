@@ -112,7 +112,7 @@
 </template>
 
 <script>
-import {aes_encrypt} from "@/utils/encryptURL";
+import {aes_encrypt, aes_decrypt} from "@/utils/encryptURL";
 import Clipboard from 'clipboard'
 
 export default {
@@ -427,7 +427,7 @@ export default {
                          this.$message({
                             type: 'info',
                             message: '已取消操作'
-                            });          
+                            });
                         });
                     }else{
                     this.StateChange(row)
@@ -552,7 +552,8 @@ export default {
                 }
 			},
             previewquestionnaire(row){
-				this.$router.push({path: "/preview", query: {testid:row.testid}});
+              let encTestId = aes_encrypt(row.testid, 'cynic', false)
+				      this.$router.push({path:"/preview", query: {testid: encTestId}});
 			}
         }
     }

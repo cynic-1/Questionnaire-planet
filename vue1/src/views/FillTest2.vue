@@ -1,18 +1,20 @@
 <template>
   <q-page padding>
-      <q-card class="my-card" style="min-height: 700px">
-          <div class="text-h3" style="text-align: center">{{title}}</div>
-            <q-card class="my-card ques-card" v-for="(test, index) in tests" :key="index">
-              <div style="padding-bottom: 20px">
-                <div class="text-h5" style="display: inline-block">
-                  <div style="display: inline-block" v-show="showNum">第{{ index+1 }}题</div>
-                  <div style="display: inline-block; color: red" v-show="+test.mustdo === 1"><sup>*</sup></div>
-                  <div>{{topicMap[+test.type]}}题,&emsp;&emsp;题目:&emsp;{{test.stem}}</div>
-                </div>
-                <div class="text-h6 ques-description">
-                  {{test.describe}}
-                </div>
-  
+    <q-card class="my-card" style="min-height: 700px; margin-right: 12%; margin-left: 12%; padding-bottom: 20px">
+      <div class="text-h3" style="text-align: center; margin-bottom: 20px">{{title}}</div>
+
+      <q-card class="my-card ques-card" v-for="(test, index) in tests" :key="index" style="padding-left: 15%">
+        <div style="padding-bottom: 20px">
+          <div class="text-h5 my-inline" style="display: inline-block">
+            <div class="my-inline" v-show="showNum">第{{ index+1 }}题</div>
+            <div class="my-inline" style="color: red" v-show="+test.mustdo === 1"><sup>*</sup></div>
+            <div class="my-inline" v-if="+test.type !== 8">{{topicMap[+test.type]}}题,&emsp;&emsp;题目:&emsp;{{test.stem}}</div>
+            <div class="my-inline" v-if="+test.type === 8">{{topicMap[4]}}题,&emsp;&emsp;题目:&emsp;{{test.stem}}</div>
+          </div>
+          <div class="text-h6 ques-description">
+            {{test.describe}}
+          </div>
+
   <!--              单选-->
                 <q-radio
                     v-if="+test.type === 4 && !disable"
@@ -24,7 +26,7 @@
                     style="padding-right: 20px"
 					:disabled = "disable"
                 />
-	<!--              单选结果-->		
+	<!--              单选结果-->
 				<q-radio
 				    v-if="+test.type === 4 && disable"
 				    v-for="(option,index) in test.answers"
@@ -35,9 +37,9 @@
 				    style="padding-right: 20px"
 					:disabled = "disable"
 				/>
-				
+
                 <!-- 多选 -->
-  
+
                 <q-checkbox
                     v-if="+test.type === 5 && !disable"
                     v-for="(option,index) in test.answers"
@@ -49,9 +51,9 @@
                     style="padding-right: 20px"
 					:disabled = "disable"
 				/>
-				
+
 				<!-- 多选结果 -->
-				  
+
 				<q-checkbox
 				    v-if="+test.type === 5 && disable"
 				    v-for="(option,index) in test.answers"
@@ -63,7 +65,7 @@
 				    style="padding-right: 20px"
 					:disabled = "disable"
 				/>
-  
+
                 <q-input
                     v-if="+test.type === 2"
                     placeholder="请输入答案"
@@ -71,10 +73,10 @@
                     v-model="test.useranswer"
                     style="width: 900px"
 					:disabled = "disable"/>
-  
+
               </div>
             </q-card>
-  
+
         <div class="return-button">
           <q-btn  v-if="!isVisitor" @click="save({
   					testid: testid,
@@ -207,7 +209,7 @@ export default {
 				paramsSerializer: data => {
 					return qs.stringify(data, { indices: false })
 				}
-			}).then((res)=>{				
+			}).then((res)=>{
 				if (res.data.code !== '200') return this.$message.error(res.data.message);
 				this.$message.success("保存成功")
 			})
@@ -242,7 +244,7 @@ export default {
 					paramsSerializer: data => {
 						return qs.stringify(data, { indices: false })
 					}
-				}).then((res)=>{				
+				}).then((res)=>{
 					if (res.data.code !== '200') return this.$message.error(res.data.message);
 					if (res.data.dic !== null || res.data.dic !=='' || res.data.dic !== []){
 						this.results = res.data.dic
@@ -258,7 +260,7 @@ export default {
 					}
 					//console.log(this.tests)
 					this.disable = true
-				})	
+				})
 			}else{
 				alert('未答完,请完成问卷再提交!');
 			}
@@ -274,6 +276,9 @@ export default {
 .return-button {
   margin: 0 auto;
   text-align: center;
+}
+.my-inline {
+  display: inline-block;
 }
 </style>
 
