@@ -569,7 +569,7 @@ export default {
 		/*margin-top: 30px;*/
 	}
     .demo-table-expand {
-        width: 15000px;
+        width: 1040px;
         font-size: 0;
     }
     .demo-table-expand label {
