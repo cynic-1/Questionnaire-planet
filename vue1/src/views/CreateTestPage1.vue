@@ -362,7 +362,12 @@ export default {
           question.type = String(item.type)
           question.questionName = item.stem
           question.key = +item.mustdo === 1?'true':'false'
-          question.answers = item.answers
+		  if(+item.type === 3){
+			question.answers = item.answers[0]
+			console.log(question.answers)	
+		  }else
+			question.answers = item.answers
+		  console.log(question.answers)
           question.describe = item.describe
           //console.log(question)
           this.modelForm.topic.push(question)
