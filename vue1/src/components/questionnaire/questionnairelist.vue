@@ -552,8 +552,8 @@ export default {
                 }
 			},
             previewquestionnaire(row){
-              let encTestId = aes_encrypt(row.testid, 'cynic', false)
-				      this.$router.push({path:"/preview", query: {testid: encTestId}});
+                let encTestId = aes_encrypt(row.testid, 'cynic', false)
+				    this.$router.push({path:"/preview", query: {testid: encTestId}});
 			}
         }
     }

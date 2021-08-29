@@ -106,7 +106,7 @@
           </q-form>
 		  
           <q-form v-if="+item.type === 2">
-            <q-input placeholder="请输入答案" outlined style="width: 900px"/>
+            <q-input placeholder="请输入答案" outlined style="width: 90%"/>
           </q-form>
 
 				</div>

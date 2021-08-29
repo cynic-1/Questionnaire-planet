@@ -89,7 +89,7 @@
           </q-form>
 
           <q-form v-else-if="+item.type === 2">
-            <q-input placeholder="请输入答案" outlined readonly style="width: 900px"/>
+            <q-input placeholder="请输入答案" outlined readonly style="width: 90%"/>
           </q-form>
 
           <q-form
