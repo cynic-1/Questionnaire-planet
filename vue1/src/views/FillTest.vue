@@ -61,7 +61,7 @@
                   placeholder="请获取位置"
                   outlined
                   v-model="test.useranswer"
-                   :dense="dense" disable
+                  disable
                   style="width: 90%"/>
               <q-btn v-if="+test.type === 8" label="获取定位" type="submit" color="primary" @click="getaddress(index)"/>
             </div>

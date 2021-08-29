@@ -100,7 +100,7 @@
               placeholder="请获取位置"
               outlined
               v-model="test.useranswer"
-              :dense="dense" disable
+              disable
               style="width: 90%"/>
           <q-btn v-if="+test.type === 8" label="获取定位" type="submit" color="primary" @click="getaddress(index)"/>
         </div>
@@ -222,10 +222,10 @@ export default {
         this.tests = dic.topic
         this.showNum = dic.showNum
         for(let item of this.tests){
-		  if(item.score !== null && item.score !== '')
+		  if(item.score !== null && item.score !== '' && item.score !== undefined)
 			this.isTest = true
           // 评分
-		  //console.log(item.score)
+		  
           if(+item.type === 3){
             if(item.useranswer === '')
               item.useranswer = 0
@@ -235,6 +235,7 @@ export default {
             this.$set(item, 'max' , max)
           }
         }
+		console.log(this.isTest)
       })
     },
     save(var1,var2){
