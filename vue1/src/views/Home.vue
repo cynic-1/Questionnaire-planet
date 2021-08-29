@@ -48,7 +48,7 @@
 
 .home {
   display: flex;
-  padding-top: 30px;
+  padding-top: 80px;
   //padding-bottom: 60px;
   .left {
     width: 20%;

@@ -23,18 +23,9 @@
             <q-btn-dropdown
                 class="glossy"
                 color="purple"
-                label="Account Settings"
+                label="账户设置"
             >
               <div class="row no-wrap q-pa-md">
-			<!--
-                <div class="column">
-                  <div class="text-h6 q-mb-md">设置</div>
-                  <q-toggle v-model="mobileData" label="暂时这是个" />
-                  <q-toggle v-model="bluetooth" label="没用的功能" />
-                </div>
-			
-                <q-separator vertical inset class="q-mx-lg" />
-			-->
                 <div class="column items-center" v-show="$store.state.hasLogin">
                   <q-avatar size="72px" >
                     <img :src="this.$store.state.avatar">
@@ -75,20 +66,7 @@
             <!--            <q-btn dense flat round icon="menu" @click="right = !right" />-->
           </q-toolbar>
 
-
-          <q-tabs align="left">
-            <q-route-tab to="/home" label="管理问卷" />
-          </q-tabs>
-
         </q-header>
-
-<!--        <q-drawer show-if-above v-model="left" side="left" bordered>-->
-<!--          &lt;!&ndash; drawer content &ndash;&gt;-->
-<!--        </q-drawer>-->
-
-<!--        <q-drawer show-if-above v-model="right" side="right" bordered>-->
-<!--          &lt;!&ndash; drawer content &ndash;&gt;-->
-<!--        </q-drawer>-->
 
         <q-page-container>
           <router-view />

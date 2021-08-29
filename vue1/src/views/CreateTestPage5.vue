@@ -13,7 +13,7 @@
     >
      <q-tab name="questions" label="问题" />
      <q-tab name="outline" label="大纲" />
-      
+
     </q-tabs>
 
     <q-separator />
@@ -27,21 +27,21 @@
 		        <q-item-label>姓名</q-item-label>
 		      </q-item-section>
 		    </q-item>
-		
+
 		    <q-item clickable v-close-popup @click="addID">
 		      <q-item-section>
 		        <q-item-label>ID</q-item-label>
 		      </q-item-section>
 		    </q-item>
-		
+
 			<q-item clickable v-close-popup @click="addInformation">
 			  <q-item-section>
 			    <q-item-label>其他信息</q-item-label>
 			  </q-item-section>
 			</q-item>
 		  </q-list>
-		</q-btn-dropdown>  
-		  
+		</q-btn-dropdown>
+
         <q-btn-dropdown color="pink" rounded label="选择题" dropdown-icon="change_history" size="30px" style="margin-top: 50px;">
           <q-list>
             <q-item clickable v-close-popup @click="addSingle">
@@ -57,15 +57,15 @@
             </q-item>
           </q-list>
         </q-btn-dropdown>
-		
+
 		<q-btn color="cyan" rounded text-color="white" label="填空题" @click="addBlank" size="30px" icon-right="circle" class="left-button"/>
 
 
       </q-tab-panel>
-	  
+
 	  <q-tab-panel name="outline">
 	    <div class="text-h5 quetitle">{{modelForm.title}}</div>
-	    <div v-for="(item, index) in modelForm.topic" :key="index" @click="changeFocus(item)">
+	    <div v-for="(item, index) in modelForm.topic" :key="index" @click="changeFocus(item)" style="cursor: pointer">
 	      <div class="text-h6" style="display: inline-block">
 	        <div style="display: inline-block">{{ index+1 }}.</div>
 	        <div style="display: inline-block; color: red" v-show="item.key === 'true'"><sup>*</sup></div>
@@ -83,15 +83,14 @@
 	  <q-form ref="modelForm" :rule="rules" :model="modelForm">
 		  <div class="text-h1 quetitle">{{modelForm.title}}</div>
 		  <vuedraggable v-model="modelForm.topic" class="wrapper" >
-			<q-card class="my-card ques-card" v-for="(item, index) in modelForm.topic" :key="index" @click.native="changeFocus(item)">
-				<div style="padding-bottom: 20px">
-				  <div class="text-h4" style="display: inline-block">
+				<div class="my-card ques-card" style="padding-bottom: 20px; margin-left: 15%" v-for="(item, index) in modelForm.topic" :key="index" @click="changeFocus(item)">
+				  <div class="text-h5" style="display: inline-block">
             <div style="display: inline-block" v-show="showNum">第{{ index+1 }}题</div>
             <div style="display: inline-block; color: red" v-show="item.key === 'true'"><sup>*</sup></div>
             {{modelForm.table[item.type]}}&emsp;&emsp;题目:&emsp;{{item.questionName}}
 			<span v-if="item.score !== 0">({{item.score}}分)</span>
 				  </div>
-          <div class="text-h5 ques-description">
+          <div class="text-h6 ques-description">
             {{item.describe}}
           </div>
 <!--   单选 -->
@@ -104,7 +103,7 @@
 
             <q-radio v-model="useless" :label="opt.value || `选项${idx + 1}`" :val="opt.value" style="padding-right: 20px" :disable="disable" />
           </q-form>
-		  
+
 <!--   多选 -->
           <q-form style="display: inline-block"
                   v-if="+item.type === 1"
@@ -114,14 +113,13 @@
                   :prop="`focusedItem.answers.${idx}.value`">
             <q-checkbox v-model="useless" keep-color :label="opt.value || `选项${idx + 1}`" :val="opt.value" style="padding-right: 20px" :disable="disable" />
           </q-form>
-		  
+
           <q-form v-if="+item.type === 2">
             <q-input placeholder="请输入答案" outlined style="width: 80%" :disable="disable" />
           </q-form>
 
 				</div>
 
-			</q-card>
 		  </vuedraggable>
 		</q-form>
 	  </q-card>
@@ -177,12 +175,12 @@
        v-model="showNum"
        label="显示题号"
    />
-   
+
    <q-toggle
        v-model="repeatable"
        label="可重复填写"
    />
-   
+
    <q-toggle
        v-model="order"
        label="乱序填写"
@@ -211,7 +209,7 @@
 	      style="display: inline-block; width: 200px;">
 	    <q-select v-model="focusedItem.score" :options="scoreOption" label="请选择分值" />
 	  </q-form>
-	  
+
       <q-form style="display: inline-block"
               v-for="(opt, idx) in focusedItem.answers"
               v-if="+focusedItem.type <2"
@@ -230,11 +228,11 @@
 		    v-model="focusedItem.answer"
 		    :val="opt.value"/>
       </q-form>
-	  
+
 	  <q-form v-if="+focusedItem.type === 2 && focusedItem.score !== 0" style="display: inline-block" >
 	    <q-input v-model.trim="focusedItem.answer" style="min-width:150px;display: inline-block" label="正确答案" clearable placeholder="请输入正确答案" />
 	  </q-form>
-	  
+
       <q-form>
         <q-btn style="margin-top: 10px" v-show="+focusedItem.type <2" @click="addDomain(focusedItem)">新增选项</q-btn>
         <br/>
@@ -435,7 +433,7 @@ export default {
 				  if(item.value === '')
 					return this.$message.info("选择题选项内容不能为空")
 			  }
-		  }	  
+		  }
 	  }
 	  for(let test of this.modelForm.topic) {
 		  if(test.type != 2){

@@ -13,7 +13,7 @@
     >
       <q-tab name="questions" label="问题" />
       <q-tab name="outline" label="大纲" />
-     
+
     </q-tabs>
 
     <q-separator />
@@ -39,10 +39,10 @@
         <q-btn color="cyan" rounded text-color="white" label="填空题" @click="addBlank" size="30px" icon-right="circle" class="left-button"/>
         <q-btn color="orange" rounded text-color="white" label="定位题" @click="addAddress" size="30px" icon-right="star" class="left-button"/>
       </q-tab-panel>
-	  
+
 	  <q-tab-panel name="outline">
 	    <div class="text-h5 quetitle">{{modelForm.title}}</div>
-	    <div v-for="(item, index) in modelForm.topic" :key="index" @click="changeFocus(item)">
+	    <div v-for="(item, index) in modelForm.topic" :key="index" @click="changeFocus(item)" style="cursor: pointer">
 	      <div class="text-h6" style="display: inline-block">
 	        <div style="display: inline-block">{{ index+1 }}.</div>
 	        <div style="display: inline-block; color: red" v-show="item.key === 'true'"><sup>*</sup></div>
@@ -50,7 +50,7 @@
 	      </div>
 	    </div>
 	  </q-tab-panel>
-     
+
     </q-tab-panels>
 
   </q-drawer>
@@ -61,8 +61,7 @@
 	  <q-form ref="modelForm" :rule="rules" :model="modelForm">
 		  <div class="text-h3 quetitle">{{modelForm.title}}</div>
 		  <vuedraggable v-model="modelForm.topic" class="wrapper" >
-			<q-card class="my-card ques-card" v-for="(item, index) in modelForm.topic" :key="index" @click.native="changeFocus(item)">
-				<div style="padding-bottom: 20px">
+				<div class="my-card ques-card" style="padding-bottom: 20px; margin-left: 15%" v-for="(item, index) in modelForm.topic" :key="index" @click="changeFocus(item)">
 				  <div class="text-h5" style="display: inline-block">
             <div style="display: inline-block" v-show="showNum">第{{ index+1 }}题</div>
             <div style="display: inline-block; color: red" v-show="item.key === 'true'"><sup>*</sup></div>
@@ -106,7 +105,6 @@
           </q-form>
 				</div>
 
-			</q-card>
 		  </vuedraggable>
 		</q-form>
 	  </q-card>
@@ -399,7 +397,7 @@ export default {
 	  				  if(item.value === '')
 	  					return this.$message.info("选择题选项内容不能为空")
 	  			  }
-	  		  }	  
+	  		  }
 	  }
 	  for(let test of this.modelForm.topic) {
 		  if(test.type != 2 && test.type != 8){

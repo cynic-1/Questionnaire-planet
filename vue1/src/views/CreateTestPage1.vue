@@ -42,7 +42,7 @@
 
       <q-tab-panel name="outline">
         <div class="text-h5 quetitle">{{modelForm.title}}</div>
-        <div v-for="(item, index) in modelForm.topic" :key="index" @click="changeFocus(item)">
+        <div v-for="(item, index) in modelForm.topic" :key="index" @click="changeFocus(item)" style="cursor: pointer">
           <div class="text-h6" style="display: inline-block">
             <div style="display: inline-block">{{ index+1 }}.</div>
             <div style="display: inline-block; color: red" v-show="item.key === 'true'"><sup>*</sup></div>
@@ -62,8 +62,7 @@
 	  <q-form ref="modelForm" :rule="rules" :model="modelForm">
 		  <div class="text-h3 quetitle">{{modelForm.title}}</div>
 		  <vuedraggable v-model="modelForm.topic" class="wrapper" >
-			<q-card class="my-card ques-card" v-for="(item, index) in modelForm.topic" :key="index" @click.native="changeFocus(item)">
-				<div style="padding-bottom: 20px">
+				<div  class="my-card ques-card" style="padding-bottom: 20px; margin-left: 15%" v-for="(item, index) in modelForm.topic" :key="index" @click="changeFocus(item)">
 				  <div class="text-h5" style="display: inline-block">
             <div style="display: inline-block" v-show="showNum">第{{ index+1 }}题</div>
             <div style="display: inline-block; color: red" v-show="item.key === 'true'"><sup>*</sup></div>
@@ -115,7 +114,6 @@
             />
           </q-form>
 				</div>
-			</q-card>
 		  </vuedraggable>
 		</q-form>
 	  </q-card>
@@ -364,7 +362,7 @@ export default {
           question.key = +item.mustdo === 1?'true':'false'
 		  if(+item.type === 3){
 			question.answers = item.answers[0]
-			console.log(question.answers)	
+			console.log(question.answers)
 		  }else
 			question.answers = item.answers
 		  console.log(question.answers)

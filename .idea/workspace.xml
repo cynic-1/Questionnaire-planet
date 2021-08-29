@@ -3,7 +3,95 @@
   <component name="ChangeListManager">
     <list default="true" id="0e372b6f-a806-4342-a93a-e202f699ceb5" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/src/Mock/articles.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/src/Mock/book2.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/src/Mock/book3.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/src/Mock/book4.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/src/Mock/bookList.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/src/Mock/bookTagCS.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/src/Mock/books.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/src/Mock/category.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/src/Mock/comment.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/src/Mock/content-list.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/src/Mock/discussionQues.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/src/Mock/focus.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/src/Mock/friend.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/src/Mock/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/src/Mock/post.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/src/Mock/profile.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/src/Mock/review.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/src/Mock/site.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/src/Mock/studentList.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/src/Mock/suggest.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/src/Mock/tags.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/src/api/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/src/assets/banks/banks.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/src/assets/icon/ai.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/src/assets/icon/android.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/src/assets/icon/area.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/src/assets/icon/back.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/src/assets/icon/ios.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/src/assets/icon/js.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/src/assets/icon/safe.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/src/assets/icon/tool.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/src/assets/icon/wx.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/src/assets/images/1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/src/assets/images/2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/src/assets/images/3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/src/assets/images/4.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/src/assets/images/E2n0ya2UUAA2odS.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/src/assets/images/E3MlNB0VEAoTyYl.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/src/assets/images/E3N1ED0XEAMRfXD.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/src/assets/images/adv1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/src/assets/images/adv2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/src/assets/images/adv3.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/src/assets/images/adv4.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/src/assets/images/background.jpeg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/src/assets/images/bg1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/src/assets/images/bg2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/src/assets/images/gg.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/src/assets/images/headImgDefault.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/src/assets/images/pentacle_PNG51.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/src/assets/images/rzdf.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/src/assets/images/xwmr.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/src/assets/logo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/src/assets/logo1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/src/assets/logo2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/src/assets/reading.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/src/assets/site-logo.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/src/assets/tortoise.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/src/components/BankChooser.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/src/components/back-top.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/src/components/banner.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/src/components/base/brake.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/src/components/base/card.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/src/components/base/chooser.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/src/components/base/counter.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/src/components/base/datepicker.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/src/components/base/dialog.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/src/components/base/multiplyChooser.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/src/components/base/selection.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/src/components/book.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/src/components/checkOrder.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/src/components/comment.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/src/components/feature.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/src/components/header-search.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/src/components/layout/layout-body.vue" beforeDir="false" afterPath="$PROJECT_DIR$/vue1/src/components/layout/layout-body.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/src/components/layout/layout-footer.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/src/components/layout/layout-header.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/src/components/menu-tree.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/src/components/post.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/src/components/quote.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/src/components/section-title.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/src/components/small-ico.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/src/router/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/vue1/src/router/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/vue1/src/views/CreateTestPage1.vue" beforeDir="false" afterPath="$PROJECT_DIR$/vue1/src/views/CreateTestPage1.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/src/views/CreateTestPage2.vue" beforeDir="false" afterPath="$PROJECT_DIR$/vue1/src/views/CreateTestPage2.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/src/views/CreateTestPage3.vue" beforeDir="false" afterPath="$PROJECT_DIR$/vue1/src/views/CreateTestPage3.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/src/views/CreateTestPage4.vue" beforeDir="false" afterPath="$PROJECT_DIR$/vue1/src/views/CreateTestPage4.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/src/views/CreateTestPage5.vue" beforeDir="false" afterPath="$PROJECT_DIR$/vue1/src/views/CreateTestPage5.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/src/views/Home.vue" beforeDir="false" afterPath="$PROJECT_DIR$/vue1/src/views/Home.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/src/views/PersonalCenter1.vue" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -99,7 +187,7 @@
       <workItem from="1629968836502" duration="2141000" />
       <workItem from="1630115109321" duration="12932000" />
       <workItem from="1630202128438" duration="4643000" />
-      <workItem from="1630234197470" duration="3326000" />
+      <workItem from="1630234197470" duration="7868000" />
     </task>
     <servers />
   </component>
