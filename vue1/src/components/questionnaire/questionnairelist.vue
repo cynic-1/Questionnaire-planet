@@ -150,19 +150,19 @@ export default {
                 let encTestId = aes_encrypt(row.testid, 'cynic', false)
               encTestId = encodeURIComponent(encTestId)
                 if(row.type==='普通问卷'||row.type==='可重复普通问卷'){
-				    this.link = `http://localhost:8080/#/fill?testid=${encTestId}`
+				    this.link = `http://47.94.221.172/#/fill?testid=${encTestId}`
                 }
                 if(row.type==='报名问卷'||row.type==='可重复报名问卷'){
-			        this.link = `http://localhost:8080/#/fill3?testid=${encTestId}`
+			        this.link = `http://47.94.221.172/#/fill3?testid=${encTestId}`
                 }
                 if(row.type==='投票问卷'||row.type==='可重复投票问卷'){
-                    this.link = `http://localhost:8080/#/fill2?testid=${encTestId}`
+                    this.link = `http://47.94.221.172/#/fill2?testid=${encTestId}`
                 }
                 if(row.type==='打卡问卷'||row.type==='可重复打卡问卷'){
-			        this.link = `http://localhost:8080/#/fill?testid=${encTestId}`
+			        this.link = `http://47.94.221.172/#/fill?testid=${encTestId}`
                 }
                 if(row.type==='考试问卷'||row.type==='可重复考试问卷'){
-			        this.link = `http://localhost:8080/#/fill5?testid=${encTestId}`
+			        this.link = `http://47.94.221.172/#/fill5?testid=${encTestId}`
                 }
                 this.$axios({
 					method:"post",
