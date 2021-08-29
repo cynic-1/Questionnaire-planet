@@ -34,8 +34,10 @@
         mounted() {
 			if(window.sessionStorage.getItem('testid') !== null){
 				const id = JSON.parse(window.sessionStorage.getItem('testid' || '[]'))
+				const path = JSON.parse(window.sessionStorage.getItem('path' || '[]'))
 				window.sessionStorage.removeItem('testid')
-				this.$router.push({path: "/fill", query: {testid: id}})
+				window.sessionStorage.removeItem('path')
+				this.$router.push({path: path, query: {testid: id}})
 			}
         },
         watch:{
