@@ -88,7 +88,7 @@ export default{
         return;//这个可能有用可能没用
       }).then(()=>{
         self.$router.push({
-              path:'/'
+              path:'/home'
             },
             //没有这两句会Uncaught (in promise) undefined
             onComplete => {},

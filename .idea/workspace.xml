@@ -3,7 +3,12 @@
   <component name="ChangeListManager">
     <list default="true" id="0e372b6f-a806-4342-a93a-e202f699ceb5" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/src/assets/intro.png" beforeDir="false" afterPath="$PROJECT_DIR$/vue1/src/assets/intro.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/vue1/src/components/layout/layout-body.vue" beforeDir="false" afterPath="$PROJECT_DIR$/vue1/src/components/layout/layout-body.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/src/router/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/vue1/src/router/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/src/store/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/vue1/src/store/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/src/views/IntroductionPage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/vue1/src/views/IntroductionPage.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/src/views/loginRegister.vue" beforeDir="false" afterPath="$PROJECT_DIR$/vue1/src/views/loginRegister.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -99,7 +104,7 @@
       <workItem from="1629968836502" duration="2141000" />
       <workItem from="1630115109321" duration="12932000" />
       <workItem from="1630202128438" duration="4643000" />
-      <workItem from="1630234197470" duration="10394000" />
+      <workItem from="1630234197470" duration="12298000" />
     </task>
     <servers />
   </component>

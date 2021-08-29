@@ -1,8 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import {getTimeInterval} from '../utils/index'
-import {fetchSiteInfo0,fetchSocial} from '@/api'
-
 Vue.use(Vuex)
 // 略:后台获取系统运行时间
 const runAt = '1589878800000';

@@ -15,7 +15,13 @@ new Vue({
 const routes = [
     {
         path: '/',
-        redirect: '/home',
+        redirect: '/introduction',
+    },
+    {
+        path: '/introduction',
+        name: 'introduction',
+        component: () => import('@/views/IntroductionPage'),
+        mata: {title: '欢迎'}
     },
     {
         path: '/home',

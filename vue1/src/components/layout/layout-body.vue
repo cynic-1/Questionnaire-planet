@@ -14,7 +14,7 @@
               <q-avatar size="100px">
                 <img src="../../assets/pentacle_PNG51.png" class="my-trans">
               </q-avatar>
-              <router-link to="/" class="link">
+              <router-link to="/home" class="link">
                 天问  Tech Win
               </router-link>
 
