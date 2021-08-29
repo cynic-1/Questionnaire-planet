@@ -73,7 +73,7 @@
       <q-card class="my-card" style="min-height: 700px">
 	  <q-form ref="modelForm" :rule="rules" :model="modelForm">
 		  <div class="text-h1 quetitle">{{modelForm.title}}</div>
-		  <vuedraggable v-model="modelForm.topic" class="wrapper" @end="end">
+		  <vuedraggable v-model="modelForm.topic" class="wrapper" >
 			<q-card class="my-card ques-card" v-for="(item, index) in modelForm.topic" :key="index" @click.native="changeFocus(item)">
 				<div style="padding-bottom: 20px">
 				  <div class="text-h4" style="display: inline-block">
@@ -359,7 +359,7 @@ export default {
       item.answers.push({ value: '' })
     },
     resetForm(formName) { // 重置
-      this.$refs[formName].resetFields()
+      this.modelForm.topic = []
     },
     moveup(item){		//上移
       let index = this.modelForm.topic.indexOf(item)
@@ -424,13 +424,15 @@ export default {
 		  }	  
 	  }
 	  for(let test of this.modelForm.topic) {
-		  var optionHash = {}
-		  for(let item  of test.answers){
-			  if(optionHash[item.value]) {
-				return this.$message.info("同一个选择题的选项不能重复")
+		  if(test.type != 2){
+			  var optionHash = {}
+			  for(let item  of test.answers){
+				  if(optionHash[item.value]) {
+					return this.$message.info("同一个选择题的选项不能重复")
+				  }
+				  // 不存在该元素，则赋值为true，可以赋任意值，相应的修改if判断条件即可
+				  optionHash[item.value] = true;
 			  }
-			  // 不存在该元素，则赋值为true，可以赋任意值，相应的修改if判断条件即可
-			  optionHash[item.value] = true;
 		  }
 	  }
       //this.$refs.myForm.validate().then(success => {

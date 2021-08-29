@@ -37,14 +37,15 @@
                 label="Account Settings"
             >
               <div class="row no-wrap q-pa-md">
+			<!--
                 <div class="column">
                   <div class="text-h6 q-mb-md">Settings</div>
                   <q-toggle v-model="mobileData" label="暂时这是个" />
                   <q-toggle v-model="bluetooth" label="没用的功能" />
                 </div>
-
+			
                 <q-separator vertical inset class="q-mx-lg" />
-
+			-->
                 <div class="column items-center" v-show="$store.state.hasLogin">
                   <q-avatar size="72px" >
                     <img :src="this.$store.state.avatar">
@@ -87,8 +88,6 @@
 
           <q-tabs align="left">
             <q-route-tab to="/home" label="管理问卷" />
-            <q-route-tab to="/page2" label="Page Two" />
-            <q-route-tab to="/page3" label="Page Three" />
           </q-tabs>
         </q-header>
 

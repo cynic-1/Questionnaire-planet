@@ -132,6 +132,18 @@ router.beforeResolve(async (to, from, next) => {
 		window.sessionStorage.setItem('testid', JSON.stringify(to.query.testid))
 		next('/login')
 	}
+	if(to.path === '/fill2' && window.sessionStorage.getItem('username') == null && window.sessionStorage.getItem('ip') == null){
+		window.sessionStorage.setItem('testid', JSON.stringify(to.query.testid))
+		next('/login')
+	}
+	if(to.path === '/fill3' && window.sessionStorage.getItem('username') == null && window.sessionStorage.getItem('ip') == null){
+		window.sessionStorage.setItem('testid', JSON.stringify(to.query.testid))
+		next('/login')
+	}
+	if(to.path === '/fill5' && window.sessionStorage.getItem('username') == null && window.sessionStorage.getItem('ip') == null){
+		window.sessionStorage.setItem('testid', JSON.stringify(to.query.testid))
+		next('/login')
+	}
     else{
         if(token === null || token === '')
             next('/login')

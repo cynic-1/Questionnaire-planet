@@ -12,7 +12,7 @@
         narrow-indicator
     >
       <q-tab name="questions" label="问题" />
-      <q-tab name="outline" label="大纲" />
+     
     </q-tabs>
 
     <q-separator />
@@ -75,11 +75,7 @@
 
       </q-tab-panel>
 
-      <q-tab-panel name="outline">
-        <div class="text-h6">这里是问题大纲</div>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-      </q-tab-panel>
-
+     
     </q-tab-panels>
 
   </q-drawer>
@@ -89,7 +85,7 @@
       <q-card class="my-card" style="min-height: 700px">
 	  <q-form ref="modelForm" :rule="rules" :model="modelForm">
 		  <div class="text-h1 quetitle">{{modelForm.title}}</div>
-		  <vuedraggable v-model="modelForm.topic" class="wrapper" @end="end">
+		  <vuedraggable v-model="modelForm.topic" class="wrapper" >
 			<q-card class="my-card ques-card" v-for="(item, index) in modelForm.topic" :key="index" @click.native="changeFocus(item)">
 				<div style="padding-bottom: 20px">
 				  <div class="text-h4" style="display: inline-block">
@@ -429,7 +425,7 @@ export default {
 	  item.amswers.push({ value:'', limit: ''})
 	},
     resetForm(formName) { // 重置
-      this.$refs[formName].resetFields()
+      this.modelForm.topic = []
     },
     moveup(item){		//上移
       let index = this.modelForm.topic.indexOf(item)
@@ -471,6 +467,7 @@ export default {
 	  		  }	  
 	  }
 	  for(let test of this.modelForm.topic) {
+		  if(test.type != 2){
 	  		  var optionHash = {}
 	  		  for(let item  of test.answers){
 	  			  if(optionHash[item.value]) {
@@ -479,6 +476,7 @@ export default {
 	  			  // 不存在该元素，则赋值为true，可以赋任意值，相应的修改if判断条件即可
 	  			  optionHash[item.value] = true;
 	  		  }
+		  }
 	  }
 	  for(let test of this.modelForm.topic){
 		  if(+test.type === 6 || +test.type === 7){

@@ -65,6 +65,9 @@
 		},
         methods:{
 			create(type){
+				if(JSON.parse(window.sessionStorage.getItem('username')) === '游客'){
+					return this.$message.info("新建问卷请先登录或注册")
+				}
 				this.dialogFormVisible = true
 				this.newtype = type
 				console.log(this.newtype)
