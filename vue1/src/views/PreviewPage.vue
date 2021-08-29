@@ -8,7 +8,7 @@
           <div class="text-h5 my-inline" style="display: inline-block">
             <div class="my-inline" v-show="showNum">第{{ index+1 }}题</div>
             <div class="my-inline" style="color: red" v-show="+test.mustdo === 1"><sup>*</sup></div>
-            <div class="my-inline" v-if="+test.type !== 8">{{topicMap[+test.type]}}题,&emsp;&emsp;题目:&emsp;{{test.stem}}</div>
+            <div class="my-inline" v-if="+test.type !== 8">{{topicMap[+test.type]}}题,&emsp;&emsp;题目:&emsp;{{test.stem}}<span v-if="isTest && test.score !== 0">({{test.score}}分)</span></div>
             <div class="my-inline" v-if="+test.type === 8">{{topicMap[4]}}题,&emsp;&emsp;题目:&emsp;{{test.stem}}</div>
           </div>
           <div class="text-h6 ques-description">
@@ -40,7 +40,7 @@
               v-if="+test.type === 6"
               v-for="(option,index) in test.answers"
               :key="index"
-              :label="option.value"
+              :label="`${option.value}  剩余${option.limit}`"
               :val="option.value"
               v-model="test.useranswer"
               style="padding-right: 20px"
@@ -52,7 +52,7 @@
               v-if="+test.type === 1"
               v-for="(option,index) in test.answers"
               :key="index"
-              v-model="test.useranswer"
+              v-model="useranswer"
               :label="option.value"
               :val="option.value"
               color="cyan"
@@ -62,7 +62,7 @@
               v-if="+test.type === 5"
               v-for="(option,index) in test.answers"
               :key="index"
-              v-model="test.useranswer"
+              v-model="useranswer"
               :label="option.value"
               :val="option.value"
               color="cyan"
@@ -72,8 +72,8 @@
               v-if="+test.type === 7"
               v-for="(option,index) in test.answers"
               :key="index"
-              v-model="test.useranswer"
-              :label="option.value"
+              v-model="useranswer"
+              :label="`${option.value}  剩余${option.limit}`"
               :val="option.value"
               color="cyan"
               style="padding-right: 20px"/>
@@ -87,7 +87,7 @@
 
           <q-rating
               v-if="+test.type === 3"
-              v-model="test.useranswer"
+              v-model="value"
               size="2em"
               :max="test.answers[0].value"
               color="yellow"
@@ -128,7 +128,10 @@ export default {
       visitorip: '',
       isVisitor: false,
       showNum: true,
-      topicMap: ['单选','多选','填空','评分','投票单选','投票多选','报名单选','报名多选','定位']
+      topicMap: ['单选','多选','填空','评分','投票单选','投票多选','报名单选','报名多选','定位'],
+	  useranswer: [],
+	  isTest: false,
+	  value: 0
     };
   },
   mounted() {
@@ -219,13 +222,10 @@ export default {
         this.tests = dic.topic
         this.showNum = dic.showNum
         for(let item of this.tests){
-          // 多选
-          if(+item.type === 1){
-            if(item.useranswer[0] === ''){
-              item.useranswer.pop()
-            }
-          }
+		  if(item.score !== null && item.score !== '')
+			this.isTest = true
           // 评分
+		  //console.log(item.score)
           if(+item.type === 3){
             if(item.useranswer === '')
               item.useranswer = 0
