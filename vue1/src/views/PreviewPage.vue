@@ -147,7 +147,7 @@ export default {
       this.loadmyquestionnaire({
         testid: this.testid,
         username: this.username,
-      },"http://47.94.221.172:80/usergettest/")
+      },"http://47.94.221.172:80/getquestionnaire/")
     }
   },
   updated() {
@@ -201,7 +201,7 @@ export default {
             ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
           }
           return ret
-        }],
+        }], 
       }).then((res)=>{
         // if (res.data.code === '0'){
         //   this.$message.warning('问卷不存在或未开放')

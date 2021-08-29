@@ -91,7 +91,7 @@
 
           <q-form v-else-if="+item.type===8">
             <q-input placeholder="请获取定位" outlined readonly style="width: 80% " :disable="disable" />
-            <q-btn label="获取定位" type="submit" color="primary"/>
+            <q-btn label="获取定位" disable  type="address" color="primary"/>
           </q-form>
 				</div>
 
