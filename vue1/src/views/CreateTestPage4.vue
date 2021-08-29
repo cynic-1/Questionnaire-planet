@@ -55,8 +55,8 @@
 				  <div class="text-h5" style="display: inline-block">
             <div style="display: inline-block" v-show="showNum">第{{ index+1 }}题</div>
             <div style="display: inline-block; color: red" v-show="item.key === 'true'"><sup>*</sup></div>
-            <div v-if="+item.type !== 8">{{modelForm.table[item.type]}}题&emsp;&emsp;题目:&emsp;{{item.questionName}}</div>
-            <div v-if="+item.type === 8">{{modelForm.table[3]}}题&emsp;&emsp;题目:&emsp;{{item.questionName}}</div>
+            <span v-if="+item.type !== 8">{{modelForm.table[item.type]}}题&emsp;&emsp;题目:&emsp;{{item.questionName}}</span>
+            <span v-if="+item.type === 8">{{modelForm.table[3]}}题&emsp;&emsp;题目:&emsp;{{item.questionName}}</span>
 				  </div>
           <div class="text-h6 ques-description">
             {{item.describe}}
