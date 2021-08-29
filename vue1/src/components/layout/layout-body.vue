@@ -12,7 +12,7 @@
             color: floralwhite;
             font-family: Helvetica Neue,Helvetica,PingFang SC,Hiragino Sans GB,Microsoft YaHei,微软雅黑,Arial,sans-serif;">
               <q-avatar size="100px">
-                <img src="../../assets/pentacle_PNG51.png">
+                <img src="../../assets/pentacle_PNG51.png" class="my-trans">
               </q-avatar>
               <router-link to="/" class="link">
                 天问  Tech Win
@@ -139,5 +139,31 @@
 }
 .link:hover {
   color: #1dffd1;
+}
+.my-trans {
+  cursor: pointer;
+}
+/*.my-trans:hover::before {*/
+/*  -webkit-transform:rotate(360deg);*/
+/*  transform:rotate(360deg);*/
+/*  -webkit-transition:-webkit-transform 1s linear;*/
+/*  transition:transform 1s linear;*/
+/*}*/
+
+.my-trans:hover {
+  animation:my-trans 1.2s infinite
+}
+@keyframes my-trans {
+  0% {
+    transform:rotate(0);
+    /*animation-timing-function:cubic-bezier(.55,.055,.675,.19)*/
+  }
+  /*50% {*/
+  /*  transform:rotate(900deg);*/
+  /*  !*animation-timing-function:cubic-bezier(.215,.61,.355,1)*!*/
+  /*}*/
+  100% {
+    transform:rotate(360deg)
+  }
 }
 </style>
