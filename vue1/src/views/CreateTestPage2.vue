@@ -59,11 +59,18 @@
 
       </q-tab-panel>
 
-      <q-tab-panel name="outline">
-        <div class="text-h6">这里是问题大纲</div>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-      </q-tab-panel>
-
+     <q-tab-panel name="outline">
+       <div class="text-h5 quetitle">{{modelForm.title}}</div>
+       <div v-for="(item, index) in modelForm.topic" :key="index" @click="changeFocus(item)">
+         <div class="text-h6" style="display: inline-block">
+           <div style="display: inline-block">{{ index+1 }}.</div>
+           <div style="display: inline-block; color: red" v-show="item.key === 'true'"><sup>*</sup></div>
+           {{modelForm.table[item.type]}}, {{item.questionName}}
+         </div>
+       </div>
+     </q-tab-panel>
+	 
+	 
     </q-tab-panels>
 
   </q-drawer>

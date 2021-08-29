@@ -85,8 +85,8 @@
       										</q-tabs>
 											<div v-show="tab1[index]==='bar'" :id="index+'bar'" style="width: 500px; height: 400px;"></div>
 											<div v-show="tab1[index]==='pie'" :id="index+'pie'" style="width: 500px; height: 400px;"></div>
-	  									</el-collapse-item>	
-										</div>	
+	  									</el-collapse-item>
+										</div>
 									</el-collapse>
 								</el-card>
 								<div v-show="+test.type!==2 && +test.type!==8"><br/></div>
@@ -97,6 +97,8 @@
 </template>
 
 <script>
+import {aes_decrypt} from "../../utils/encryptURL";
+
 export default {
 	data() {
 		return {
@@ -126,7 +128,7 @@ export default {
 		};
 	},
 	created(){
-		this.testid=this.$route.query.testid
+    this.testid = aes_decrypt(this.$route.query.testid, 'cynic', false)
 	},
 	mounted() {
 		this.loadreport()

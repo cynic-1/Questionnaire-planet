@@ -236,8 +236,8 @@ export default {
                 this.link=''
             },
             checkreport(row){   // 查看数据统计
-                var _this=this
-                this.$router.push({path: "/report" , query: {testid:row.testid}});
+                let encTestId = aes_encrypt(row.testid, 'cynic', false)
+                this.$router.push({path: "/report" , query: {testid:encTestId}});
             },
             copy(){
                 this.dialogFormVisible = true
