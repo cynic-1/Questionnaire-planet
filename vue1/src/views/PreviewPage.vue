@@ -66,6 +66,9 @@
           <q-btn v-if="+test.type === 8" label="获取定位" type="submit" color="primary" @click="getaddress(index)"/>
         </div>
       </q-card>
+      <div class="return-button">
+        <q-btn to="/home" color="primary">返回</q-btn>
+      </div>
     </q-card>
   </q-page>
 </template>
@@ -92,6 +95,7 @@ export default {
   mounted() {
     // this.testid = this.$route.query.testid
     this.testid = aes_decrypt(this.$route.query.testid, 'cynic', false)
+    console.log(this.testid)
     if(window.sessionStorage.getItem('ip') !== null){
       this.isVisitor = true
       this.visitorip = JSON.parse(window.sessionStorage.getItem('ip' || '[]'))

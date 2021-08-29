@@ -112,7 +112,7 @@
 </template>
 
 <script>
-import {aes_encrypt} from "@/utils/encryptURL";
+import {aes_encrypt, aes_decrypt} from "@/utils/encryptURL";
 import Clipboard from 'clipboard'
 
 export default {
@@ -553,8 +553,7 @@ export default {
 			},
             previewquestionnaire(row){
               let encTestId = aes_encrypt(row.testid, 'cynic', false)
-              encTestId = encodeURIComponent(encTestId)
-				this.$router.push({path: "/preview", query: {testid:`${encTestId}`}});
+				      this.$router.push({path:"/preview", query: {testid: encTestId}});
 			}
         }
     }
