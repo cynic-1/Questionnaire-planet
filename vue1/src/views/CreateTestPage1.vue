@@ -17,8 +17,8 @@
 
     <q-separator />
 
-    <q-tab-panels v-model="tab" animated style="margin-top: 40px">
-      <q-tab-panel name="questions">
+    <q-tab-panels v-model="tab" animated>
+      <q-tab-panel name="questions" style="margin-top: 40px">
         <q-btn-dropdown color="pink" rounded label="选择题" dropdown-icon="change_history" size="30px">
           <q-list>
             <q-item clickable v-close-popup @click="addSingle">
@@ -40,8 +40,14 @@
       </q-tab-panel>
 
       <q-tab-panel name="outline">
-        <div class="text-h6">这里是问题大纲</div>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+        <div class="text-h5 quetitle">{{modelForm.title}}</div>
+        <div v-for="(item, index) in modelForm.topic" :key="index" @click="changeFocus(item)">
+          <div class="text-h6" style="display: inline-block">
+            <div style="display: inline-block">{{ index+1 }}.</div>
+            <div style="display: inline-block; color: red" v-show="item.key === 'true'"><sup>*</sup></div>
+            {{modelForm.table[item.type]}}, {{item.questionName}}
+          </div>
+        </div>
       </q-tab-panel>
 
     </q-tab-panels>
@@ -50,12 +56,12 @@
 
 <!--  <q-page-container>-->
     <q-page padding>
-      <q-card class="my-card" style="min-height: 700px">
+      <q-card class="my-card" style="min-height: 700px;">
 	  <q-form ref="modelForm" :rule="rules" :model="modelForm">
 		  <div class="text-h3 quetitle">{{modelForm.title}}</div>
 		  <vuedraggable v-model="modelForm.topic" class="wrapper" @end="end">
-			<q-card class="my-card ques-card" v-for="(item, index) in modelForm.topic" :key="index" @click.native="changeFocus(item)">
-				<div style="padding-bottom: 20px">
+
+				<div class="my-card ques-card" style="padding-bottom: 20px; margin-left: 15%" v-for="(item, index) in modelForm.topic" :key="index" @click="changeFocus(item)">
 				  <div class="text-h5" style="display: inline-block">
             <div style="display: inline-block" v-show="showNum">第{{ index+1 }}题</div>
             <div style="display: inline-block; color: red" v-show="item.key === 'true'"><sup>*</sup></div>
@@ -108,7 +114,6 @@
           </q-form>
 				</div>
 
-			</q-card>
 		  </vuedraggable>
 		</q-form>
 	  </q-card>
@@ -410,7 +415,7 @@ export default {
 	  				  if(item.value === '')
 	  					return this.$message.info("选择题选项内容不能为空")
 	  			  }
-	  		  }	  
+	  		  }
 	  }
 	  for(let test of this.modelForm.topic) {
 	  		  var optionHash = {}
