@@ -427,7 +427,7 @@ export default {
                          this.$message({
                             type: 'info',
                             message: '已取消操作'
-                            });          
+                            });
                         });
                     }else{
                     this.StateChange(row)
@@ -552,7 +552,9 @@ export default {
                 }
 			},
             previewquestionnaire(row){
-				this.$router.push({path: "/preview", query: {testid:row.testid}});
+              let encTestId = aes_encrypt(row.testid, 'cynic', false)
+              encTestId = encodeURIComponent(encTestId)
+				this.$router.push({path: "/preview", query: {testid:`${encTestId}`}});
 			}
         }
     }

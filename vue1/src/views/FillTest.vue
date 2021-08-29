@@ -1,14 +1,15 @@
 <template>
   <q-page padding>
-    <q-card class="my-card" style="min-height: 700px">
-        <div class="text-h3" style="text-align: center">{{title}}</div>
-          <q-card class="my-card ques-card" v-for="(test, index) in tests" :key="index">
+    <q-card class="my-card" style="min-height: 700px; margin-right: 12%; margin-left: 12%; padding-bottom: 20px">
+        <div class="text-h3" style="text-align: center; margin-bottom: 20px">{{title}}</div>
+
+          <q-card class="my-card ques-card" v-for="(test, index) in tests" :key="index" style="padding-left: 15%">
             <div style="padding-bottom: 20px">
-              <div class="text-h5" style="display: inline-block">
-                <div style="display: inline-block" v-show="showNum">第{{ index+1 }}题</div>
-                <div style="display: inline-block; color: red" v-show="+test.mustdo === 1"><sup>*</sup></div>
-                <div v-if="+test.type !== 8">{{topicMap[+test.type]}}题,&emsp;&emsp;题目:&emsp;{{test.stem}}</div>
-                <div v-if="+test.type === 8">{{topicMap[4]}}题,&emsp;&emsp;题目:&emsp;{{test.stem}}</div>
+              <div class="text-h5 my-inline" style="display: inline-block">
+                <div class="my-inline" v-show="showNum">第{{ index+1 }}题</div>
+                <div class="my-inline" style="color: red" v-show="+test.mustdo === 1"><sup>*</sup></div>
+                <div class="my-inline" v-if="+test.type !== 8">{{topicMap[+test.type]}}题,&emsp;&emsp;题目:&emsp;{{test.stem}}</div>
+                <div class="my-inline" v-if="+test.type === 8">{{topicMap[4]}}题,&emsp;&emsp;题目:&emsp;{{test.stem}}</div>
               </div>
               <div class="text-h6 ques-description">
                 {{test.describe}}
@@ -60,11 +61,12 @@
                   placeholder="请获取位置"
                   outlined
                   v-model="test.useranswer"
-                   :dense="dense" disable 
+                   :dense="dense" disable
                   style="width: 900px"/>
               <q-btn v-if="+test.type === 8" label="获取定位" type="submit" color="primary" @click="getaddress(index)"/>
             </div>
           </q-card>
+
 
       <div class="return-button">
         <q-btn  v-if="!isVisitor" @click="save({
@@ -163,7 +165,7 @@ export default {
           this.$message({
             type: 'info',
             message: '已取消获取'
-          });          
+          });
         });
     },
     loadmyquestionnaire(var1,var2){
@@ -269,5 +271,7 @@ export default {
   margin: 0 auto;
   text-align: center;
 }
-
+.my-inline {
+  display: inline-block;
+}
 </style>
