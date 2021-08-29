@@ -16,6 +16,7 @@
       <div style="text-align: center">
         <q-btn color="cyan" label="导出数据" @click="downloaddate" icon-right="download"></q-btn>
         <br/>
+		<br/>
         <q-btn color="blue" label="返回主页" @click="backhome" icon-right="home"></q-btn>
       </div>
 
@@ -66,22 +67,15 @@
     				/>
 					</div>
 						<div v-show="tab==='picture'">
-							<!-- <div id="linechart" style="width: 800px; height: 400px;"></div> -->
 							<el-card>
-<!--								<el-collapse >-->
-<!--										<div @click="loadline">-->
-<!--  										<el-collapse-item title="查看提交情况">-->
-											<div id="linechart" style="width: 100%; height: 400px;"></div>
-<!--  										</el-collapse-item>-->
-<!--										</div>-->
-<!--									</el-collapse>-->
+								<div id="linechart" style="width: 1200px; height: 400px;"></div>
 							</el-card>
 							<br/>
 							<div v-for="(test, index) in tests" :key="index">
 								<el-card v-show="+test.type!==2 && +test.type!==8" class="picturedata">
-<!--									<el-collapse >-->
-<!--										<div @click="loadchart(index,tab1)">-->
-<!--  										<el-collapse-item :title="(index + 1)+`.`+test.stem">-->
+								<el-collapse >
+									<div @click="loadchart(index)">
+	 									<el-collapse-item :title="(index + 1)+`.`+test.stem">
 											<q-tabs
         									v-model="tab1"
         									class="text-primary"
@@ -89,14 +83,13 @@
         										<q-tab name="bar"  label="柱状图" />
         										<q-tab name="pie"  label="饼状图" />
       										</q-tabs>
-											<div v-show="tab1==='bar'" id="bar" style="width: 500px; height: 400px;"></div>
-											<div v-show="tab1==='pie'" id="pie" style="width: 500px; height: 400px;"></div>
-
-<!--  										</el-collapse-item>-->
-<!--										</div>-->
-<!--									</el-collapse>-->
+											<div v-show="tab1==='bar'" :id="index+'bar'" style="width: 500px; height: 400px;"></div>
+											<div v-show="tab1==='pie'" :id="index+'pie'" style="width: 500px; height: 400px;"></div>
+	  									</el-collapse-item>	
+										</div>	
+									</el-collapse>
 								</el-card>
-								<div v-show="+test.type!==2 && test.type!==8"><br/></div>
+								<div v-show="+test.type!==2 && +test.type!==8"><br/></div>
 							</div>
 	            		</div>
 	            </div>
@@ -138,8 +131,7 @@ export default {
 	mounted() {
 		this.loadreport()
 		this.loadtable()
-    this.loadline()
-    this.loadchart(this.tab1)
+    	this.loadline()
 	},
 	methods: {
 		loadtable(){
@@ -161,13 +153,6 @@ export default {
 				}],
 			}).then((res)=>{
 				console.log(res.data)
-				// for (let i = 0; i < 1000; i++) {
-  				// 	this.data = this.data.concat(res.data.all.data.slice(0).map(r => ({ ...r })))
-				// }
-				// this.data.forEach((row, index) => {
-  				// row.index = index
-				// })
-				// Object.freeze(this.data)
 				this.data=res.data.all.data
 				for(let key in res.data.all.columns){
 					this.columns.push(res.data.all.columns[key])
@@ -197,11 +182,15 @@ export default {
 				column2.setOption(res.data.option);
 			})
 		},
-		loadchart(tab1){
-			if(tab1==='bar'){
-        let fuck = document.getElementById('bar')
-        console.log(fuck)
-				let column1 = this.$echarts.init(document.getElementById('bar'));
+		loadchart(index){
+			// if(tab1==='bar'){
+				let ord2=index.toString()
+				let a=ord2+'bar'
+				console.log(a)
+        		let fuck = document.getElementById(a)
+        		console.log(fuck)
+				let column1 = this.$echarts.init(document.getElementById(a));
+				console.log('sss')
 				// console.log('in loadchart' + column1)
 				this.$axios({
 					method:"post",
@@ -211,7 +200,7 @@ export default {
 					},
 					data:{
 						testid: this.testid,
-						ord: 1,
+						ord: ord2,
 					},
 					transformRequest:[function(data){
 						let ret = ''
@@ -223,30 +212,31 @@ export default {
 				}).then((res)=>{
 					column1.setOption(res.data.option);
 				})
-			}
-			// else{
-			// 	let b = index.toString()
-			// 	let column2 = this.$echarts.init(document.getElementById(b));
-			// 	this.$axios({
-			// 		method:"post",
-			// 		url:"http://47.94.221.172/pie_chart/",
-			// 		header:{
-			// 			'Content-Type': 'application/x-www-form-urlencoded'
-			// 		},
-			// 		data:{
-			// 			testid: this.testid,
-			// 			ord:b,
-			// 		},
-			// 		transformRequest:[function(data){
-			// 			let ret = ''
-			// 			for(let it in data){
-			// 				ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
-			// 			}
-			// 			return ret
-			// 		}],
-			// 	}).then((res)=>{
-			// 		column2.setOption(res.data.option);
-			// 	})
+			// }
+			// if(tab1==='pie'){
+				let ord1=index.toString()
+				let b=ord1+'pie'
+				let column2 = this.$echarts.init(document.getElementById(b));
+				this.$axios({
+					method:"post",
+					url:"http://47.94.221.172/pie_chart/",
+					header:{
+						'Content-Type': 'application/x-www-form-urlencoded'
+					},
+					data:{
+						testid: this.testid,
+						ord:ord1,
+					},
+					transformRequest:[function(data){
+						let ret = ''
+						for(let it in data){
+							ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
+						}
+						return ret
+					}],
+				}).then((res)=>{
+					column2.setOption(res.data.option);
+				})
 			// }
 
 		},
@@ -370,9 +360,13 @@ export default {
 				this.title = dic.title
 				this.tests = dic.allinfo
                 console.log(this.tests)
-				//for(let item of this.tests){
-					//item.cover = 'http://47.94.221.172/' + item.cover
-				//}
+				// console.log(this.tests.length)
+				// for (let i=0;i<this.tests.length;i++){
+				// 	console.log(i)
+				// 	if(this.tests[i].type!==2 && this.tests.type!==8){
+				// 		this.loadchart(i)
+				// 	}
+				// }
 			})
 		},
 
