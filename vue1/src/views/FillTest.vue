@@ -50,7 +50,7 @@
                   v-if="+test.type === 3"
                   v-model="test.useranswer"
                   size="2em"
-                  :max="test.answers.value"
+                  :max="test.answers[0].value"
                   color="yellow"
                   icon="star_border"
                   icon-selected="star"
