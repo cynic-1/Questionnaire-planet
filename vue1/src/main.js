@@ -27,13 +27,10 @@ import * as echarts from 'echarts'
 
 Vue.prototype.$echarts = echarts
 
-
-import mavonEditor from 'mavon-editor'
 import 'mavon-editor/dist/css/index.css'
 import VueCropper from 'vue-cropper'
 import './quasar'
 // use
-Vue.use(mavonEditor)
 Vue.prototype.$qs = qs
 Vue.use(vcolorpicker)
 Vue.use(ViewUI)
