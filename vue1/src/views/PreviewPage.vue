@@ -26,6 +26,26 @@
               style="padding-right: 20px"
           />
 
+          <q-radio
+              v-if="+test.type === 4"
+              v-for="(option,index) in test.answers"
+              :key="index"
+              :label="option.value"
+              :val="option.value"
+              v-model="test.useranswer"
+              style="padding-right: 20px"
+          />
+
+          <q-radio
+              v-if="+test.type === 6"
+              v-for="(option,index) in test.answers"
+              :key="index"
+              :label="option.value"
+              :val="option.value"
+              v-model="test.useranswer"
+              style="padding-right: 20px"
+          />
+
           <!-- 多选 -->
 
           <q-checkbox
@@ -38,6 +58,25 @@
               color="cyan"
               style="padding-right: 20px"/>
 
+          <q-checkbox
+              v-if="+test.type === 5"
+              v-for="(option,index) in test.answers"
+              :key="index"
+              v-model="test.useranswer"
+              :label="option.value"
+              :val="option.value"
+              color="cyan"
+              style="padding-right: 20px"/>
+
+          <q-checkbox
+              v-if="+test.type === 7"
+              v-for="(option,index) in test.answers"
+              :key="index"
+              v-model="test.useranswer"
+              :label="option.value"
+              :val="option.value"
+              color="cyan"
+              style="padding-right: 20px"/>
 
           <q-input
               v-if="+test.type === 2"
@@ -89,7 +128,7 @@ export default {
       visitorip: '',
       isVisitor: false,
       showNum: true,
-      topicMap: ['单选', '多选', '填空', '评分','定位']
+      topicMap: ['单选','多选','填空','评分','投票单选','投票多选','报名单选','报名多选','定位']
     };
   },
   mounted() {
