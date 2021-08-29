@@ -9,7 +9,7 @@
 				    <el-dropdown-item @click.native="create('1')">普通问卷</el-dropdown-item>
 				    <el-dropdown-item @click.native="create('2')">投票问卷</el-dropdown-item>
 				    <el-dropdown-item @click.native="create('3')">报名问卷</el-dropdown-item>
-				    <el-dropdown-item>考试问卷</el-dropdown-item>
+				    <el-dropdown-item @click.native="create('5')">考试问卷</el-dropdown-item>
 				    <el-dropdown-item @click.native="create('4')">疫情填报问卷</el-dropdown-item>
 				  </el-dropdown-menu>
 				</el-dropdown>
@@ -82,6 +82,8 @@
 						this.$router.push({path: "/createtest3", query: {title:this.title,type:0}});
 					if(this.newtype === '4')
 						this.$router.push({path: "/createtest4", query: {title:this.title,type:0}});
+					if(this.newtype === '5')
+						this.$router.push({path: "/createtest5", query: {title:this.title,type:0}});
             	}
             },
 			cancel(){

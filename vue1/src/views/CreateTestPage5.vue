@@ -19,6 +19,28 @@
 
     <q-tab-panels v-model="tab" animated style="margin-top: 30px">
       <q-tab-panel name="questions">
+		<q-btn-dropdown color="blue" rounded label="个人信息" dropdown-icon="change_history" size="30px">
+		  <q-list>
+		    <q-item clickable v-close-popup @click="addName">
+		      <q-item-section>
+		        <q-item-label>姓名</q-item-label>
+		      </q-item-section>
+		    </q-item>
+		
+		    <q-item clickable v-close-popup @click="addID">
+		      <q-item-section>
+		        <q-item-label>ID</q-item-label>
+		      </q-item-section>
+		    </q-item>
+		
+			<q-item clickable v-close-popup @click="addInformation">
+			  <q-item-section>
+			    <q-item-label>其他信息</q-item-label>
+			  </q-item-section>
+			</q-item>
+		  </q-list>
+		</q-btn-dropdown>  
+		  
         <q-btn-dropdown color="pink" rounded label="选择题" dropdown-icon="change_history" size="30px" style="margin-top: 50px;">
           <q-list>
             <q-item clickable v-close-popup @click="addSingle">
@@ -61,6 +83,7 @@
             <div style="display: inline-block" v-show="showNum">第{{ index+1 }}题</div>
             <div style="display: inline-block; color: red" v-show="item.key === 'true'"><sup>*</sup></div>
             {{modelForm.table[item.type]}}&emsp;&emsp;题目:&emsp;{{item.questionName}}
+			<span v-if="item.score !== 0">({{item.score}}分)</span>
 				  </div>
           <div class="text-h5 ques-description">
             {{item.describe}}
@@ -129,15 +152,16 @@
 	      </q-input>
 	    </div>
  <!-- drawer content -->
- 
+ <!--
 	<div>
 		<q-input
-		    v-model.trim="modelForm.testlimit"
+		    v-model.trim="sum"
 		    clearable
-		    label="问卷限额"
+		    label="总分"
+			:disable="true"
 		/>
 	</div>
-	
+	-->
     <div>
       <q-btn label="提交" type="submit" color="primary" @click="addSubmit()"/>
       <q-btn label="重置" type="reset" color="primary" flat class="q-ml-sm" @click="resetForm('modelForm')"/>
@@ -177,6 +201,11 @@
         />
       </q-form>
       <!-- 答案 -->
+	  <q-form
+	      style="display: inline-block; width: 200px;">
+	    <q-select v-model="focusedItem.score" :options="scoreOption" label="请选择分值" />
+	  </q-form>
+	  
       <q-form style="display: inline-block"
               v-for="(opt, idx) in focusedItem.answers"
               v-if="+focusedItem.type <2"
@@ -187,8 +216,18 @@
 											{ required: true, message: '请输入答案', trigger: 'blur' },
 										]">
         <q-input v-model.trim="opt.value" style="min-width:150px;display: inline-block" :label="`选项${idx + 1}`" clearable placeholder="请输入答案" />
-        <q-btn style="margin-left: 20px;display: inline-block" @click.prevent="removeDomain(focusedItem,idx)" round color="red" label="删除"/>
+        <q-btn v-if="+focusedItem.type === 0" style="margin-left: 20px;display: inline-block" @click.prevent="removeDomain(focusedItem,idx)" round color="red" label="删除"/>
+		<q-checkbox v-if="+focusedItem.type ===0 && focusedItem.score !== 0" v-model="focusedItem.answer" :true-value="opt.value"/>
+		<q-btn v-if="+focusedItem.type === 1" style="margin-left: 20px;display: inline-block" @click.prevent="removeDomain2(focusedItem,idx)" round color="red" label="删除"/>
+		<q-checkbox v-if="+focusedItem.type === 1 && focusedItem.score !== 0"
+		    :key="idx"
+		    v-model="focusedItem.answer"
+		    :val="opt.value"/>
       </q-form>
+	  
+	  <q-form v-if="+focusedItem.type === 2 && focusedItem.score !== 0" style="display: inline-block" >
+	    <q-input v-model.trim="focusedItem.answer" style="min-width:150px;display: inline-block" label="正确答案" clearable placeholder="请输入正确答案" />
+	  </q-form>
 	  
       <q-form>
         <q-btn style="margin-top: 10px" v-show="+focusedItem.type <2" @click="addDomain(focusedItem)">新增选项</q-btn>
@@ -227,17 +266,19 @@ export default {
         title: '',
         time: '',
         table: ['单选','多选','填空'],
-		testlimit: ''
       },
 	  tab: 'questions',
 	  // type: modelform.topic
 	  focusedItem: '',
-	  useless:false
+	  useless:false,
+	  scoreOption: []
     }
   },
   created(){
     window.addEventListener('beforeunload', this.leaveConfirm)
     window.addEventListener('unload', this.updateRecord)
+	for(let i = 0; i <= 100; i++)
+		this.scoreOption.push(i)
     let type = this.$route.query.type
     if(type == 0){
       this.modelForm.title = this.$route.query.title
@@ -333,7 +374,12 @@ export default {
     },
     removeDomain(item, idx) { // 删除选项
       item.answers.splice(idx, 1)
+	  item.answer = ''
     },
+	removeDomain2(item, idx) { // 删除选项
+	  item.answers.splice(idx, 1)
+	  item.answer = []
+	},
     removeQuestion(item) {//删除题目
       let index = this.modelForm.topic.indexOf(item)
       this.modelForm.topic.splice(index, 1);
@@ -355,21 +401,42 @@ export default {
     },
     addSubmit() {
       console.log(this.modelForm.topic)
-	  var numReg = /^[0-9]*$/
-	  var numRe = new RegExp(numReg)
       if(this.modelForm.topic.length === 0)
         return this.$message.info("问卷至少包含一个题目！")
-	  if(!numRe.test(this.modelForm.testlimit) && this.modelForm.testlimit !== '')
-	    return this.$message.info("问卷限额只能为空或数字")
-	  if(this.modelForm.testlimit !== '')
-	    this.modelForm.testlimit = parseInt(this.modelForm.testlimit);
 	  for(let test of this.modelForm.topic){
-		  if(+test.type === 6 || +test.type === 7){
+		  if(test.questionName === '')
+			return this.$message.info("题目的标题不能为空！")
+	  }
+	  var hash = {};
+	  for(let test of this.modelForm.topic) {
+	      if(hash[test.questionName]) {
+	        return this.$message.info("一份问卷的题目不能重复")
+	      }
+	      // 不存在该元素，则赋值为true，可以赋任意值，相应的修改if判断条件即可
+	      hash[test.questionName] = true;
+	  }
+	  for(let test of this.modelForm.topic){
+		  if(test.type != 2){
 			  for(let item of test.answers){
-				  if(!numRe.test(item.limit) || item.limit === '')
-					return this.$message.info("选项限额不能为非数字")
-				  item.limit = parseInt(item.limit)
+				  if(item.value === '')
+					return this.$message.info("选择题选项内容不能为空")
 			  }
+		  }	  
+	  }
+	  for(let test of this.modelForm.topic) {
+		  var optionHash = {}
+		  for(let item  of test.answers){
+			  if(optionHash[item.value]) {
+				return this.$message.info("同一个选择题的选项不能重复")
+			  }
+			  // 不存在该元素，则赋值为true，可以赋任意值，相应的修改if判断条件即可
+			  optionHash[item.value] = true;
+		  }
+	  }
+	  for(let test of this.modelForm.topic){
+		  if(test.score !== 0){
+			  if(test.answer === '' || test.answer === [])
+				return this.$message.info("请在右侧设计栏为你有分值的题目选择或填写正确答案")
 		  }
 	  }
 	  //return this.$message.info("到底了")
@@ -390,8 +457,7 @@ export default {
 			  showNum: this.showNum,
 			  order: this.order,
 			  type: this.repeatable === false? '5':'15',
-              testid: this.testid,
-			  testlimit: this.modelForm.testlimit
+              testid: this.testid
             },
             traditional: true,
             paramsSerializer: data => {
@@ -408,14 +474,23 @@ export default {
       //})
     },
     addSingle(){
-      this.modelForm.topic.push({ type: '0', questionName: '',key: 'false', answers: [{ value: '' }] ,describe: ''}, answer:'')
+      this.modelForm.topic.push({ type: '0', questionName: '',key: 'true', answers: [{ value: '' }] ,describe: '',answer:'',score: 5})
     },
     addMulti(){
-      this.modelForm.topic.push({ type: '1', questionName: '',key: 'false', answers: [{ value: '' }] , describe: ''},answer: )
+      this.modelForm.topic.push({ type: '1', questionName: '',key: 'true', answers: [{ value: '' }] , describe: '',answer: [],score: 5 })
     },
     addBlank(){
-      this.modelForm.topic.push({ type: '2', questionName: '',key: 'false', answers: [{ value: '' }] , describe: ''})
+      this.modelForm.topic.push({ type: '2', questionName: '',key: 'true', answers: [{ value: '' }] , describe: '',answer:'',score: 5})
     },
+	addName(){
+	  this.modelForm.topic.push({ type: '2', questionName: '您的姓名',key: 'true', answers: [{ value: '' }] , describe: '',answer:'',score: 0})
+	},
+	addID(){
+	  this.modelForm.topic.push({ type: '2', questionName: '您的ID',key: 'true', answers: [{ value: '' }] , describe: '',answer:'',score: 0})
+	},
+	addInformation(){
+	  this.modelForm.topic.push({ type: '2', questionName: '',key: 'false', answers: [{ value: '' }] , describe: '',answer:'',score: 0})
+	},
     copy(item){
       var newitem = JSON.parse(JSON.stringify(item))
       this.modelForm.topic.push(newitem)

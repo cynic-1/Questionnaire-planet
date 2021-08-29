@@ -244,7 +244,7 @@ export default {
 					}
 				}).then((res)=>{				
 					if (res.data.code !== '200') return this.$message.error(res.data.message);
-					if (res.data.dic !== null || res.data.dic !== null==='' || res.data.dic !== []){
+					if (res.data.dic !== null || res.data.dic !=='' || res.data.dic !== []){
 						this.results = res.data.dic
 						//console.log(this.results)
 					}

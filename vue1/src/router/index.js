@@ -85,6 +85,12 @@ const routes = [
         component: () => import('@/views/CreateTestPage4'),
         meta: { title: '创建疫情打卡问卷' }
     },
+	{
+	    path:'/createtest5',
+	    name:'createtest5',
+	    component: () => import('@/views/CreateTestPage5'),
+	    meta: { title: '创建考试问卷' }
+	},
 	  {
 	    path:'/fill2',
 	    name: 'fill2',
@@ -96,6 +102,12 @@ const routes = [
 	    name: 'fill3',
 	    component: () => import('@/views/FillTest3'),
 	    meta: { title: '填写报名问卷' }
+	  },
+	  {
+	    path:'/fill5',
+	    name: 'fill5',
+	    component: () => import('@/views/FillTest5'),
+	    meta: { title: '填写考试问卷' }
 	  },
 ]
 
