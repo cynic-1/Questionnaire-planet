@@ -96,7 +96,7 @@
                   :label="`选项${idx + 1}`"
                   :prop="`focusedItem.answers.${idx}.value`">
 
-            <q-radio v-model="useless" :label="opt.value || `选项${idx + 1}`" :val="opt.value" style="padding-right: 20px"/>
+            <q-radio v-model="useless" :label="opt.value || `选项${idx + 1}`" :val="opt.value" style="padding-right: 20px" :disable="disable" />
           </q-form>
 		  
 <!--   多选 -->
@@ -106,11 +106,11 @@
                   :key="idx"
                   :label="`选项${idx + 1}`"
                   :prop="`focusedItem.answers.${idx}.value`">
-            <q-checkbox v-model="useless" keep-color :label="opt.value || `选项${idx + 1}`" :val="opt.value" style="padding-right: 20px"/>
+            <q-checkbox v-model="useless" keep-color :label="opt.value || `选项${idx + 1}`" :val="opt.value" style="padding-right: 20px" :disable="disable" />
           </q-form>
 		  
           <q-form v-if="+item.type === 2">
-            <q-input placeholder="请输入答案" outlined style="width: 90%"/>
+            <q-input placeholder="请输入答案" outlined style="width: 80%" :disable="disable" />
           </q-form>
 
 				</div>
@@ -271,7 +271,8 @@ export default {
 	  // type: modelform.topic
 	  focusedItem: '',
 	  useless:false,
-	  scoreOption: []
+	  scoreOption: [],
+	  disable: true
     }
   },
   created(){
@@ -357,12 +358,17 @@ export default {
         //if (res.data.code !== '200') return this.$router.push('/404');
         this.modelForm.title = dic.title
 		this.modelForm.time = dic.endtime=="None"?'':dic.endtime
+		this.order = dic.order === 1?true:false
+		this.showNum = dic.showNum === 1?true:false
+		this.repeatable = dic.type === 15?true:false
         for(let item of dic.topic){
           const question = { type: '', questionName: '',key: '', answers: '',describe: '' }
           question.type = String(item.type)
           question.questionName = item.stem
           question.key = item.mustdo == 1?'true':'false'
           question.answers = item.answers
+		  question.answer = item.answer
+		  question.score = item.score
           question.describe = item.describe
           //console.log(question)
           this.modelForm.topic.push(question)

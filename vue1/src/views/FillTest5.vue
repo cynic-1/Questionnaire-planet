@@ -1,15 +1,15 @@
 <template>
   <q-page padding>
-    <q-card class="my-card" style="min-height: 700px">
-        <div class="text-h3" style="text-align: center">{{title}}</div>
+    <q-card class="my-card" style="min-height: 700px; margin-right: 12%; margin-left: 12%; padding-bottom: 20px">
+        <div class="text-h3" style="text-align: center; margin-bottom: 20px">{{title}}</div>
 		<h5 style="text-align: right;">距离考试结束<span style="color:red">{{Math.floor(countdown/3600)}}</span>小时<span style="color:red">{{Math.floor(countdown%3600/60)}}</span>分<span style="color:red">{{Math.floor(countdown%3600%60)}}</span>秒</h5>
 		<h5 v-if="disable" style="text-align: right;">总分:<span style="color:red">{{sum}}</span>分</h5>
           <q-card class="my-card ques-card" v-for="(test, index) in tests" :key="index">
             <div style="padding-bottom: 20px">
-              <div class="text-h5" style="display: inline-block">
-                <div style="display: inline-block" v-show="showNum">第{{ index+1 }}题</div>
-                <div style="display: inline-block; color: red" v-show="+test.mustdo === 1"><sup>*</sup></div>
-                <div>{{topicMap[+test.type]}}题,&emsp;&emsp;题目:&emsp;{{test.stem}}<span v-if="test.score !== 0">({{test.score}}分)</span>
+             <div class="text-h5 my-inline" style="display: inline-block">
+                <div class="my-inline" v-show="showNum">第{{ index+1 }}题</div>
+                <div class="my-inline" style="color: red" v-show="+test.mustdo === 1"><sup>*</sup></div>
+                <div class="my-inline">{{topicMap[+test.type]}}题,&emsp;&emsp;题目:&emsp;{{test.stem}}<span v-if="test.score !== 0">({{test.score}}分)</span>
 					<span v-if="disable && test.score !== 0">你的得分:<span style="color:red">{{test.myscore}}</span>分</span>
 				</div>
               </div>
@@ -49,7 +49,7 @@
                   placeholder="请输入答案"
                   outlined
                   v-model="test.useranswer"
-                  style="width: 900px"
+                  style="width: 80%"
 				  :disable="disable"
 			/>              
             </div>
@@ -288,5 +288,7 @@ export default {
   margin: 0 auto;
   text-align: center;
 }
-
+.my-inline {
+  display: inline-block;
+}
 </style>

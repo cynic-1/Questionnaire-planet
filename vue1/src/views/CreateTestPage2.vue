@@ -92,7 +92,7 @@
                   :label="`选项${idx + 1}`"
                   :prop="`focusedItem.answers.${idx}.value`">
 
-            <q-radio v-model="useless" :label="opt.value || `选项${idx + 1}`" :val="opt.value" style="padding-right: 20px"/>
+            <q-radio v-model="useless" :label="opt.value || `选项${idx + 1}`" :val="opt.value" style="padding-right: 20px" :disable="disable" />
           </q-form>
 
 <!--多选-->
@@ -102,11 +102,13 @@
                   :key="idx"
                   :label="`选项${idx + 1}`"
                   :prop="`focusedItem.answers.${idx}.value`">
-            <q-checkbox v-model="useless" keep-color :label="opt.value || `选项${idx + 1}`" :val="opt.value" style="padding-right: 20px"/>
+            <q-checkbox v-model="useless" keep-color :label="opt.value || `选项${idx + 1}`" :val="opt.value" style="padding-right: 20px" :disable="disable" />
           </q-form>
 		  
           <q-form v-if="+item.type === 2">
-            <q-input placeholder="请输入答案" outlined style="width: 90%"/>
+
+            <q-input placeholder="请输入答案" outlined style="width: 80%" :disable="disable" />
+
           </q-form>
 
 				</div>
@@ -242,7 +244,8 @@ export default {
 	  tab: 'questions',
 	  // type: modelform.topic
 	  focusedItem: '',
-	  useless:false
+	  useless:false,
+	  disable: true
     }
   },
   created(){
@@ -326,6 +329,10 @@ export default {
         //if (res.data.code !== '200') return this.$router.push('/404');
         this.modelForm.title = dic.title
 		this.modelForm.time = dic.endtime=="None"?'':dic.endtime
+		this.order = dic.order === 1?true:false
+		this.showNum = dic.showNum === 1?true:false
+		this.repeatable = dic.type === 12?true:false
+		this.modelForm.topic = []
         for(let item of dic.topic){
           const question = { type: '', questionName: '',key: '', answers: '',describe: '' }
           question.type = String(item.type)
@@ -367,6 +374,65 @@ export default {
       console.log(this.modelForm.topic)
       if(this.modelForm.topic.length === 0)
         return this.$message.info("问卷至少包含一个题目！")
+	  for(let test of this.modelForm.topic){
+	  		  if(test.questionName === '')
+	  			return this.$message.info("题目的标题不能为空！")
+	  }
+	  var hash = {};
+	  for(let test of this.modelForm.topic) {
+	      if(hash[test.questionName]) {
+	        return this.$message.info("一份问卷的题目不能重复")
+	      }
+	      // 不存在该元素，则赋值为true，可以赋任意值，相应的修改if判断条件即可
+	      hash[test.questionName] = true;
+	  }
+	  for(let test of this.modelForm.topic){
+	  		  if(test.type != 2){
+	  			  for(let item of test.answers){
+	  				  if(item.value === '')
+	  					return this.$message.info("选择题选项内容不能为空")
+	  			  }
+	  		  }	  
+	  }
+	  for(let test of this.modelForm.topic) {
+	  		  var optionHash = {}
+	  		  for(let item  of test.answers){
+	  			  if(optionHash[item.value]) {
+	  				return this.$message.info("同一个选择题的选项不能重复")
+	  			  }
+	  			  // 不存在该元素，则赋值为true，可以赋任意值，相应的修改if判断条件即可
+	  			  optionHash[item.value] = true;
+	  		  }
+	  }for(let test of this.modelForm.topic){
+		  if(test.questionName === '')
+			return this.$message.info("题目的标题不能为空！")
+	  }
+	  var hash = {};
+	  for(let test of this.modelForm.topic) {
+	      if(hash[test.questionName]) {
+	        return this.$message.info("一份问卷的题目不能重复")
+	      }
+	      // 不存在该元素，则赋值为true，可以赋任意值，相应的修改if判断条件即可
+	      hash[test.questionName] = true;
+	  }
+	  for(let test of this.modelForm.topic){
+		  if(test.type != 2){
+			  for(let item of test.answers){
+				  if(item.value === '')
+					return this.$message.info("选择题选项内容不能为空")
+			  }
+		  }	  
+	  }
+	  for(let test of this.modelForm.topic) {
+		  var optionHash = {}
+		  for(let item  of test.answers){
+			  if(optionHash[item.value]) {
+				return this.$message.info("同一个选择题的选项不能重复")
+			  }
+			  // 不存在该元素，则赋值为true，可以赋任意值，相应的修改if判断条件即可
+			  optionHash[item.value] = true;
+		  }
+	  }
       //this.$refs.myForm.validate().then(success => {
 		//console.log(this.modelForm.topic)
         //if (success) {
