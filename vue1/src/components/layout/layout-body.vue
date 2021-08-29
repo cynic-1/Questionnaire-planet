@@ -11,7 +11,7 @@
             font-weight: bolder;
             color: floralwhite;
             font-family: Helvetica Neue,Helvetica,PingFang SC,Hiragino Sans GB,Microsoft YaHei,微软雅黑,Arial,sans-serif;">
-              <q-avatar size="60px">
+              <q-avatar size="100px">
                 <img src="../../assets/pentacle_PNG51.png">
               </q-avatar>
               <router-link to="/" class="link">
@@ -20,17 +20,6 @@
 
             </q-toolbar-title>
 
-<!--            <q-btn rounded color="" label="登录" />-->
-
-<!--            <q-btn v-if="!$store.state.hasLogin" flat round dense size="20px" icon="assignment_ind" to="/loginRegister"/>-->
-<!--            <div class="menu-item hasChild" v-else>-->
-<!--              <q-btn-dropdown round>-->
-<!--                <q-avatar flat round dense size="45px">-->
-<!--                  <img :src="$store.state.avatar" alt="头像">-->
-<!--                </q-avatar>-->
-<!--              </q-btn-dropdown>-->
-<!--            </div>-->
-
             <q-btn-dropdown
                 class="glossy"
                 color="purple"
@@ -38,7 +27,7 @@
             >
               <div class="row no-wrap q-pa-md">
                 <div class="column">
-                  <div class="text-h6 q-mb-md">Settings</div>
+                  <div class="text-h6 q-mb-md">设置</div>
                   <q-toggle v-model="mobileData" label="暂时这是个" />
                   <q-toggle v-model="bluetooth" label="没用的功能" />
                 </div>
@@ -84,12 +73,6 @@
 
             <!--            <q-btn dense flat round icon="menu" @click="right = !right" />-->
           </q-toolbar>
-
-          <q-tabs align="left">
-            <q-route-tab to="/home" label="管理问卷" />
-            <q-route-tab to="/page2" label="Page Two" />
-            <q-route-tab to="/page3" label="Page Three" />
-          </q-tabs>
         </q-header>
 
 <!--        <q-drawer show-if-above v-model="left" side="left" bordered>-->

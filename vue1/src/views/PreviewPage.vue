@@ -134,7 +134,7 @@ export default {
   mounted() {
     // this.testid = this.$route.query.testid
     this.testid = aes_decrypt(this.$route.query.testid, 'cynic', false)
-    console.log(this.testid)
+    // console.log(this.testid)
     if(window.sessionStorage.getItem('ip') !== null){
       this.isVisitor = true
       this.visitorip = JSON.parse(window.sessionStorage.getItem('ip' || '[]'))
@@ -201,7 +201,7 @@ export default {
             ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
           }
           return ret
-        }], 
+        }],
       }).then((res)=>{
         // if (res.data.code === '0'){
         //   this.$message.warning('问卷不存在或未开放')

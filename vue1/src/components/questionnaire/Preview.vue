@@ -71,7 +71,6 @@ export default {
 	},
 	methods: {
 		previewmyquestionnaire(){
-			var _this = this
 			this.$axios({
 				method:"post",
 				url:"http://47.94.221.172:80/previewquestionnaire/",

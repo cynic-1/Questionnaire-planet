@@ -3,7 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="0e372b6f-a806-4342-a93a-e202f699ceb5" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/public/favicon.ico" beforeDir="false" afterPath="$PROJECT_DIR$/vue1/public/favicon.ico" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/src/components/layout/layout-body.vue" beforeDir="false" afterPath="$PROJECT_DIR$/vue1/src/components/layout/layout-body.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/src/components/questionnaire/Preview.vue" beforeDir="false" afterPath="$PROJECT_DIR$/vue1/src/components/questionnaire/Preview.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/vue1/src/components/questionnaire/questionnairelist.vue" beforeDir="false" afterPath="$PROJECT_DIR$/vue1/src/components/questionnaire/questionnairelist.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue1/src/components/questionnaire/report.vue" beforeDir="false" afterPath="$PROJECT_DIR$/vue1/src/components/questionnaire/report.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/vue1/src/views/PreviewPage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/vue1/src/views/PreviewPage.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -99,7 +103,8 @@
       <workItem from="1629959878830" duration="3605000" />
       <workItem from="1629968836502" duration="2141000" />
       <workItem from="1630115109321" duration="12932000" />
-      <workItem from="1630202128438" duration="4405000" />
+      <workItem from="1630202128438" duration="4643000" />
+      <workItem from="1630234197470" duration="1547000" />
     </task>
     <servers />
   </component>
