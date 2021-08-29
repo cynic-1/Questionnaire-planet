@@ -77,14 +77,14 @@
 									<div @click="loadchart(index)">
 	 									<el-collapse-item :title="(index + 1)+`.`+test.stem">
 											<q-tabs
-        									v-model="tab1"
+        									v-model="tab1[index]"
         									class="text-primary"
       										>
         										<q-tab name="bar"  label="柱状图" />
         										<q-tab name="pie"  label="饼状图" />
       										</q-tabs>
-											<div v-show="tab1==='bar'" :id="index+'bar'" style="width: 500px; height: 400px;"></div>
-											<div v-show="tab1==='pie'" :id="index+'pie'" style="width: 500px; height: 400px;"></div>
+											<div v-show="tab1[index]==='bar'" :id="index+'bar'" style="width: 500px; height: 400px;"></div>
+											<div v-show="tab1[index]==='pie'" :id="index+'pie'" style="width: 500px; height: 400px;"></div>
 	  									</el-collapse-item>	
 										</div>	
 									</el-collapse>
@@ -117,7 +117,7 @@ export default {
         		},
         		{ name: 'submit_time', align: 'center', label: 'submit_time', field: 'submit_time' }],
 				tab: 'list',
-				tab1: 'bar',
+				tab1: [],
 				title: '',
 				tests: [],
 				testid:'',
@@ -360,13 +360,9 @@ export default {
 				this.title = dic.title
 				this.tests = dic.allinfo
                 console.log(this.tests)
-				// console.log(this.tests.length)
-				// for (let i=0;i<this.tests.length;i++){
-				// 	console.log(i)
-				// 	if(this.tests[i].type!==2 && this.tests.type!==8){
-				// 		this.loadchart(i)
-				// 	}
-				// }
+				for (let i=0;i<this.tests.length;i++){
+					this.tab1.push('bar')
+				}
 			})
 		},
 
