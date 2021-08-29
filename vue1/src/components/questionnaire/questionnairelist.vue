@@ -549,6 +549,9 @@ export default {
                     if(row.type==='打卡问卷'||row.type==='可重复打卡问卷'){
 				        this.$router.push({path: "/createtest4", query: {testid:row.testid,type:1}});
                     }
+					if(row.type==='考试问卷'||row.type==='可重复考试问卷'){
+					    this.$router.push({path: "/createtest5", query: {testid:row.testid,type:1}});
+					}
                 }
 			},
             previewquestionnaire(row){
