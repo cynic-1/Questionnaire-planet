@@ -203,14 +203,14 @@ export default {
           return ret
         }],
       }).then((res)=>{
-        if (res.data.code === '0'){
-          this.$message.warning('问卷不存在或未开放')
-          return this.$router.push('/home')
-        }
-        if(res.data.code === '1'){
-          this.$message.info('你已经填过该问卷了')
-          return this.$router.push('/home')
-        }
+        // if (res.data.code === '0'){
+        //   this.$message.warning('问卷不存在或未开放')
+        //   return this.$router.push('/home')
+        // }
+        // if(res.data.code === '1'){
+        //   this.$message.info('你已经填过该问卷了')
+        //   return this.$router.push('/home')
+        // }
         const dic = res.data.dic
         console.log(res.data)
         //if (res.data.code !== '200') return this.$router.push('/404');
