@@ -44,7 +44,7 @@
                   placeholder="请输入答案"
                   outlined
                   v-model="test.useranswer"
-                  style="width: 900px"/>
+                  style="width: 90%"/>
 
               <q-rating
                   v-if="+test.type === 3"
@@ -62,7 +62,7 @@
                   outlined
                   v-model="test.useranswer"
                    :dense="dense" disable
-                  style="width: 900px"/>
+                  style="width: 90%"/>
               <q-btn v-if="+test.type === 8" label="获取定位" type="submit" color="primary" @click="getaddress(index)"/>
             </div>
           </q-card>

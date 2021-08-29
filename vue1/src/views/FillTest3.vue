@@ -69,7 +69,7 @@
                     placeholder="请输入答案"
                     outlined
                     v-model="test.useranswer"
-                    style="width: 900px"/>
+                    style="width: 90%"/>
 
               </div>
             </q-card>

@@ -143,7 +143,9 @@
           </q-form>
 		  
           <q-form v-if="+item.type === 2">
+
             <q-input placeholder="请输入答案" outlined style="width: 80%" :disable="disable" />
+
           </q-form>
 
 				</div>
