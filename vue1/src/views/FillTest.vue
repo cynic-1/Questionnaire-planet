@@ -186,11 +186,17 @@ export default {
       }).then((res)=>{
         if (res.data.code === '0'){
           this.$message.warning('问卷不存在或未开放')
-          return this.$router.push('/home')
+		  if(!this.isVisitor)
+			return this.$router.push('/home')
+		  else
+		    return this.$router.push('/')
         }
         if(res.data.code === '1'){
           this.$message.info('你已经填过该问卷了')
-          return this.$router.push('/home')
+          if(!this.isVisitor)
+          	return this.$router.push('/home')
+          else
+            return this.$router.push('/')
         }
         const dic = res.data.dic
         console.log(res.data)
@@ -256,7 +262,10 @@ export default {
         var1.issubmit = '1'
         this.save(var1, var2)
         alert('提交成功!');
-        this.$router.push('/home')
+        if(!this.isVisitor)
+          return this.$router.push('/home')
+        else
+          return this.$router.push('/')
       }else{
         alert('未答完,请完成问卷再提交!');
       }

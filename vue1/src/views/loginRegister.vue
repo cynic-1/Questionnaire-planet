@@ -146,14 +146,15 @@ export default{
                 this.$Notice.open({
                   title: '成功登录'
                 })
-                sessionStorage.setItem('Authorization', /* "Bearer " + */ res.data.token)
+				sessionStorage.removeItem('ip')
+                sessionStorage.setItem('Authorization', /* "Bearer " + */ 'Authorization')
                 this.$store.commit('SET_LOG_STATE', true)
                 this.$store.commit('SET_SITE_INFO', res.data)
                 this.$store.commit('SET_USERNAME', res.data.data.username)
 				console.log(JSON.stringify(res.data))
                 sessionStorage.setItem('siteInfo', JSON.stringify(res.data))
                 this.$router.push({
-                   path:'/'}, onComplete => { }, onAbort => { })
+                   path:'/home'}, onComplete => { }, onAbort => { })
                 break
               case 1:
                 this.$store.commit('SET_LOG_STATE', false)

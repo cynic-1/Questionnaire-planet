@@ -21,14 +21,14 @@ const routes = [
         path: '/introduction',
         name: 'introduction',
         component: () => import('@/views/IntroductionPage'),
-        mata: {title: '欢迎'}
+        meta: {title: '欢迎'}
     },
     {
         path: '/home',
         name: 'home',
         component: () => import('../views/Home.vue'),
         meta: {
-            title: '首页',
+            title: '管理页面',
         }
     },
     {
@@ -116,6 +116,7 @@ const router = new VueRouter({
     base: process.env.BASE_URL,
     routes
 })
+
 router.beforeResolve(async (to, from, next) => {
     let title = '天问：一站式问卷收集管理平台'
     if (to.meta.params){
@@ -125,7 +126,11 @@ router.beforeResolve(async (to, from, next) => {
     }
     document.title = title
     let token = sessionStorage.getItem('Authorization')
-    if(to.path === '/login' || to.path === '/')
+	if(to.path === '/introduction' || to.path === '/'){
+		next()
+		console.log(1)
+	}
+    if(to.path === '/login')
         // alert(token),
         next();
 	if(to.path === '/fill' && window.sessionStorage.getItem('username') == null && window.sessionStorage.getItem('ip') == null){
@@ -148,9 +153,10 @@ router.beforeResolve(async (to, from, next) => {
 		window.sessionStorage.setItem('path', JSON.stringify(to.path))
 		next('/login')
 	}
-    else{
-        if(token === null || token === '')
+    if(to.path !== '/' && to.path !== '/introduction'){
+        if(token === null || token === ''){
             next('/login')
+		}
         else
             // alert(token)
             next();
